@@ -44,7 +44,7 @@ public class ViviendasConnector implements Connector {
 		ArrayList<CBRCase> cases = new ArrayList<CBRCase>();
 		try
 		{
-			BufferedReader reader = new BufferedReader(new FileReader("games"));
+			BufferedReader reader = new BufferedReader(new FileReader("viviendas"));
 			String line = null;
 			while ((line=reader.readLine())!=null)
 			{
@@ -79,11 +79,11 @@ public class ViviendasConnector implements Connector {
 	 * Testing method
 	 * @param args
 	 */
-	public static void main(String[] args){
-		ViviendasConnector vc = new ViviendasConnector();
-		Collection<CBRCase> cases = vc.retrieveAllCases();
-		for(CBRCase c : cases)
-			System.out.println(c);
-	}
+//	public static void main(String[] args){
+//		ViviendasConnector vc = new ViviendasConnector();
+//		Collection<CBRCase> cases = vc.retrieveAllCases();
+//		for(CBRCase c : cases)
+//			System.out.println(c);
+//	}
 
 }
