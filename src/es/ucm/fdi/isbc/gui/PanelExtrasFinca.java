@@ -6,6 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import es.ucm.fdi.isbc.viviendas.representacion.ExtrasFinca;
+
 @SuppressWarnings("serial")
 public class PanelExtrasFinca extends JPanel{
 	
@@ -34,6 +36,20 @@ public class PanelExtrasFinca extends JPanel{
 			add(combos[i]);
 			i++;
 		}
+	}
+	
+	public ExtrasFinca getExtrasFinca(int id){
+		// TODO: id de extras básicos y demás?
+		ExtrasFinca extrasFinca = new ExtrasFinca(id);
+		extrasFinca.setAscensor(combos[0].getSelectedItem().equals("Sí"));
+		extrasFinca.setTrastero(combos[1].getSelectedItem().equals("Sí"));
+		extrasFinca.setEnergiaSolar(combos[2].getSelectedItem().equals("Sí"));
+		extrasFinca.setServPorteria(combos[3].getSelectedItem().equals("Sí"));
+		extrasFinca.setParkingComunitario(combos[4].getSelectedItem().equals("Sí"));
+		extrasFinca.setGarajePrivado(combos[5].getSelectedItem().equals("Sí"));
+		extrasFinca.setVideoportero(combos[6].getSelectedItem().equals("Sí"));
+		
+		return extrasFinca;
 	}
 	
 }

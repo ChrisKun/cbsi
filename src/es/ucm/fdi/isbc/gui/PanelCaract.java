@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
 
@@ -44,6 +45,30 @@ public class PanelCaract extends JPanel{
 			add(textAreas[i]);
 			i++;
 		} 
-		
+	}
+	
+	public DescripcionVivienda getDescripcionVivienda(int id){
+		// TODO: id de extras básicos y demás?
+		DescripcionVivienda caract = new DescripcionVivienda(id);
+		caract.setTipo((TipoVivienda)tipoVivienda.getSelectedItem());
+		caract.setEstado((EstadoVivienda)estadoVivienda.getSelectedItem());
+		// Si la conversión es errónea suponemos que el usuario ha introducido datos
+		try{
+			caract.setSuperficie(Integer.parseInt(textAreas[0].getText()));
+		}catch(NumberFormatException e){}
+		try{
+			caract.setHabitaciones(Integer.parseInt(textAreas[1].getText()));
+		}catch(NumberFormatException e){}
+		try{
+			caract.setBanios(Integer.parseInt(textAreas[2].getText()));
+		}catch(NumberFormatException e){}
+		try{
+			caract.setPrecioMedio(Integer.parseInt(textAreas[3].getText()));
+		}catch(NumberFormatException e){}
+		try{
+			caract.setPrecioZona(Integer.parseInt(textAreas[4].getText()));
+		}catch(NumberFormatException e){}
+		caract.setLocalizacion(textAreas[5].getText());
+		return caract;
 	}
 }

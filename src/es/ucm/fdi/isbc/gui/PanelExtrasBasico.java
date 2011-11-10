@@ -6,6 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
+
 @SuppressWarnings("serial")
 public class PanelExtrasBasico extends JPanel{
 	
@@ -45,6 +47,31 @@ public class PanelExtrasBasico extends JPanel{
 			add(combos[i]);
 			i++;
 		}
+	}
+	
+	public ExtrasBasicos getExtrasBasicos(int id){
+		// TODO: id de extras básicos y demás?
+		ExtrasBasicos extrasBasicos = new ExtrasBasicos(id);
+		extrasBasicos.setLavadero(combos[0].getSelectedItem().equals("Sí"));
+		extrasBasicos.setInternet(combos[1].getSelectedItem().equals("Sí"));
+		extrasBasicos.setMicroondas(combos[2].getSelectedItem().equals("Sí"));
+		extrasBasicos.setHorno(combos[3].getSelectedItem().equals("Sí"));
+		extrasBasicos.setAmueblado(combos[4].getSelectedItem().equals("Sí"));
+		extrasBasicos.setCocinaOffice(combos[5].getSelectedItem().equals("Sí"));
+		extrasBasicos.setParquet(combos[6].getSelectedItem().equals("Sí"));
+		extrasBasicos.setDomotica(combos[7].getSelectedItem().equals("Sí"));
+		extrasBasicos.setArmarios(combos[8].getSelectedItem().equals("Sí"));
+		extrasBasicos.setTv(combos[9].getSelectedItem().equals("Sí"));
+		extrasBasicos.setLavadora(combos[10].getSelectedItem().equals("Sí"));
+		extrasBasicos.setElectrodomesticos(combos[11].getSelectedItem().equals("Sí"));
+		extrasBasicos.setSuiteConBanio(combos[12].getSelectedItem().equals("Sí"));
+		extrasBasicos.setPuertaBlindada(combos[13].getSelectedItem().equals("Sí"));
+		extrasBasicos.setGresCeramica(combos[14].getSelectedItem().equals("Sí"));
+		extrasBasicos.setCalefaccion(combos[15].getSelectedItem().equals("Sí"));
+		extrasBasicos.setAireAcondicionado(combos[16].getSelectedItem().equals("Sí"));
+		extrasBasicos.setNevera(combos[17].getSelectedItem().equals("Sí"));
+		
+		return extrasBasicos;
 	}
 
 }

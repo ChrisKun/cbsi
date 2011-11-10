@@ -6,6 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import es.ucm.fdi.isbc.viviendas.representacion.ExtrasOtros;
+
 @SuppressWarnings("serial")
 public class PanelExtrasOtros extends JPanel{
 
@@ -36,5 +38,21 @@ public class PanelExtrasOtros extends JPanel{
 			add(combos[i]);
 			i++;
 		}
+	}
+	
+	public ExtrasOtros getExtrasOtros(int id){
+		// TODO: id de extras básicos y demás?
+		ExtrasOtros extrasOtros = new ExtrasOtros(id);
+		extrasOtros.setPatio(combos[0].getSelectedItem().equals("Sí"));
+		extrasOtros.setBalcon(combos[1].getSelectedItem().equals("Sí"));
+		extrasOtros.setZonaDeportiva(combos[2].getSelectedItem().equals("Sí"));
+		extrasOtros.setZonaComunitaria(combos[3].getSelectedItem().equals("Sí"));
+		extrasOtros.setTerraza(combos[4].getSelectedItem().equals("Sí"));
+		extrasOtros.setPiscinaComunitaria(combos[5].getSelectedItem().equals("Sí"));
+		extrasOtros.setJardinPrivado(combos[6].getSelectedItem().equals("Sí"));
+		extrasOtros.setZonaInfantil(combos[7].getSelectedItem().equals("Sí"));
+		extrasOtros.setPiscina(combos[8].getSelectedItem().equals("Sí"));
+		
+		return extrasOtros;
 	}
 }

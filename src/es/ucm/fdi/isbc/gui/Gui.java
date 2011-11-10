@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
+
 @SuppressWarnings("serial")
 public class Gui extends JFrame implements ActionListener{
 	private JButton button;
@@ -35,7 +37,7 @@ public class Gui extends JFrame implements ActionListener{
 		tabbed.addTab("Extras Básicos", panelExtrasBasico);
 		
 		panelExtrasOtros = new PanelExtrasOtros();
-		tabbed.addTab("Extras Básicos", panelExtrasOtros);
+		tabbed.addTab("Extras Otros", panelExtrasOtros);
 		
         this.add(tabbed, BorderLayout.NORTH);
 		button = new JButton("OK");
@@ -55,7 +57,14 @@ public class Gui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+        if ("OK".equals(e.getActionCommand())) {
+        	// Obtener datos paneles y crear DescripcionVivienda
+        	// TODO: id query?
+//        	DescripcionVivienda descr = panelCaract.getDescripcionVivienda(id);
+//        	descr.setExtrasFinca(panelExtrasFinca.getExtrasFinca(id));
+//        	descr.setExtrasBasicos(panelExtrasBasico.getExtrasBasicos(id));
+//        	descr.setExtrasOtros(panelExtrasOtros.getExtrasOtros(id));
+        } 
 	}
 
 }
