@@ -1,92 +1,76 @@
 package funcSimilitud;
 
+import java.util.Enumeration;
+
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import jcolibri.exception.NoApplicableSimilarityFunctionException;
 import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 
-public class MyTreeSimilarityFunction implements LocalSimilarityFunction{
+public class MyTreeSimilarityFunction implements LocalSimilarityFunction {
 	private JTree tree;
-	
+
 	public MyTreeSimilarityFunction(JTree tree) {
 		this.tree = tree;
 	}
 
-	@Override
-	public double compute(Object caseObject, Object queryObject)
-			throws NoApplicableSimilarityFunctionException {
-		String caseLocalizacion = (String) caseObject;
-		String queryLocalizacion = (String) queryObject;
-		String[] caseSplit = {};
-		String barrio = "",	zona = "",	calle = "";
-		caseSplit = caseLocalizacion.split("/");
-		switch (caseSplit.length) {
-		// s[0] es caca
-		case 2:
-			zona = caseSplit[1];
-			break;
-		case 3:
-			zona = caseSplit[1];
-			barrio = caseSplit[2];
-			break;
-		case 4:
-			zona = caseSplit[1];
-			barrio = caseSplit[2];
-			calle = caseSplit[3];
-			break;
-		}
-		DefaultMutableTreeNode top = (DefaultMutableTreeNode)tree.getModel().getRoot();
-		DefaultMutableTreeNode hijo = new DefaultMutableTreeNode();
-		DefaultMutableTreeNode nieto = new DefaultMutableTreeNode();
-		DefaultMutableTreeNode bisnieto = new DefaultMutableTreeNode();
-		//buscamos en zonas
-		boolean found = false; int i = 0;
-		while (!found && i < top.getChildCount()) {
-			hijo = (DefaultMutableTreeNode) top.getChildAt(i);
-			// Si no está la zona, el barrio y la calle tampoco
-			found = hijo.getUserObject().equals(zona);
-			// Si tenemos barrio en el caso, comprobamos barrios
-			if (!found && caseSplit.length > 2){ 	
-		
-				boolean encontrado = false; int j = 0;				
-				while (!encontrado && j < hijo.getChildCount()) {
-					nieto = (DefaultMutableTreeNode) hijo.getChildAt(j);
-					encontrado = nieto.getUserObject().equals(barrio);
-					// Si no se ha encontrado comprobamos calles, si tenemos calles en el caso
-					if (!encontrado && caseSplit.length > 3){
-						
-						boolean foundF = false; int k = 0;						
-						while (!foundF	&& k < nieto.getChildCount()) {
-							bisnieto = (DefaultMutableTreeNode) nieto.getChildAt(k);
-							foundF = bisnieto.getUserObject().equals(calle);
-							k++;
-						}
-						if (!foundF) {
-							// añadir calle al barrio indicado
+	public TreePath findByName(JTree tree, String name) {
+		TreeNode root = (TreeNode) tree.getModel().getRoot();
+		return find(tree, new TreePath(root), name, 0, true);
+	}
 
-						}
+	private TreePath find(JTree tree, TreePath parent, Object node2Comp, int depth, boolean byName) {
+		TreeNode node = (TreeNode) parent.getLastPathComponent();
+		Object o = node;
+
+		// If by name, convert node to a string
+		if (byName) {
+			o = o.toString();
+		}
+
+		// If equal, go down the branch
+		if (!o.equals(node2Comp)) {
+
+			// Traverse children
+			if (node.getChildCount() >= 0) {
+				for (Enumeration e = node.children(); e.hasMoreElements();) {
+					TreeNode n = (TreeNode) e.nextElement();
+					// Añadimos el hijo a la path, para buscar luego con el.
+					TreePath path = parent.pathByAddingChild(n); 
+					TreePath result = find(tree, path, node2Comp, depth + 1, byName);
+					// Found a match
+					if (result != null) {
+						return result;
 					}
-					else{
-						
-					}
-					j++;
-					
 				}
 			}
-			else{
-				// Si se ha encontrado en el primer nivel del árbol (zonas)
-			}
-			i++;
-		} 
+		} else {
+			return parent;
+		}
 
-		return 0;
+		// No match at this branch
+		return null;
 	}
 
 	@Override
 	public boolean isApplicable(Object caseObject, Object queryObject) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public double compute(Object caseObject, Object queryObject) throws NoApplicableSimilarityFunctionException {
+		// Obtenemos el path de la query
+		TreePath path = this.findByName(tree, (String)queryObject);
+		System.out.println(path.toString());
+		// Obtenemos el path del caso a comparar
+		
+		// Comparamos los paths para obtener la profundidad del nodo común
+		
+		// Calculamos similitud a devolver
+		return 0;
 	}
 
 }
