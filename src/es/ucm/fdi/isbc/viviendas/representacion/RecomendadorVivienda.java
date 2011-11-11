@@ -3,7 +3,6 @@ package es.ucm.fdi.isbc.viviendas.representacion;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -21,7 +20,9 @@ import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
+import es.ucm.fdi.isbc.gui.Gui;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 import funcSimilitud.MyTreeSimilarityFunction;
 
@@ -33,6 +34,7 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 	CBRCaseBase _caseBase;
 	/** Árbol de localización */
 	private JTree tree;
+
 
 	@Override
 	public void configure() throws ExecutionException {
@@ -167,21 +169,71 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 		 // Fijamos la función de similitud global
 		 simConfig.setDescriptionSimFunction(new Average());
 		
-		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
+//		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
 		 // Fijamos las funciones de similitud locales
-		 simConfig.addMapping(new Attribute("HolidayType",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("NumberOfPersons",
-		 DescripcionVivienda.class), new Interval(12));
-		 simConfig.addMapping(new Attribute("Region",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("Transportation",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("Duration",DescripcionVivienda.class), new Interval(21));
-		 simConfig.addMapping(new Attribute("Season",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("Accommodation",DescripcionVivienda.class), new Equal());
-		
+		 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda"));
+		 simConfig.addMapping(new Attribute("superficie",DescripcionVivienda.class), new Interval(5));
+		 simConfig.addMapping(new Attribute("habitaciones",DescripcionVivienda.class), new Interval(1));
+		 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
+		 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda"));
+		 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
+		 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
+		 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
+		 
+		 simConfig.addMapping(new Attribute("extrasFinca",DescripcionVivienda.class), new Average());
+		 simConfig.addMapping(new Attribute("ascensor",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("trastero",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("energiaSolar",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("servPorteria",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("parkingComunitario",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("garajePrivado",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("videoportero",ExtrasFinca.class), new Equal());
+		 
+				 
+		 simConfig.addMapping(new Attribute("extrasBasicos",DescripcionVivienda.class), new Average());
+		 simConfig.addMapping(new Attribute("lavadero",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("internet",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("microondas",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("horno",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("amueblado",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("cocinaOffice",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("parquet",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("domotica",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("armarios",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("tv",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("lavadora",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("electrodomesticos",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("suiteConBanio",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("puertaBlindada",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("gresCeramica",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("calefaccion",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("aireAcondicionado",ExtrasBasicos.class), new Equal());
+		 simConfig.addMapping(new Attribute("nevera",ExtrasBasicos.class), new Equal());
+		 
+		 
+		 simConfig.addMapping(new Attribute("extrasOtros",DescripcionVivienda.class), new Average());
+		 simConfig.addMapping(new Attribute("patio",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("balcon",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("zonaDeportiva",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("zonaComunitaria",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("terraza",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("piscinaComunitaria",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("jardinPrivado",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("zonaInfantil",ExtrasOtros.class), new Equal());
+		 simConfig.addMapping(new Attribute("piscina",ExtrasOtros.class), new Equal());
+		 
 		 // Es posible modificar el peso de cada atributo en la media ponderada.
 		 // Por defecto el peso es 1.
-		  simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), 0.5);
-		
+		 simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), 10.0);
+		 simConfig.setWeight(new Attribute("tipo", DescripcionVivienda.class), 10.0);
+		 simConfig.setWeight(new Attribute("superficie", DescripcionVivienda.class), 7.0);
+		 simConfig.setWeight(new Attribute("habitaciones", DescripcionVivienda.class), 6.0);
+		 simConfig.setWeight(new Attribute("banios", DescripcionVivienda.class), 5.0);
+		 simConfig.setWeight(new Attribute("estado", DescripcionVivienda.class), 10.0);
+		 simConfig.setWeight(new Attribute("coordenada", DescripcionVivienda.class), 10.0);
+		 simConfig.setWeight(new Attribute("precioMedio", DescripcionVivienda.class), 15.0);
+		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), 15.0);
+		 
 		 // Ejecutamos la recuperación por vecino más próximo
 		  Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query,
 		 simConfig);
@@ -209,7 +261,8 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 	}
 
 	public static void main(String[] args) {
-		// Lanzar el SGBD
+		Gui gui = new Gui();
+		// Lanza el SGBD
 		jcolibri.test.database.HSQLDBserver.init();
 
 		// Crear el objeto que implementa la aplicación CBR
@@ -221,16 +274,24 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 			rv.preCycle();
 			// Crear el objeto que almacena la consulta
 			CBRQuery query = new CBRQuery();
-			// TODO: Id vivienda? Pongo 0 de momento
-			query.setDescription(new DescripcionVivienda(960));
+			
 			// Mientras que el usuario quiera (se muestra la ventana de
 			// continuar)
+			gui.setVisible(true);
 			do {
+				
 				// Obtener los valores de la consulta
-//				ObtainQueryWithFormMethod.obtainQueryWithInitialValues(query, null, null);
+				query.setDescription(gui.getDescripcionVivienda());
+				
 				// Ejecutar el ciclo
-				rv.cycle(query);
-			} while (JOptionPane.showConfirmDialog(null, "Continuar?") == JOptionPane.OK_OPTION);
+				if (gui.getFlag()){
+					rv.cycle(query);
+					gui.setFlag(false);
+				}
+					
+				
+			} while (true);
+//					JOptionPane.showConfirmDialog(null, "Continuar?") == JOptionPane.OK_OPTION);
 		} catch (Exception e) {
 			org.apache.commons.logging.LogFactory
 					.getLog(RecomendadorVivienda.class);

@@ -17,6 +17,7 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda
 public class PanelCaract extends JPanel{
 	private JTextArea[] textAreas;
 	private JLabel[] labels;
+	@SuppressWarnings("rawtypes")
 	private JComboBox tipoVivienda, estadoVivienda;
 	
 	public PanelCaract(){
@@ -41,6 +42,7 @@ public class PanelCaract extends JPanel{
 		for (JLabel l: labels){
 			add(l);
 			textAreas[i] = new JTextArea(1,20);
+			textAreas[i].setText("1");
 			textAreas[i].setBorder(BorderFactory.createLineBorder(Color.black));
 			add(textAreas[i]);
 			i++;
