@@ -3,6 +3,7 @@ package es.ucm.fdi.isbc.viviendas.representacion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
+import java.util.Vector;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -13,6 +14,9 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.evaluation.Evaluator;
+import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
+import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.extensions.recommendation.casesDisplay.DisplayCasesTableMethod;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -251,6 +255,21 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 }
 		
 		 // Aquí se incluiría el código para adaptar la solución
+//		 Clasificacion clasificacion = new Clasificacion();
+//		Integer precio_predicción = clasificacion.getPrediccionPrecio((CBRCase)query, eval);
+//		double confianza_prediccion = calcularConfianza(casos);
+		
+//		CBRCase casoReal = (CBRCase)query;
+//		SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
+//		Integer precio_real = solucionReal.getPrecio();
+		
+		// Hemos acertado con margen < 10000 --> prediccion == 1
+//		double prediccion = 0.0;
+//		if (Math.abs(precio_predicción - precio_real) < 10000)
+//			prediccion = 1.0;
+//		
+//		Evaluator.getEvaluationReport().addDataToSeries("Aciertos", prediccion);
+//		Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
 		
 		 // Sólamente mostramos el resultado
 		 DisplayCasesTableMethod.displayCasesInTableBasic(casos);
@@ -288,6 +307,20 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Ejecutar el ciclo
 		try {
 			this.cycle(query);
+			
+			// Validación cruzada
+//			LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
+//			eval.init(new RecomendadorVivienda());
+//			eval.LeaveOneOut();
+//			
+//			Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
+//			double media = 0.0;
+//			for (Double acierto: vectorAciertos)
+//				media += acierto;
+//			media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
+//			
+//			System.out.println(Evaluator.getEvaluationReport().toString());
+//			EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
