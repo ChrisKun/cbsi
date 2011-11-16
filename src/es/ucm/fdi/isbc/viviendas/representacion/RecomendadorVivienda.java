@@ -272,6 +272,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			org.apache.commons.logging.LogFactory
 					.getLog(RecomendadorVivienda.class);
 		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void fin(){

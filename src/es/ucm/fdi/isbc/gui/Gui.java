@@ -42,6 +42,8 @@ public class Gui extends JFrame implements ActionListener, Observer{
 		mArchivo.addActionListener(this);
 		mArchivo.add(new MenuItem( "Salir"));
 		barraMenus.add(mArchivo);
+		this.setMenuBar(barraMenus);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 		this.setLayout(new BorderLayout());
 		tabbed = new JTabbedPane();
@@ -61,6 +63,7 @@ public class Gui extends JFrame implements ActionListener, Observer{
         this.add(tabbed, BorderLayout.NORTH);
 		button = new JButton("OK");
 		button.addActionListener(this);
+		button.setEnabled(false);
 		minipanel = new JPanel();
 		minipanel.add(button);
         this.add(minipanel, BorderLayout.CENTER);
@@ -96,6 +99,7 @@ public class Gui extends JFrame implements ActionListener, Observer{
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// Ya ha terminado de mostrar los resultados
+		button.setEnabled(true);
 		flag = true;
 	}
 
