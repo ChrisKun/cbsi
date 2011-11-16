@@ -2,6 +2,7 @@ package es.ucm.fdi.isbc.viviendas.representacion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -22,11 +23,11 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
+import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.gui.Gui;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
-import funcSimilitud.MyTreeSimilarityFunction;
 
-public class RecomendadorVivienda implements StandardCBRApplication {
+public class RecomendadorVivienda extends Observable implements StandardCBRApplication {
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -34,6 +35,7 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 	CBRCaseBase _caseBase;
 	/** Árbol de localización */
 	private JTree tree;
+	private CBRQuery query;
 
 
 	@Override
@@ -171,11 +173,11 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 		
 //		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
 		 // Fijamos las funciones de similitud locales
-		 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda"));
+		 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
 		 simConfig.addMapping(new Attribute("superficie",DescripcionVivienda.class), new Interval(5));
 		 simConfig.addMapping(new Attribute("habitaciones",DescripcionVivienda.class), new Interval(1));
 		 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda"));
+		 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda.txt"));
 		 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
 		 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
 		 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
@@ -235,8 +237,7 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), 15.0);
 		 
 		 // Ejecutamos la recuperación por vecino más próximo
-		  Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query,
-		 simConfig);
+		  Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		
 		 // Seleccionamos los k mejores casos
 		 eval = SelectCases.selectTopKRR(eval, 5);
@@ -254,6 +255,44 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 		 // Sólamente mostramos el resultado
 		 DisplayCasesTableMethod.displayCasesInTableBasic(casos);
 	}
+	
+	public void inicia(){
+		// Lanza el SGBD
+		jcolibri.test.database.HSQLDBserver.init();
+
+		try {
+			// Configuración
+			this.configure();
+			// Preciclo
+			this.preCycle();
+			// Crear el objeto que almacena la consulta
+			query = new CBRQuery();
+
+		} catch (Exception e) {
+			org.apache.commons.logging.LogFactory
+					.getLog(RecomendadorVivienda.class);
+		}
+	}
+	
+	public void fin(){
+		// Apagar el SGBD
+		jcolibri.test.database.HSQLDBserver.shutDown();
+	}
+	
+	public void repite(DescripcionVivienda descr){
+		// Obtener los valores de la consulta
+		query.setDescription(descr);
+		
+		// Ejecutar el ciclo
+		try {
+			this.cycle(query);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		this.setChanged();
+		this.notifyObservers();
+		
+	}
 
 	@Override
 	public void postCycle() throws ExecutionException {
@@ -261,44 +300,13 @@ public class RecomendadorVivienda implements StandardCBRApplication {
 	}
 
 	public static void main(String[] args) {
-		Gui gui = new Gui();
-		// Lanza el SGBD
-		jcolibri.test.database.HSQLDBserver.init();
-
 		// Crear el objeto que implementa la aplicación CBR
 		RecomendadorVivienda rv = new RecomendadorVivienda();
-		try {
-			// Configuración
-			rv.configure();
-			// Preciclo
-			rv.preCycle();
-			// Crear el objeto que almacena la consulta
-			CBRQuery query = new CBRQuery();
-			
-			// Mientras que el usuario quiera (se muestra la ventana de
-			// continuar)
-			gui.setVisible(true);
-			do {
-				
-				// Obtener los valores de la consulta
-				query.setDescription(gui.getDescripcionVivienda());
-				
-				// Ejecutar el ciclo
-				if (gui.getFlag()){
-					rv.cycle(query);
-					gui.setFlag(false);
-				}
-					
-				
-			} while (true);
-//					JOptionPane.showConfirmDialog(null, "Continuar?") == JOptionPane.OK_OPTION);
-		} catch (Exception e) {
-			org.apache.commons.logging.LogFactory
-					.getLog(RecomendadorVivienda.class);
-		}
-
-		// Apagar el SGBD
-		jcolibri.test.database.HSQLDBserver.shutDown();
+		Controlador controlador = new Controlador(rv);
+		Gui gui = new Gui(controlador);
+		gui.setVisible(true);
+		rv.addObserver(gui);
+		rv.inicia();
 	}
 
 }
