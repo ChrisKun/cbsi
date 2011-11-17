@@ -2,9 +2,7 @@ package es.ucm.fdi.isbc.funcSimilitud;
 
 import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 
-import jcolibri.cbrcore.CBRCase;
 import jcolibri.exception.NoApplicableSimilarityFunctionException;
 import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 
@@ -70,31 +68,40 @@ public class MyTreeSimilarityFunction implements LocalSimilarityFunction {
 		sQuery = pathQuery.split("/");
 		pathQuery = this.findByName(tree, sQuery[sQuery.length-1]); //Buscamos solo con el último dato.
 		System.out.println(pathQuery);
-		//Volvemos a separarlo pero ahora con la path entera
-		sQuery = pathQuery.split("/");
 		
-		// Obtenemos el path del caso a comparar
-		String pathCase = (String) caseObject;
-		sCase = pathCase.split("/");
-		
-		// Comparamos los paths para obtener la profundidad del nodo común
-		//Sabemos que sCase[0] es un valor corrupto y el de sQuery es madrid. Asi que comparamos con sCase[1] == sQuery[1] pero este no hace falta.
-		double profCoQ = 0.0; //Profundidad (Case v Query)
-		boolean coincidencia = false;
-		int i = Math.min(sCase.length, sQuery.length) - 1;
-		while ( i > 0 && !coincidencia){
-			coincidencia = sCase[i].equalsIgnoreCase(sQuery[i]);
-			i--;
+		// Si se encuentra en el árbol
+		if (pathQuery != null){
+			
+			//Volvemos a separarlo pero ahora con la path entera
+			sQuery = pathQuery.split("/");
+			
+			// Obtenemos el path del caso a comparar
+			String pathCase = (String) caseObject;
+			sCase = pathCase.split("/");
+			
+			// Comparamos los paths para obtener la profundidad del nodo común
+			//Sabemos que sCase[0] es un valor corrupto y el de sQuery es madrid. Asi que comparamos con sCase[1] == sQuery[1] pero este no hace falta.
+			double profCoQ = 0.0; //Profundidad (Case v Query)
+			boolean coincidencia = false;
+			int i = Math.min(sCase.length, sQuery.length) - 1;
+			while (!coincidencia && i > 0){
+				coincidencia = sCase[i].equalsIgnoreCase(sQuery[i]);
+				i--;
+			}
+			if (coincidencia)
+				profCoQ = i + 1;
+			else
+				profCoQ = 0;
+			// Calculamos similitud a devolver
+			double maxprof = Math.max(sCase.length, sQuery.length);
+			double result = profCoQ/maxprof;
+			return result;
 		}
-		if(coincidencia)
-			profCoQ = i + 1;
-		else
-			profCoQ = 0;
-		
-		// Calculamos similitud a devolver
-		double maxprof = Math.max(sCase.length, sQuery.length);
-		double result = profCoQ/maxprof;
-		return result;
+		// Si no, sólo tienen en común la raíz (Madrid)
+		else{
+			return 0;
+		}
+
 	}
 
 }

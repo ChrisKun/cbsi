@@ -3,7 +3,6 @@ package es.ucm.fdi.isbc.viviendas.representacion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
-import java.util.Vector;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -14,9 +13,6 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
-import jcolibri.evaluation.Evaluator;
-import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
-import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.extensions.recommendation.casesDisplay.DisplayCasesTableMethod;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -28,6 +24,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.isbc.controlador.Controlador;
+import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
 import es.ucm.fdi.isbc.gui.Gui;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
@@ -175,7 +172,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 // Fijamos la función de similitud global
 		 simConfig.setDescriptionSimFunction(new Average());
 		
-//		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
+		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
 		 // Fijamos las funciones de similitud locales
 		 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
 		 simConfig.addMapping(new Attribute("superficie",DescripcionVivienda.class), new Interval(5));
@@ -255,7 +252,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 }
 		
 		 // Aquí se incluiría el código para adaptar la solución
-//		 Clasificacion clasificacion = new Clasificacion();
+//		Clasificacion clasificacion = new Clasificacion();
 //		Integer precio_predicción = clasificacion.getPrediccionPrecio((CBRCase)query, eval);
 //		double confianza_prediccion = calcularConfianza(casos);
 		
