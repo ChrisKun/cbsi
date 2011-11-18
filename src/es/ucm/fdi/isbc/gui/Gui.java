@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -27,15 +28,12 @@ public class Gui extends JFrame implements ActionListener, Observer{
 	private PanelExtrasOtros panelExtrasOtros;
 	private JTabbedPane tabbed;
 	private DescripcionVivienda descr;
-	private Controlador controlador;
 	private MenuBar barraMenus;
 	private Menu mArchivo;
 	private boolean flag = true;
 	
-	public Gui(Controlador c){
+	public Gui(){
 		super("Recomendador Viviendas");
-		
-		this.controlador = c;
 		
 		barraMenus = new MenuBar();
 		mArchivo = new Menu( "Archivo" );
@@ -43,7 +41,7 @@ public class Gui extends JFrame implements ActionListener, Observer{
 		mArchivo.add(new MenuItem( "Salir"));
 		barraMenus.add(mArchivo);
 		this.setMenuBar(barraMenus);
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		this.setLayout(new BorderLayout());
 		tabbed = new JTabbedPane();
@@ -63,13 +61,16 @@ public class Gui extends JFrame implements ActionListener, Observer{
         this.add(tabbed, BorderLayout.NORTH);
 		button = new JButton("OK");
 		button.addActionListener(this);
-		button.setEnabled(false);
 		minipanel = new JPanel();
 		minipanel.add(button);
         this.add(minipanel, BorderLayout.CENTER);
         descr = null;
 		//Display the window.
         this.pack();
+        
+		int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getPreferredSize().width/2);
+		int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getPreferredSize().height/2);
+		setLocation(x, y);
         
 	}
 
@@ -83,11 +84,11 @@ public class Gui extends JFrame implements ActionListener, Observer{
         	descr.setExtrasBasicos(panelExtrasBasico.getExtrasBasicos(-1));
         	descr.setExtrasOtros(panelExtrasOtros.getExtrasOtros(-1));
         	flag = false;
-        	controlador.repite(descr);
+        	Controlador.getInstance().repite(descr);
         } 
 		else if (e.getActionCommand().equals("Salir")){
-			controlador.fin();
-			System.exit(0); 
+			Controlador.getInstance().fin(); 
+			this.dispose();
 		}
 	}
 
@@ -98,7 +99,7 @@ public class Gui extends JFrame implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// Ya ha terminado de mostrar los resultados
+		// Ya ha terminado de hacer el inicio
 		button.setEnabled(true);
 		flag = true;
 	}

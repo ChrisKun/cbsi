@@ -29,6 +29,7 @@ import jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
 import es.ucm.fdi.isbc.gui.Gui;
+import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
 public class RecomendadorVivienda extends Observable implements StandardCBRApplication {
@@ -44,12 +45,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	
 	public RecomendadorVivienda(){
 		evaluacionSistema = false;
-	}
-	
-	public RecomendadorVivienda(boolean evalSis){
-		evaluacionSistema = evalSis;
-	}
-	
+	}	
 
 	@Override
 	public void configure() throws ExecutionException {
@@ -314,11 +310,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		} catch (Exception e) {
 			org.apache.commons.logging.LogFactory
 					.getLog(RecomendadorVivienda.class);
-		}
-		if (!evaluacionSistema){
-			this.setChanged();
-			this.notifyObservers();
-		}
+		}		
+		this.setChanged();
+		this.notifyObservers();
+		
 	}
 	
 	public void fin(){
@@ -328,7 +323,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	
 	public void repite(DescripcionVivienda descr){
 		// Obtener los valores de la consulta
-		query.setDescription(descr);
+		if (descr != null){
+			query.setDescription(descr);
+			evaluacionSistema = false;
+		}
+		else evaluacionSistema = true;
 		
 		// Ejecutar el ciclo
 		try {
@@ -368,16 +367,18 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	public static void main(String[] args) {
 		// Crear el objeto que implementa la aplicación CBR
 		RecomendadorVivienda rv = new RecomendadorVivienda();
-		Controlador controlador = new Controlador(rv);
-		Gui gui = new Gui(controlador);
-		gui.setVisible(true);
-		rv.addObserver(gui);
+		Controlador controlador = Controlador.getInstance();
+		controlador.setRecomendadorVivienda(rv);
+		VentanaPpal v = new VentanaPpal();
+		v.setVisible(true);
+		rv.addObserver(v);
 		rv.inicia();
-		
-		// Evaluacion
-//		RecomendadorVivienda rv = new RecomendadorVivienda(true);
-//		rv.inicia();
-//		rv.repite(null);
+	}
+	
+	public void iniciaNormal(){
+		Gui gui = new Gui();
+		gui.setVisible(true);
+		this.addObserver(gui);
 	}
 
 }
