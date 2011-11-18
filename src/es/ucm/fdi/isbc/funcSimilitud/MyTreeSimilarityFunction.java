@@ -63,11 +63,9 @@ public class MyTreeSimilarityFunction implements LocalSimilarityFunction {
 	public double compute(Object caseObject, Object queryObject) throws NoApplicableSimilarityFunctionException {
 		// Obtenemos el path de la query
 		String pathQuery = (String) queryObject;
-		System.out.println(pathQuery);
 		String[] sQuery, sCase;
 		sQuery = pathQuery.split("/");
 		pathQuery = this.findByName(tree, sQuery[sQuery.length-1]); //Buscamos solo con el último dato.
-		System.out.println(pathQuery);
 		
 		// Si se encuentra en el árbol
 		if (pathQuery != null){

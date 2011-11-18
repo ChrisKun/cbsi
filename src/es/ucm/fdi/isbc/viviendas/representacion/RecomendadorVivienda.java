@@ -1,9 +1,10 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
+import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -13,8 +14,10 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.evaluation.Evaluator;
+import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
+import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
-import jcolibri.extensions.recommendation.casesDisplay.DisplayCasesTableMethod;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
@@ -37,7 +40,16 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	/** Árbol de localización */
 	private JTree tree;
 	private CBRQuery query;
-
+	private boolean evaluacionSistema;
+	
+	public RecomendadorVivienda(){
+		evaluacionSistema = false;
+	}
+	
+	public RecomendadorVivienda(boolean evalSis){
+		evaluacionSistema = evalSis;
+	}
+	
 
 	@Override
 	public void configure() throws ExecutionException {
@@ -179,7 +191,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.addMapping(new Attribute("habitaciones",DescripcionVivienda.class), new Interval(1));
 		 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
 		 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda.txt"));
-		 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
+//		 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
 		 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
 		 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
 		 
@@ -243,35 +255,50 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 // Seleccionamos los k mejores casos
 		 eval = SelectCases.selectTopKRR(eval, 5);
 		
-		 // Imprimimos el resultado del k-NN y obtenemos la lista de casos recuperados
-		 Collection<CBRCase> casos = new ArrayList<CBRCase>();
-		 System.out.println("Casos Recuperados: ");
-		 for (RetrievalResult nse: eval){
-			 System.out.println(nse);
-			 casos.add(nse.get_case());
-		 }
-		
 		 // Aquí se incluiría el código para adaptar la solución
-//		Clasificacion clasificacion = new Clasificacion();
-//		Integer precio_predicción = clasificacion.getPrediccionPrecio((CBRCase)query, eval);
-//		double confianza_prediccion = calcularConfianza(casos);
+		Integer precio_prediccion = getPrediccionPrecio(eval);
+		System.out.println("Prediccion precio: " + precio_prediccion);
+		double confianza_prediccion = calcularConfianza(eval);
+		System.out.println("Confianza: " + confianza_prediccion);
 		
-//		CBRCase casoReal = (CBRCase)query;
-//		SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
-//		Integer precio_real = solucionReal.getPrecio();
-		
-		// Hemos acertado con margen < 10000 --> prediccion == 1
-//		double prediccion = 0.0;
-//		if (Math.abs(precio_predicción - precio_real) < 10000)
-//			prediccion = 1.0;
-//		
-//		Evaluator.getEvaluationReport().addDataToSeries("Aciertos", prediccion);
-//		Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
-		
-		 // Sólamente mostramos el resultado
-		 DisplayCasesTableMethod.displayCasesInTableBasic(casos);
+		if (evaluacionSistema){
+			
+			CBRCase casoReal = (CBRCase)query;
+			SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
+			Integer precio_real = solucionReal.getPrecio();
+			
+			// Hemos acertado con margen < 10000 --> prediccion == 1
+			double prediccion = 0.0;
+			if (Math.abs(precio_prediccion - precio_real) < 10000)
+				prediccion = 1.0;
+			
+			Evaluator.getEvaluationReport().addDataToSeries("Aciertos", prediccion);
+			Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
+		}
+		else{
+			String s = "Predicción precio: "+ precio_prediccion+ "\n"+ "Confianza: "+ confianza_prediccion;
+			JOptionPane.showMessageDialog(null, s, "Tasador", JOptionPane.INFORMATION_MESSAGE); 
+		}
 	}
 	
+	private double calcularConfianza(Collection<RetrievalResult> eval) {
+		double total = 0;
+		 for (RetrievalResult nse: eval){
+			 total += nse.getEval();
+		 }
+		 return total / eval.size();
+	}
+
+	private Integer getPrediccionPrecio(Collection<RetrievalResult> eval) {
+		double pesos = 0; double total = 0;
+		 for (RetrievalResult nse: eval){
+			 pesos += nse.getEval();
+			 total += ((SolucionVivienda)nse.get_case().getSolution()).getPrecio() * nse.getEval();
+		 }
+		 
+		 return (int) Math.round(total / pesos);
+	}
+
 	public void inicia(){
 		// Lanza el SGBD
 		jcolibri.test.database.HSQLDBserver.init();
@@ -288,8 +315,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			org.apache.commons.logging.LogFactory
 					.getLog(RecomendadorVivienda.class);
 		}
-		this.setChanged();
-		this.notifyObservers();
+		if (!evaluacionSistema){
+			this.setChanged();
+			this.notifyObservers();
+		}
 	}
 	
 	public void fin(){
@@ -303,26 +332,31 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 		// Ejecutar el ciclo
 		try {
-			this.cycle(query);
-			
-			// Validación cruzada
-//			LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
-//			eval.init(new RecomendadorVivienda());
-//			eval.LeaveOneOut();
-//			
-//			Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
-//			double media = 0.0;
-//			for (Double acierto: vectorAciertos)
-//				media += acierto;
-//			media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
-//			
-//			System.out.println(Evaluator.getEvaluationReport().toString());
-//			EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
+			if (!evaluacionSistema) this.cycle(query);
+			else{
+				// Validación cruzada
+				LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
+				eval.init(new RecomendadorVivienda());
+				eval.LeaveOneOut();
+				
+				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
+				double media = 0.0;
+				for (Double acierto: vectorAciertos)
+					media += acierto;
+				media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
+				
+				System.out.println(Evaluator.getEvaluationReport().toString());
+				EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
+			}
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		this.setChanged();
-		this.notifyObservers();
+		
+		if (!evaluacionSistema) {
+			this.setChanged();
+			this.notifyObservers();
+		}
+
 		
 	}
 
@@ -339,6 +373,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		gui.setVisible(true);
 		rv.addObserver(gui);
 		rv.inicia();
+		
+		// Evaluacion
+//		RecomendadorVivienda rv = new RecomendadorVivienda(true);
+//		rv.inicia();
+//		rv.repite(null);
 	}
 
 }
