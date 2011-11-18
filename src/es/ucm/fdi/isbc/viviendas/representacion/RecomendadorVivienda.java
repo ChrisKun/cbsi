@@ -15,6 +15,7 @@ import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.evaluation.Evaluator;
+import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
 import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
@@ -26,6 +27,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
+import jcolibri.test.test8.EvaluableApp;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
 import es.ucm.fdi.isbc.gui.Gui;
@@ -334,9 +336,13 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			if (!evaluacionSistema) this.cycle(query);
 			else{
 				// Validación cruzada
-				LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
+//				LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
+//				eval.init(new RecomendadorVivienda());
+//				eval.LeaveOneOut();
+				
+				HoldOutEvaluator eval = new HoldOutEvaluator();
 				eval.init(new RecomendadorVivienda());
-				eval.LeaveOneOut();
+				eval.HoldOut(100, 1);
 				
 				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
 				double media = 0.0;
