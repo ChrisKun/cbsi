@@ -16,7 +16,6 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.HoldOutEvaluator;
-import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
 import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -27,7 +26,6 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
-import jcolibri.test.test8.EvaluableApp;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
 import es.ucm.fdi.isbc.gui.Gui;
@@ -182,27 +180,36 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 // Fijamos la función de similitud global
 		 simConfig.setDescriptionSimFunction(new Average());
 		
-		 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
+		 if (!((DescripcionVivienda)query.getDescription()).getLocalizacion().equals(""))
+			 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
 		 // Fijamos las funciones de similitud locales
-		 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
-		 simConfig.addMapping(new Attribute("superficie",DescripcionVivienda.class), new Interval(5));
-		 simConfig.addMapping(new Attribute("habitaciones",DescripcionVivienda.class), new Interval(1));
-		 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
-		 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda.txt"));
-//		 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
-		 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
-		 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
+		 if (((DescripcionVivienda)query.getDescription()).getTipo() != null)
+			 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
+		 if (((DescripcionVivienda)query.getDescription()).getSuperficie() != null)
+			 simConfig.addMapping(new Attribute("superficie",DescripcionVivienda.class), new Interval(5));
+		 if (((DescripcionVivienda)query.getDescription()).getHabitaciones() != null)	 
+			 simConfig.addMapping(new Attribute("habitaciones",DescripcionVivienda.class), new Interval(1));
+		 if (((DescripcionVivienda)query.getDescription()).getBanios() != null) 
+			 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
+		 if (((DescripcionVivienda)query.getDescription()).getEstado() != null) 
+			 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda.txt"));
+//		 if (((DescripcionVivienda)query.getDescription()).getCoordenada() != null)
+//			 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
+		 if (((DescripcionVivienda)query.getDescription()).getPrecioMedio() != null) 
+			 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
+		 if (((DescripcionVivienda)query.getDescription()).getPrecioZona() != null)	 
+			 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
+		 	 
 		 
-		 simConfig.addMapping(new Attribute("extrasFinca",DescripcionVivienda.class), new Average());
-		 simConfig.addMapping(new Attribute("ascensor",ExtrasFinca.class), new Equal());
-		 simConfig.addMapping(new Attribute("trastero",ExtrasFinca.class), new Equal());
+		 simConfig.addMapping(new Attribute("extrasFinca",DescripcionVivienda.class), new Average());	 
+		 simConfig.addMapping(new Attribute("ascensor",ExtrasFinca.class), new Equal()); 
+		 simConfig.addMapping(new Attribute("trastero",ExtrasFinca.class), new Equal()); 
 		 simConfig.addMapping(new Attribute("energiaSolar",ExtrasFinca.class), new Equal());
 		 simConfig.addMapping(new Attribute("servPorteria",ExtrasFinca.class), new Equal());
 		 simConfig.addMapping(new Attribute("parkingComunitario",ExtrasFinca.class), new Equal());
 		 simConfig.addMapping(new Attribute("garajePrivado",ExtrasFinca.class), new Equal());
 		 simConfig.addMapping(new Attribute("videoportero",ExtrasFinca.class), new Equal());
-		 
-				 
+	 
 		 simConfig.addMapping(new Attribute("extrasBasicos",DescripcionVivienda.class), new Average());
 		 simConfig.addMapping(new Attribute("lavadero",ExtrasBasicos.class), new Equal());
 		 simConfig.addMapping(new Attribute("internet",ExtrasBasicos.class), new Equal());
@@ -222,8 +229,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.addMapping(new Attribute("calefaccion",ExtrasBasicos.class), new Equal());
 		 simConfig.addMapping(new Attribute("aireAcondicionado",ExtrasBasicos.class), new Equal());
 		 simConfig.addMapping(new Attribute("nevera",ExtrasBasicos.class), new Equal());
-		 
-		 
+	 
 		 simConfig.addMapping(new Attribute("extrasOtros",DescripcionVivienda.class), new Average());
 		 simConfig.addMapping(new Attribute("patio",ExtrasOtros.class), new Equal());
 		 simConfig.addMapping(new Attribute("balcon",ExtrasOtros.class), new Equal());
@@ -234,9 +240,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.addMapping(new Attribute("jardinPrivado",ExtrasOtros.class), new Equal());
 		 simConfig.addMapping(new Attribute("zonaInfantil",ExtrasOtros.class), new Equal());
 		 simConfig.addMapping(new Attribute("piscina",ExtrasOtros.class), new Equal());
-		 
+	  
+	 
 		 // Es posible modificar el peso de cada atributo en la media ponderada.
 		 // Por defecto el peso es 1.
+	 
 		 simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), 10.0);
 		 simConfig.setWeight(new Attribute("tipo", DescripcionVivienda.class), 10.0);
 		 simConfig.setWeight(new Attribute("superficie", DescripcionVivienda.class), 7.0);
