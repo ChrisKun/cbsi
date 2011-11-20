@@ -27,6 +27,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.isbc.controlador.Controlador;
+import es.ucm.fdi.isbc.funcSimilitud.MyCoordinateSimilarityFunction;
 import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
 import es.ucm.fdi.isbc.gui.Gui;
 import es.ucm.fdi.isbc.gui.VentanaPpal;
@@ -193,8 +194,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			 simConfig.addMapping(new Attribute("banios",DescripcionVivienda.class), new Equal());
 		 if (((DescripcionVivienda)query.getDescription()).getEstado() != null) 
 			 simConfig.addMapping(new Attribute("estado",DescripcionVivienda.class), new Table("tablaEstadoVivienda.txt"));
-//		 if (((DescripcionVivienda)query.getDescription()).getCoordenada() != null)
-//			 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new Interval(50));
+		 if (((DescripcionVivienda)query.getDescription()).getCoordenada() != null)
+			 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new MyCoordinateSimilarityFunction());
 		 if (((DescripcionVivienda)query.getDescription()).getPrecioMedio() != null) 
 			 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
 		 if (((DescripcionVivienda)query.getDescription()).getPrecioZona() != null)	 

@@ -29,22 +29,24 @@ public class PanelCaract extends JPanel{
 	
 	public PanelCaract(){
 		super();
-		setLayout(new GridLayout(8,2));
+		setLayout(new GridLayout(10,2));
 		JLabel tipoLabel = new JLabel("Tipo vivienda ");
 		JLabel estadoLabel = new JLabel("Estado vivienda ");
 		tipoVivienda = new JComboBox(TipoVivienda.values());
 		estadoVivienda = new JComboBox(EstadoVivienda.values());
 		add(tipoLabel); add(tipoVivienda);
 		add(estadoLabel); add(estadoVivienda);
-		labels = new JLabel[6];
+		labels = new JLabel[8];
 		labels[0] = new JLabel("Superficie ");
 		labels[1]  = new JLabel("Habitaciones ");
 		labels[2]  = new JLabel("Baños ");
 		labels[3]  = new JLabel("Precio medio ");
 		labels[4]  = new JLabel("Precio zona ");
 		labels[5] = new JLabel("Localización ");
+		labels[6]  = new JLabel("Coordenada Latitud ");
+		labels[7] = new JLabel("Coordenada Longitud ");
 		
-		textAreas = new JTextArea[6];
+		textAreas = new JTextArea[8];
 		int i = 0;
 		for (JLabel l: labels){
 			add(l);
@@ -54,6 +56,9 @@ public class PanelCaract extends JPanel{
 			add(textAreas[i]);
 			i++;
 		} 
+		// Las coordenadas se obtienen a partir de la localización
+		textAreas[6].setEditable(false);
+		textAreas[7].setEditable(false);
 	}
 	
 	public DescripcionVivienda getDescripcionVivienda(int id){
@@ -98,6 +103,8 @@ public class PanelCaract extends JPanel{
 				e.printStackTrace();
 			}
 			caract.setCoordenada(coordenada);
+			textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
+			textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
 		}
 		return caract;
 	}
