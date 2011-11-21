@@ -1,7 +1,10 @@
 package es.ucm.fdi.isbc.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +16,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 import es.ucm.fdi.isbc.viviendas.representacion.Coordenada;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
@@ -21,45 +32,103 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivien
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
 
 @SuppressWarnings("serial")
-public class PanelCaract extends JPanel{
-	private JTextArea[] textAreas;
+public class PanelCaract extends JPanel implements TreeSelectionListener, FocusListener{
+	private JTextField[] textAreas;
 	private JLabel[] labels;
 	private JComboBox tipoVivienda, estadoVivienda;
 	private Coordenada coordenada;
+	private JTree localizaciones;
 	
-	public PanelCaract(){
+	public PanelCaract(JTree localiz){
 		super();
-		setLayout(new GridLayout(10,2));
-		JLabel tipoLabel = new JLabel("Tipo vivienda ");
-		JLabel estadoLabel = new JLabel("Estado vivienda ");
+//		this.setPreferredSize(new Dimension(730,300));
+		this.localizaciones = localiz;
+		coordenada = new Coordenada();
+		
+		JPanel pDatos = new JPanel();
+		GridLayout layout1 = new GridLayout(10,2);
+		layout1.setVgap(18);
+		pDatos.setLayout(layout1);
+		
+		
+		JLabel tipoLabel = new JLabel("  Tipo vivienda ");
+		JLabel estadoLabel = new JLabel("  Estado vivienda ");
 		tipoVivienda = new JComboBox(TipoVivienda.values());
 		estadoVivienda = new JComboBox(EstadoVivienda.values());
-		add(tipoLabel); add(tipoVivienda);
-		add(estadoLabel); add(estadoVivienda);
-		labels = new JLabel[8];
-		labels[0] = new JLabel("Superficie ");
-		labels[1]  = new JLabel("Habitaciones ");
-		labels[2]  = new JLabel("Baños ");
-		labels[3]  = new JLabel("Precio medio ");
-		labels[4]  = new JLabel("Precio zona ");
-		labels[5] = new JLabel("Localización ");
-		labels[6]  = new JLabel("Coordenada Latitud ");
-		labels[7] = new JLabel("Coordenada Longitud ");
+		pDatos.add(tipoLabel); pDatos.add(tipoVivienda);
+		pDatos.add(estadoLabel); pDatos.add(estadoVivienda);
 		
-		textAreas = new JTextArea[8];
+		labels = new JLabel[8];
+		labels[0] = new JLabel("  Superficie ");
+		labels[1]  = new JLabel("  Habitaciones ");
+		labels[2]  = new JLabel("  Baños ");
+		labels[3]  = new JLabel("  Precio medio ");
+		labels[4]  = new JLabel("  Precio zona ");
+		labels[5]  = new JLabel("  Localizacion ");
+		labels[6]  = new JLabel("  Latitud ");
+		labels[7]  = new JLabel("  Longitud ");
+	
+		textAreas = new JTextField[8];
 		int i = 0;
 		for (JLabel l: labels){
-			add(l);
-			textAreas[i] = new JTextArea(1,20);
+			pDatos.add(l);
+			textAreas[i] = new JTextField(20);
 			textAreas[i].setText("");
 			textAreas[i].setBorder(BorderFactory.createLineBorder(Color.black));
-			add(textAreas[i]);
+			pDatos.add(textAreas[i]);
 			i++;
 		} 
-		// Las coordenadas se obtienen a partir de la localización
-		textAreas[6].setEditable(false);
-		textAreas[7].setEditable(false);
+		
+		textAreas[5].addFocusListener(this);
+		
+		JScrollPane datosView = new JScrollPane(pDatos);
+		
+		
+		//Create a tree that allows one selection at a time.
+		localizaciones.getSelectionModel().setSelectionMode
+        (TreeSelectionModel.SINGLE_TREE_SELECTION);
+		//Listen for when the selection changes.
+		localizaciones.addTreeSelectionListener(this);
+		//Create the scroll pane and add the tree to it. 
+        JScrollPane arbolView = new JScrollPane(localizaciones);
+		
+        //Dividimos la pantalla en dos.
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPane.add(datosView);
+		splitPane.add(arbolView);
+		
+		Dimension minimumSize = new Dimension(170, 130);
+        datosView.setMinimumSize(minimumSize);
+        arbolView.setMinimumSize(minimumSize);
+        splitPane.setDividerLocation(420); 
+        splitPane.setDividerSize(0);
+        splitPane.setPreferredSize(new Dimension(500, 700));
+ 
+        //Add the split pane to this panel.
+        add(splitPane);
 	}
+	
+	/** Required by TreeSelectionListener interface. */
+    public void valueChanged(TreeSelectionEvent event) {
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) localizaciones.getLastSelectedPathComponent();
+ 
+        if (node == null) return;
+        
+        TreeNode[] nodos = node.getPath();
+        String localiz = new String("");
+        for(int i = 0; i < nodos.length-1; i++)
+        	localiz += nodos[i] + "/";
+        localiz += nodos[nodos.length-1];
+        textAreas[5].setText(localiz);
+        try {
+			this.getStringCoordinate(textAreas[5].getText());
+			textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
+			textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 	
 	public DescripcionVivienda getDescripcionVivienda(int id){
 		// TODO: id de extras básicos y demás?
@@ -68,43 +137,60 @@ public class PanelCaract extends JPanel{
 		caract.setEstado((EstadoVivienda)estadoVivienda.getSelectedItem());
 		// Si la conversión es errónea suponemos que el usuario ha introducido datos
 		try{
-			if (textAreas[0].getText() != "")
+			if (!textAreas[0].getText().isEmpty())
 				caract.setSuperficie(Integer.parseInt(textAreas[0].getText()));
 			else caract.setSuperficie(null);
 		}catch(NumberFormatException e){}
 		try{
-			if (textAreas[1].getText() != "")
+			if (!textAreas[1].getText().isEmpty())
 				caract.setHabitaciones(Integer.parseInt(textAreas[1].getText()));
 			else caract.setHabitaciones(null);
 		}catch(NumberFormatException e){}
 		try{
-			if (textAreas[2].getText() != "")
+			if (!textAreas[2].getText().isEmpty())
 				caract.setBanios(Integer.parseInt(textAreas[2].getText()));
 			else caract.setBanios(null);
 		}catch(NumberFormatException e){}
 		try{
-			if (textAreas[3].getText() != "")
+			if (!textAreas[3].getText().isEmpty())
 				caract.setPrecioMedio(Integer.parseInt(textAreas[3].getText()));
 			else caract.setPrecioMedio(null);
 		}catch(NumberFormatException e){}
 		try{
-			if (textAreas[4].getText() != "")
+			if (!textAreas[4].getText().isEmpty())
 				caract.setPrecioZona(Integer.parseInt(textAreas[4].getText()));
 			else caract.setPrecioZona(null);
 		}catch(NumberFormatException e){}
-		if (textAreas[5].getText() != ""){
+		if (!textAreas[5].getText().isEmpty()){
 			caract.setLocalizacion(textAreas[5].getText());
+		}
+		else caract.setLocalizacion(null);
+		
+		if ((!textAreas[6].getText().isEmpty() && !textAreas[7].getText().isEmpty()) 
+				&& (!textAreas[6].getText().equals("0.0") && !textAreas[7].getText().equals("0.0"))){
 			// A partir de la localización obtenemos las coordenadas
-			coordenada = new Coordenada();
+			try {
+				//this.getStringCoordinate(textAreas[5].getText());
+				coordenada.setLatitud(Double.parseDouble(textAreas[6].getText()));
+				coordenada.setLongitud(Double.parseDouble(textAreas[7].getText()));
+				caract.setCoordenada(coordenada);
+			} catch(NumberFormatException e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (!textAreas[5].getText().isEmpty()){  
+			//En caso de que le de al ok tras estar editando la localizacion
 			try {
 				this.getStringCoordinate(textAreas[5].getText());
+				if (coordenada.getLatitud() == 0.0 && coordenada.getLongitud() == 0.0)
+					caract.setCoordenada(null);
+				else
+					caract.setCoordenada(coordenada);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			caract.setCoordenada(coordenada);
-			textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
-			textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
 		}
 		return caract;
 	}
@@ -165,5 +251,26 @@ public class PanelCaract extends JPanel{
 	        return buffer.toString();
 	    }
 
+		@Override
+		public void focusGained(FocusEvent e) {
+			//Nada en particular tenemos que hacer
+			
+		}
+
+		@Override
+		public void focusLost(FocusEvent event) {
+			//Llamamos al buscador de coordenadas
+			if (!textAreas[5].getText().isEmpty()){
+				try {
+					this.getStringCoordinate(textAreas[5].getText());
+					textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
+					textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
 
 }

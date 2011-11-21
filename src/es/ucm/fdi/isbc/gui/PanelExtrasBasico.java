@@ -1,10 +1,13 @@
 package es.ucm.fdi.isbc.gui;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
 
@@ -16,37 +19,46 @@ public class PanelExtrasBasico extends JPanel{
 	
 	public PanelExtrasBasico(){
 		super();
-		setLayout(new GridLayout(18,2));
+		
+		JPanel pDatos = new JPanel();
+		GridLayout layout1 = new GridLayout(18,2);
+		layout1.setVgap(18);
+		pDatos.setLayout(layout1);
+		pDatos.setPreferredSize(new Dimension(500, 700));
 		
 		labels = new JLabel[18];
-		labels[0] = new JLabel("Lavadero ");
-		labels[1]  = new JLabel("Internet ");
-		labels[2]  = new JLabel("Microondas ");
-		labels[3]  = new JLabel("Horno ");
-		labels[4]  = new JLabel("Amueblado ");
-		labels[5] = new JLabel("Cocina Office ");
-		labels[6] = new JLabel("Parquet ");
-		labels[7] = new JLabel("Domótica ");
-		labels[8]  = new JLabel("Armarios ");
-		labels[9]  = new JLabel("Televisión ");
-		labels[10]  = new JLabel("Lavadora ");
-		labels[11]  = new JLabel("Electrodomésticos ");
-		labels[12] = new JLabel("Suite con baño ");
-		labels[13] = new JLabel("Puerta blindada ");
-		labels[14] = new JLabel("Gres cerámica ");
-		labels[15]  = new JLabel("Calefacción ");
-		labels[16]  = new JLabel("Aire acondicionado ");
-		labels[17]  = new JLabel("Nevera ");
+		labels[0] = new JLabel("  Lavadero");
+		labels[1]  = new JLabel("  Internet");
+		labels[2]  = new JLabel("  Microondas");
+		labels[3]  = new JLabel("  Horno ");
+		labels[4]  = new JLabel("  Amueblado ");
+		labels[5] = new JLabel("  Cocina Office ");
+		labels[6] = new JLabel("  Parquet ");
+		labels[7] = new JLabel("  Domótica ");
+		labels[8]  = new JLabel("  Armarios ");
+		labels[9]  = new JLabel("  Televisión ");
+		labels[10]  = new JLabel("  Lavadora ");
+		labels[11]  = new JLabel("  Electrodomésticos ");
+		labels[12] = new JLabel("  Suite con baño ");
+		labels[13] = new JLabel("  Puerta blindada ");
+		labels[14] = new JLabel("  Gres cerámica ");
+		labels[15]  = new JLabel("  Calefacción ");
+		labels[16]  = new JLabel("  Aire acondicionado ");
+		labels[17]  = new JLabel("  Nevera ");
 		
 		combos = new JComboBox[18];
 		String[] options = {"No", "Sí"};
 		int i = 0;
 		for (JLabel l: labels){
-			add(l);
+			pDatos.add(l);
 			combos[i] = new JComboBox(options);
-			add(combos[i]);
+			pDatos.add(combos[i]);
 			i++;
 		}
+		
+		JScrollPane datosView = new JScrollPane(pDatos);
+        add(datosView);
+		
 	}
 	
 	public ExtrasBasicos getExtrasBasicos(int id){

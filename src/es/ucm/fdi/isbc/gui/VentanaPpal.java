@@ -12,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 import es.ucm.fdi.isbc.controlador.Controlador;
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 
 public class VentanaPpal extends JFrame implements ActionListener, Observer{
@@ -20,13 +21,17 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 	private Menu mTasador;
 	private MenuItem modoEval, modoNormal;
 	private boolean flag = false;
+	private Gui g;
+	private VentanaResult vResult;
 	
 
 	public VentanaPpal(){
 		super("Tasador");
 		barraMenus = inicializaMenus();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(200,200));
+		setPreferredSize(new Dimension(550,865));
+		setLocation(200, 100);
+		this.setResizable(false);
 		setMenuBar(barraMenus);
 		pack();
 	}
@@ -48,7 +53,6 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		mTasador.addSeparator();
 		mTasador.add(new MenuItem("Salir"));
 		barra.add(mTasador);
-		
 		return barra;
 	}
 
@@ -57,10 +61,21 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 	 */
 	public void actionPerformed(ActionEvent arg) {
 		if (arg.getActionCommand().equals("Normal")){
-			Controlador.getInstance().iniciaNormal();
+			if(g == null){
+				g = new Gui();
+				g.setVisible(true);
+				this.add(g);
+			}
+			else{
+				g.setVisible(true);
+			}
+			if(vResult != null)
+				vResult.setVisible(false);
 		}
 		else if (flag && arg.getActionCommand().equals("Evaluación")){
 			Controlador.getInstance().repite(null);
+			if(g != null)
+				g.setVisible(false);
 		}
 		else if (arg.getActionCommand().equals("Salir"))
 			System.exit(0); 
@@ -72,6 +87,18 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		modoEval.setEnabled(true);
 		modoNormal.setEnabled(true);
 		flag = true;
+	}
+	
+	public void muestraSol(DescripcionVivienda descrip, int precio, double confianza){
+		if(g != null)
+			g.setVisible(false);
+		if(vResult == null){
+			vResult = new VentanaResult();
+			add(vResult);
+		}
+		vResult.setSolucion(descrip, precio, confianza);
+		vResult.setVisible(true);
+		//Update de poder hacer nueva consulta:
 	}
 
 }

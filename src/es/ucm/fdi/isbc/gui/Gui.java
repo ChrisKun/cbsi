@@ -1,25 +1,22 @@
 package es.ucm.fdi.isbc.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTree;
 
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 @SuppressWarnings("serial")
-public class Gui extends JFrame implements ActionListener, Observer{
+public class Gui extends JInternalFrame implements ActionListener, Observer{
 	private JButton button;
 	private JPanel minipanel;
 	private PanelCaract panelCaract;
@@ -28,25 +25,25 @@ public class Gui extends JFrame implements ActionListener, Observer{
 	private PanelExtrasOtros panelExtrasOtros;
 	private JTabbedPane tabbed;
 	private DescripcionVivienda descr;
-	private MenuBar barraMenus;
-	private Menu mArchivo;
+//	private MenuBar barraMenus;
+//	private Menu mArchivo;
 	private boolean flag = true;
 	
 	public Gui(){
 		super("Recomendador Viviendas");
 		
-		barraMenus = new MenuBar();
+		/*barraMenus = new MenuBar();
 		mArchivo = new Menu( "Archivo" );
 		mArchivo.addActionListener(this);
 		mArchivo.add(new MenuItem( "Salir"));
 		barraMenus.add(mArchivo);
-		this.setMenuBar(barraMenus);
+		this.setMenuBar(barraMenus);*/
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		this.setLayout(new BorderLayout());
 		tabbed = new JTabbedPane();
 		
-		panelCaract = new PanelCaract();
+		panelCaract = new PanelCaract(new JTree());
 		tabbed.addTab("Características", panelCaract);
 		
 		panelExtrasFinca = new PanelExtrasFinca();
@@ -68,9 +65,9 @@ public class Gui extends JFrame implements ActionListener, Observer{
 		//Display the window.
         this.pack();
         
-		int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getPreferredSize().width/2);
-		int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getPreferredSize().height/2);
-		setLocation(x, y);
+//		int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getPreferredSize().width/2);
+//		int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getPreferredSize().height/2);
+//		setLocation(x, y);
         
 	}
 
@@ -83,13 +80,14 @@ public class Gui extends JFrame implements ActionListener, Observer{
         	descr.setExtrasFinca(panelExtrasFinca.getExtrasFinca(-1));
         	descr.setExtrasBasicos(panelExtrasBasico.getExtrasBasicos(-1));
         	descr.setExtrasOtros(panelExtrasOtros.getExtrasOtros(-1));
-        	flag = false;
+        	//flag = false;
+        	//button.setEnabled(false);
         	Controlador.getInstance().repite(descr);
         } 
-		else if (e.getActionCommand().equals("Salir")){
-			Controlador.getInstance().fin(); 
-			this.dispose();
-		}
+//		else if (e.getActionCommand().equals("Salir")){
+//			Controlador.getInstance().fin(); 
+//			this.dispose();
+//		}
 	}
 
 

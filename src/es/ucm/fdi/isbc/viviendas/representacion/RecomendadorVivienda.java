@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -21,6 +20,7 @@ import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
@@ -43,9 +43,12 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private JTree tree;
 	private CBRQuery query;
 	private boolean evaluacionSistema;
+	Controlador controlador;
 	
-	public RecomendadorVivienda(){
+	
+	public RecomendadorVivienda(Controlador controldr){
 		evaluacionSistema = false;
+		controlador = controldr;
 	}	
 
 	@Override
@@ -81,10 +84,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			zona = "";
 			calle = "";
 			l = ((DescripcionVivienda) c.getDescription()).getLocalizacion();
-			// Construimos el árbol
+			
+			//Dividimos el string en campos.
 			s = l.split("/");
 			switch (s.length) {
-			// s[0] es caca
+			// s[0] es dato Madrid.
 			case 2:
 				zona = s[1];
 				break;
@@ -103,14 +107,16 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 					+ "\n--------------\n Zona: "
 					+ zona
 					+ "\n Barrio: " + barrio + "\n Calle: " + calle);
+
+			
+			//Creamos el nodo dentro del arbol
 			createNodes(top, zona, barrio, calle);
 		}
 		System.out.println("Árbol creado");
 		return _caseBase;
 	}
 
-	private void createNodes(DefaultMutableTreeNode top, String zona,
-			String barrio, String calle) {
+	private void createNodes(DefaultMutableTreeNode top, String zona, String barrio, String calle) {
 		DefaultMutableTreeNode zonas = null;
 		DefaultMutableTreeNode barrios = null;
 		DefaultMutableTreeNode calles = null;
@@ -181,7 +187,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 // Fijamos la función de similitud global
 		 simConfig.setDescriptionSimFunction(new Average());
 		
-		 if (!((DescripcionVivienda)query.getDescription()).getLocalizacion().equals(""))
+		 if (((DescripcionVivienda)query.getDescription()).getLocalizacion() != null)
 			 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
 		 // Fijamos las funciones de similitud locales
 		 if (((DescripcionVivienda)query.getDescription()).getTipo() != null)
@@ -257,7 +263,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), 15.0);
 		 
 		 // Ejecutamos la recuperación por vecino más próximo
-		  Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		  Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
 		
 		 // Seleccionamos los k mejores casos
 		 eval = SelectCases.selectTopKRR(eval, 5);
@@ -271,6 +277,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		if (evaluacionSistema){
 			
 			CBRCase casoReal = (CBRCase)query;
+			//controlador.muestraSolucion((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion);
 			SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
 			Integer precio_real = solucionReal.getPrecio();
 			
@@ -283,8 +290,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
 		}
 		else{
-			String s = "Predicción precio: "+ precio_prediccion+ "\n"+ "Confianza: "+ confianza_prediccion;
-			JOptionPane.showMessageDialog(null, s, "Tasador", JOptionPane.INFORMATION_MESSAGE); 
+//			String s = "Predicción precio: "+ precio_prediccion+ "\n"+ "Confianza: "+ confianza_prediccion;
+//			JOptionPane.showMessageDialog(null, s, "Tasador", JOptionPane.INFORMATION_MESSAGE); 
+			controlador.muestraSolucion((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion);
 		}
 	}
 	
@@ -350,10 +358,12 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 //				eval.LeaveOneOut();
 				
 				HoldOutEvaluator eval = new HoldOutEvaluator();
-				eval.init(new RecomendadorVivienda());
+				eval.init(new RecomendadorVivienda(controlador));
 				eval.HoldOut(100, 1);
 				
-				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
+//				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
+//				vectorAciertos = eval.getEvaluationReport().getSeries("Aciertos");
+				Vector<Double> vectorAciertos = eval.getEvaluationReport().getSeries("Aciertos");
 				double media = 0.0;
 				for (Double acierto: vectorAciertos)
 					media += acierto;
@@ -381,10 +391,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 
 	public static void main(String[] args) {
 		// Crear el objeto que implementa la aplicación CBR
-		RecomendadorVivienda rv = new RecomendadorVivienda();
 		Controlador controlador = Controlador.getInstance();
+		RecomendadorVivienda rv = new RecomendadorVivienda(controlador);		
 		controlador.setRecomendadorVivienda(rv);
 		VentanaPpal v = new VentanaPpal();
+		controlador.setVentanaPpal(v);
 		v.setVisible(true);
 		rv.addObserver(v);
 		rv.inicia();
