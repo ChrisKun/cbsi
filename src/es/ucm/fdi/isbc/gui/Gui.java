@@ -29,7 +29,7 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 //	private Menu mArchivo;
 	private boolean flag = true;
 	
-	public Gui(){
+	public Gui(JTree localizaciones){
 		super("Recomendador Viviendas");
 		
 		/*barraMenus = new MenuBar();
@@ -43,7 +43,7 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 		this.setLayout(new BorderLayout());
 		tabbed = new JTabbedPane();
 		
-		panelCaract = new PanelCaract(new JTree());
+		panelCaract = new PanelCaract(localizaciones);
 		tabbed.addTab("Características", panelCaract);
 		
 		panelExtrasFinca = new PanelExtrasFinca();

@@ -363,7 +363,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 				
 //				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
 //				vectorAciertos = eval.getEvaluationReport().getSeries("Aciertos");
-				Vector<Double> vectorAciertos = eval.getEvaluationReport().getSeries("Aciertos");
+				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
 				double media = 0.0;
 				for (Double acierto: vectorAciertos)
 					media += acierto;
@@ -393,18 +393,25 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Crear el objeto que implementa la aplicación CBR
 		Controlador controlador = Controlador.getInstance();
 		RecomendadorVivienda rv = new RecomendadorVivienda(controlador);		
-		controlador.setRecomendadorVivienda(rv);
+		controlador.setRecomendadorVivienda(rv);		
 		VentanaPpal v = new VentanaPpal();
 		controlador.setVentanaPpal(v);
 		v.setVisible(true);
 		rv.addObserver(v);
 		rv.inicia();
+		v.setLocalizaciones(rv.getLocalizaciones()); //Le pasamos el arbol de localizaciones
+		
+		
 	}
 	
-	public void iniciaNormal(){
-		Gui gui = new Gui();
-		gui.setVisible(true);
-		this.addObserver(gui);
+//	public void iniciaNormal(){
+//		Gui gui = new Gui();
+//		gui.setVisible(true);
+//		this.addObserver(gui);
+//	}
+	
+	public JTree getLocalizaciones() {
+		return tree;
 	}
 
 }

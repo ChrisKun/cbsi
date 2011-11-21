@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JTree;
 
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
@@ -23,7 +24,7 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 	private boolean flag = false;
 	private Gui g;
 	private VentanaResult vResult;
-	
+	private JTree localizaciones;
 
 	public VentanaPpal(){
 		super("Tasador");
@@ -62,7 +63,7 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 	public void actionPerformed(ActionEvent arg) {
 		if (arg.getActionCommand().equals("Normal")){
 			if(g == null){
-				g = new Gui();
+				g = new Gui(localizaciones);
 				g.setVisible(true);
 				this.add(g);
 			}
@@ -99,6 +100,10 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		vResult.setSolucion(descrip, precio, confianza);
 		vResult.setVisible(true);
 		//Update de poder hacer nueva consulta:
+	}
+	
+	public void setLocalizaciones(JTree localzn){
+		localizaciones = localzn;
 	}
 
 }

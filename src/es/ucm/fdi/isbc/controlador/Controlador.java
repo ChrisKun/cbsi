@@ -39,9 +39,9 @@ public class Controlador {
 		rv.fin();	
 	}
 
-	public void iniciaNormal() {
-		rv.iniciaNormal();
-	}
+//	public void iniciaNormal() {
+//		rv.iniciaNormal();
+//	}
 
 	public void muestraSolucion(DescripcionVivienda description, Integer precio_prediccion, double confianza_prediccion) {		
 		v.muestraSol(description, precio_prediccion, confianza_prediccion);		
