@@ -1,12 +1,10 @@
 package es.ucm.fdi.isbc.controlador;
 
-import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 
 public class Controlador {
 	private RecomendadorVivienda rv;
-	private VentanaPpal v;
 	private static Controlador controlador;
 	
 	public static Controlador getInstance(){
@@ -23,16 +21,18 @@ public class Controlador {
 		rv = recomendador;
 	}
 	
-	public void setVentanaPpal(VentanaPpal v){
-		this.v = v;
-	}
-	
 	public Controlador(RecomendadorVivienda recomendador){
 		this.rv = recomendador;
 	}
 	
 	public void repite(DescripcionVivienda descr){
+		if (descr == null) rv.setEvaluacionSistema(true);
+		else rv.setEvaluacionSistema(false);
 		rv.repite(descr);
+	}
+	
+	public void setEvaluacionSistema(boolean b){
+		rv.setEvaluacionSistema(b);
 	}
 
 	public void fin() {
@@ -42,9 +42,5 @@ public class Controlador {
 //	public void iniciaNormal() {
 //		rv.iniciaNormal();
 //	}
-
-	public void muestraSolucion(DescripcionVivienda description, Integer precio_prediccion, double confianza_prediccion) {		
-		v.muestraSol(description, precio_prediccion, confianza_prediccion);		
-	}
 
 }

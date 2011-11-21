@@ -12,7 +12,8 @@ import javax.swing.JTextField;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 public class VentanaResult extends JInternalFrame {
-	
+
+	private static final long serialVersionUID = 1L;
 	private JTextField[] textAreas;
 	private JLabel[] labels;
 	

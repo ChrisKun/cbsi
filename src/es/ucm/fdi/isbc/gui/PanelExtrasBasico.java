@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
 
@@ -55,9 +53,8 @@ public class PanelExtrasBasico extends JPanel{
 			pDatos.add(combos[i]);
 			i++;
 		}
-		
-		JScrollPane datosView = new JScrollPane(pDatos);
-        add(datosView);
+
+        add(pDatos);
 		
 	}
 	

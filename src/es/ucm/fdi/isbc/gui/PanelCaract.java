@@ -16,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
@@ -41,7 +40,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 	
 	public PanelCaract(JTree localiz){
 		super();
-//		this.setPreferredSize(new Dimension(730,300));
 		this.localizaciones = localiz;
 		coordenada = new Coordenada();
 		
@@ -79,27 +77,22 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 			i++;
 		} 
 		
-		textAreas[5].addFocusListener(this);
-		
-		JScrollPane datosView = new JScrollPane(pDatos);
-		
+		textAreas[5].addFocusListener(this);		
 		
 		//Create a tree that allows one selection at a time.
 		localizaciones.getSelectionModel().setSelectionMode
         (TreeSelectionModel.SINGLE_TREE_SELECTION);
 		//Listen for when the selection changes.
 		localizaciones.addTreeSelectionListener(this);
-		//Create the scroll pane and add the tree to it. 
-        JScrollPane arbolView = new JScrollPane(localizaciones);
 		
         //Dividimos la pantalla en dos.
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splitPane.add(datosView);
-		splitPane.add(arbolView);
+		splitPane.add(pDatos);
+		splitPane.add(localizaciones);
 		
 		Dimension minimumSize = new Dimension(170, 130);
-        datosView.setMinimumSize(minimumSize);
-        arbolView.setMinimumSize(minimumSize);
+        pDatos.setMinimumSize(minimumSize);
+        localizaciones.setMinimumSize(minimumSize);
         splitPane.setDividerLocation(420); 
         splitPane.setDividerSize(0);
         splitPane.setPreferredSize(new Dimension(500, 700));
@@ -131,7 +124,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
     }
 	
 	public DescripcionVivienda getDescripcionVivienda(int id){
-		// TODO: id de extras básicos y demás?
 		DescripcionVivienda caract = new DescripcionVivienda(id);
 		caract.setTipo((TipoVivienda)tipoVivienda.getSelectedItem());
 		caract.setEstado((EstadoVivienda)estadoVivienda.getSelectedItem());

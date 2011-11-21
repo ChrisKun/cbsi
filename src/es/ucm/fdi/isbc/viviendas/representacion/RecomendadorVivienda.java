@@ -19,7 +19,6 @@ import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
@@ -27,9 +26,9 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Table;
 import jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.isbc.controlador.Controlador;
+import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 import es.ucm.fdi.isbc.funcSimilitud.MyCoordinateSimilarityFunction;
 import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
-import es.ucm.fdi.isbc.gui.Gui;
 import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
@@ -46,10 +45,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	Controlador controlador;
 	
 	
-	public RecomendadorVivienda(Controlador controldr){
-		evaluacionSistema = false;
-		controlador = controldr;
-	}	
+	public void setEvaluacionSistema(boolean b){
+		evaluacionSistema = b;
+	}
 
 	@Override
 	public void configure() throws ExecutionException {
@@ -290,9 +288,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
 		}
 		else{
-//			String s = "Predicción precio: "+ precio_prediccion+ "\n"+ "Confianza: "+ confianza_prediccion;
-//			JOptionPane.showMessageDialog(null, s, "Tasador", JOptionPane.INFORMATION_MESSAGE); 
-			controlador.muestraSolucion((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion);
+			this.setChanged();
+			this.notifyObservers(new MuestraSolEvent((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion));
 		}
 	}
 	
@@ -358,7 +355,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 //				eval.LeaveOneOut();
 				
 				HoldOutEvaluator eval = new HoldOutEvaluator();
-				eval.init(new RecomendadorVivienda(controlador));
+				eval.init(this);
 				eval.HoldOut(100, 1);
 				
 //				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
@@ -392,10 +389,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	public static void main(String[] args) {
 		// Crear el objeto que implementa la aplicación CBR
 		Controlador controlador = Controlador.getInstance();
-		RecomendadorVivienda rv = new RecomendadorVivienda(controlador);		
+		RecomendadorVivienda rv = new RecomendadorVivienda();		
 		controlador.setRecomendadorVivienda(rv);		
 		VentanaPpal v = new VentanaPpal();
-		controlador.setVentanaPpal(v);
 		v.setVisible(true);
 		rv.addObserver(v);
 		rv.inicia();

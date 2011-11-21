@@ -9,6 +9,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 
@@ -18,7 +19,7 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 @SuppressWarnings("serial")
 public class Gui extends JInternalFrame implements ActionListener, Observer{
 	private JButton button;
-	private JPanel minipanel;
+	private JPanel minipanel, panel;
 	private PanelCaract panelCaract;
 	private PanelExtrasFinca panelExtrasFinca;
 	private PanelExtrasBasico panelExtrasBasico;
@@ -40,7 +41,7 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 		this.setMenuBar(barraMenus);*/
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		this.setLayout(new BorderLayout());
+		panel = new JPanel(new BorderLayout());
 		tabbed = new JTabbedPane();
 		
 		panelCaract = new PanelCaract(localizaciones);
@@ -55,19 +56,17 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 		panelExtrasOtros = new PanelExtrasOtros();
 		tabbed.addTab("Extras Otros", panelExtrasOtros);
 		
-        this.add(tabbed, BorderLayout.NORTH);
+		panel.add(tabbed,BorderLayout.NORTH);
 		button = new JButton("OK");
 		button.addActionListener(this);
 		minipanel = new JPanel();
 		minipanel.add(button);
-        this.add(minipanel, BorderLayout.CENTER);
+		panel.add(minipanel, BorderLayout.CENTER);
         descr = null;
+        JScrollPane scrollPane = new JScrollPane(panel);
+        this.add(scrollPane);
 		//Display the window.
         this.pack();
-        
-//		int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getPreferredSize().width/2);
-//		int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getPreferredSize().height/2);
-//		setLocation(x, y);
         
 	}
 
@@ -75,7 +74,6 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 	public void actionPerformed(ActionEvent e) {
         if (flag && "OK".equals(e.getActionCommand())) {
         	// Obtener datos paneles y crear DescripcionVivienda
-        	// TODO: id query?
         	descr = panelCaract.getDescripcionVivienda(-1);
         	descr.setExtrasFinca(panelExtrasFinca.getExtrasFinca(-1));
         	descr.setExtrasBasicos(panelExtrasBasico.getExtrasBasicos(-1));

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -13,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JTree;
 
 import es.ucm.fdi.isbc.controlador.Controlador;
-import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
+import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 
 
 public class VentanaPpal extends JFrame implements ActionListener, Observer{
@@ -30,8 +31,10 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		super("Tasador");
 		barraMenus = inicializaMenus();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(550,865));
-		setLocation(200, 100);
+		setPreferredSize(new Dimension(550,700));
+		int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getPreferredSize().width/2);
+		int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getPreferredSize().height/2);
+		setLocation(x, y);
 		this.setResizable(false);
 		setMenuBar(barraMenus);
 		pack();
@@ -70,7 +73,7 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 			else{
 				g.setVisible(true);
 			}
-			if(vResult != null)
+			if (vResult != null)
 				vResult.setVisible(false);
 		}
 		else if (flag && arg.getActionCommand().equals("Evaluación")){
@@ -84,22 +87,24 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// Ya ha terminado de hacer el inicio
-		modoEval.setEnabled(true);
-		modoNormal.setEnabled(true);
-		flag = true;
-	}
-	
-	public void muestraSol(DescripcionVivienda descrip, int precio, double confianza){
-		if(g != null)
-			g.setVisible(false);
-		if(vResult == null){
-			vResult = new VentanaResult();
-			add(vResult);
+		if (arg instanceof MuestraSolEvent){
+			if(g != null)
+				g.setVisible(false);
+			if(vResult == null){
+				vResult = new VentanaResult();
+				add(vResult);
+			}
+			
+			vResult.setSolucion(((MuestraSolEvent)arg).getDescr(), ((MuestraSolEvent)arg).getPrecioPrediccion(), ((MuestraSolEvent)arg).getConfianzaPrediccion());
+			vResult.setVisible(true);
+			//Update de poder hacer nueva consulta:
 		}
-		vResult.setSolucion(descrip, precio, confianza);
-		vResult.setVisible(true);
-		//Update de poder hacer nueva consulta:
+		// Ya ha terminado de hacer el inicio
+		else{
+			modoEval.setEnabled(true);
+			modoNormal.setEnabled(true);
+			flag = true;
+		}
 	}
 	
 	public void setLocalizaciones(JTree localzn){

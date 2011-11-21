@@ -46,16 +46,15 @@ public class PanelExtrasOtros extends JPanel{
 			i++;
 		}
 		
-		JScrollPane datosView = new JScrollPane(pDatos);
 
 		JScrollPane nullView = new JScrollPane();
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splitPane.add(datosView);
+		splitPane.add(pDatos);
 		splitPane.add(nullView);
 		
 		Dimension minimumSize = new Dimension(170, 130);
-        datosView.setMinimumSize(minimumSize);
+        pDatos.setMinimumSize(minimumSize);
         //arbolView.setMinimumSize(minimumSize);
         splitPane.setDividerLocation(420); 
         splitPane.setDividerSize(0);
