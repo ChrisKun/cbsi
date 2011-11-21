@@ -1,9 +1,12 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -33,6 +36,21 @@ import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
 public class RecomendadorVivienda extends Observable implements StandardCBRApplication {
+	
+	final double PESOLocaliz = 0.10;
+	final double PESOTipo = 0.15;
+	final double PESOSuperficie = 0.15;
+	final double PESOHabitaciones = 0.08;
+	final double PESOBanios = 0.03;
+	final double PESOEstado = 0.12;
+	final double PESOCoordenadas = 0.09;
+	final double PESOPrecioM = 0.15;
+	final double PESOPrecioZ = 0.15;
+	final double PESOExtrasF = 0.05;
+	final double PESOExtrasO = 0.07;
+	final double PESOExtrasB = 0.01;
+	
+	final int NUMSELECTCASOS = 3;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -44,9 +62,20 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private boolean evaluacionSistema;
 	Controlador controlador;
 	
+	private PrintWriter fichAc;
+	private PrintWriter fichFa;
+	private PrintWriter fich;
+	
 	
 	public void setEvaluacionSistema(boolean b){
 		evaluacionSistema = b;
+		
+		try{
+			fichAc = new PrintWriter(new FileOutputStream("Aciertos.txt"));
+			fichFa = new PrintWriter(new FileOutputStream("Fallos.txt"));
+		  }catch(Exception e){
+			  JOptionPane.showMessageDialog(null,e.getMessage());
+		  }
 	}
 
 	@Override
@@ -201,9 +230,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 if (((DescripcionVivienda)query.getDescription()).getCoordenada() != null)
 			 simConfig.addMapping(new Attribute("coordenada",DescripcionVivienda.class), new MyCoordinateSimilarityFunction());
 		 if (((DescripcionVivienda)query.getDescription()).getPrecioMedio() != null) 
-			 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(10000));
+			 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(500));
 		 if (((DescripcionVivienda)query.getDescription()).getPrecioZona() != null)	 
-			 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(10000));
+			 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(500));
 		 	 
 		 
 		 simConfig.addMapping(new Attribute("extrasFinca",DescripcionVivienda.class), new Average());	 
@@ -250,21 +279,24 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 // Es posible modificar el peso de cada atributo en la media ponderada.
 		 // Por defecto el peso es 1.
 	 
-		 simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), 10.0);
-		 simConfig.setWeight(new Attribute("tipo", DescripcionVivienda.class), 10.0);
-		 simConfig.setWeight(new Attribute("superficie", DescripcionVivienda.class), 7.0);
-		 simConfig.setWeight(new Attribute("habitaciones", DescripcionVivienda.class), 6.0);
-		 simConfig.setWeight(new Attribute("banios", DescripcionVivienda.class), 5.0);
-		 simConfig.setWeight(new Attribute("estado", DescripcionVivienda.class), 10.0);
-		 simConfig.setWeight(new Attribute("coordenada", DescripcionVivienda.class), 10.0);
-		 simConfig.setWeight(new Attribute("precioMedio", DescripcionVivienda.class), 15.0);
-		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), 15.0);
+		 simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), PESOLocaliz);
+		 simConfig.setWeight(new Attribute("tipo", DescripcionVivienda.class), PESOTipo);
+		 simConfig.setWeight(new Attribute("superficie", DescripcionVivienda.class), PESOSuperficie);
+		 simConfig.setWeight(new Attribute("habitaciones", DescripcionVivienda.class), PESOHabitaciones);
+		 simConfig.setWeight(new Attribute("banios", DescripcionVivienda.class), PESOBanios);
+		 simConfig.setWeight(new Attribute("estado", DescripcionVivienda.class), PESOEstado);
+		 simConfig.setWeight(new Attribute("coordenada", DescripcionVivienda.class), PESOCoordenadas);
+		 simConfig.setWeight(new Attribute("precioMedio", DescripcionVivienda.class), PESOPrecioM);
+		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), PESOPrecioZ);
+		 simConfig.setWeight(new Attribute("extrasFinca", DescripcionVivienda.class), PESOExtrasF);
+		 simConfig.setWeight(new Attribute("extrasBasicos", DescripcionVivienda.class), PESOExtrasB);
+		 simConfig.setWeight(new Attribute("extrasOtros", DescripcionVivienda.class), PESOExtrasO);
 		 
 		 // Ejecutamos la recuperación por vecino más próximo
 		  Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
 		
 		 // Seleccionamos los k mejores casos
-		 eval = SelectCases.selectTopKRR(eval, 5);
+		 eval = SelectCases.selectTopKRR(eval, NUMSELECTCASOS);
 		
 		 // Aquí se incluiría el código para adaptar la solución
 		Integer precio_prediccion = getPrediccionPrecio(eval);
@@ -283,6 +315,34 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			double prediccion = 0.0;
 			if (Math.abs(precio_prediccion - precio_real) < 10000)
 				prediccion = 1.0;
+			
+			DescripcionVivienda descrip = (DescripcionVivienda) query.getDescription();
+			if(prediccion == 1.0)
+				fich = fichAc;
+			else
+				fich = fichFa;
+			
+			fich.println("\n\n-------------------------------------------\n");
+			fich.println("Tipo "+descrip.getTipo().toString()+"\n");
+			fich.println("Estado "+descrip.getEstado().toString()+"\n");
+			fich.println("Superficie "+String.valueOf(descrip.getSuperficie())+"\n");
+			fich.println("Habitaciones "+String.valueOf(descrip.getHabitaciones())+"\n");
+			fich.println("Banio "+String.valueOf(descrip.getBanios())+"\n");
+			fich.println("Precio Medio "+String.valueOf(descrip.getPrecioMedio())+"\n");
+			fich.println("Precio Zona "+String.valueOf(descrip.getPrecioZona())+"\n");
+			fich.println("Localizacion "+String.valueOf(descrip.getLocalizacion())+"\n");
+			fich.println("Latitud "+String.valueOf(descrip.getCoordenada().getLatitud())+"\n");
+			fich.println("Longitud "+String.valueOf(descrip.getCoordenada().getLongitud())+"\n\n");
+			fich.println("Prediccion: "+String.valueOf(precio_prediccion)+"\n");
+			fich.println("Real: "+String.valueOf(precio_real)+"\n");
+			fich.println("Confianza: "+String.valueOf(confianza_prediccion)+"\n");
+
+			System.out.println((descrip)
+					.getId().toString()
+					+ "\n--------------"
+					+ "\nPrecio Estimado: " + Integer.toString(precio_prediccion)
+					+ "\nPrecio Real : " + Integer.toString(precio_real)
+					+ "\nPrediccion :"+ Double.toString(prediccion)+"\n-------------------------------");
 			
 			Evaluator.getEvaluationReport().addDataToSeries("Aciertos", prediccion);
 			Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
@@ -364,9 +424,12 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 				double media = 0.0;
 				for (Double acierto: vectorAciertos)
 					media += acierto;
+				System.out.println("Aciertos total :"+Double.toString(media)+"\n");
 				media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
+				System.out.println("Media de aciertos: "+Double.toString(media)+"\n");
 				
 				System.out.println(Evaluator.getEvaluationReport().toString());
+				fichAc.close(); fichFa.close();
 				EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
 			}
 		} catch (ExecutionException e) {
