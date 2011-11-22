@@ -78,14 +78,8 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
         	descr.setExtrasFinca(panelExtrasFinca.getExtrasFinca(-1));
         	descr.setExtrasBasicos(panelExtrasBasico.getExtrasBasicos(-1));
         	descr.setExtrasOtros(panelExtrasOtros.getExtrasOtros(-1));
-        	//flag = false;
-        	//button.setEnabled(false);
-        	Controlador.getInstance().repite(descr);
+        	Controlador.getInstance().repite(descr,-1);
         } 
-//		else if (e.getActionCommand().equals("Salir")){
-//			Controlador.getInstance().fin(); 
-//			this.dispose();
-//		}
 	}
 
 

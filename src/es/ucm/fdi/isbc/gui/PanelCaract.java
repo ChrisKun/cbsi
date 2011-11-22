@@ -30,8 +30,8 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
 
-@SuppressWarnings("serial")
 public class PanelCaract extends JPanel implements TreeSelectionListener, FocusListener{
+	private static final long serialVersionUID = 1L;
 	private JTextField[] textAreas;
 	private JLabel[] labels;
 	private JComboBox tipoVivienda, estadoVivienda;

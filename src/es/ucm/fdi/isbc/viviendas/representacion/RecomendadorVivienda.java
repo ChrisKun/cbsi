@@ -18,6 +18,7 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.HoldOutEvaluator;
+import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
 import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -307,7 +308,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		if (evaluacionSistema){
 			
 			CBRCase casoReal = (CBRCase)query;
-			//controlador.muestraSolucion((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion);
 			SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
 			Integer precio_real = solucionReal.getPrecio();
 			
@@ -397,7 +397,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		jcolibri.test.database.HSQLDBserver.shutDown();
 	}
 	
-	public void repite(DescripcionVivienda descr){
+	public void repite(DescripcionVivienda descr, int modo){
 		// Obtener los valores de la consulta
 		if (descr != null){
 			query.setDescription(descr);
@@ -410,27 +410,26 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			if (!evaluacionSistema) this.cycle(query);
 			else{
 				// Validación cruzada
-//				LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
-//				eval.init(new RecomendadorVivienda());
-//				eval.LeaveOneOut();
-				
-				HoldOutEvaluator eval = new HoldOutEvaluator();
-				eval.init(this);
-				eval.HoldOut(100, 1);
-				
-//				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
-//				vectorAciertos = eval.getEvaluationReport().getSeries("Aciertos");
-				Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
-				double media = 0.0;
-				for (Double acierto: vectorAciertos)
-					media += acierto;
-				System.out.println("Aciertos total :"+Double.toString(media)+"\n");
-				media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
-				System.out.println("Media de aciertos: "+Double.toString(media)+"\n");
-				
-				System.out.println(Evaluator.getEvaluationReport().toString());
-				fichAc.close(); fichFa.close();
-				EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
+				if (modo == 0){
+					// Leave-One-Out
+					LeaveOneOutEvaluator eval = new LeaveOneOutEvaluator();
+					eval.init(this);
+					eval.LeaveOneOut();
+
+					getEvaluation(eval);
+				}
+				else if (modo == 1){
+					// Hold-Out				
+					HoldOutEvaluator eval = new HoldOutEvaluator();
+					eval.init(this);
+					eval.HoldOut(100, 1);
+					
+					getEvaluation(eval);
+				}
+				else if (modo == 2){
+					// N-Fold
+					
+				}	
 			}
 		} catch (ExecutionException e) {
 			e.printStackTrace();
@@ -439,10 +438,22 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		if (!evaluacionSistema) {
 			this.setChanged();
 			this.notifyObservers();
-		}
-
-		
+		}	
 	}
+
+
+	private void getEvaluation(Evaluator eval) {		
+		Vector<Double> vectorAciertos = Evaluator.getEvaluationReport().getSeries("Aciertos");
+
+		double media = 0.0;
+		for (Double acierto: vectorAciertos)
+			media += acierto;
+		media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
+		
+		System.out.println(Evaluator.getEvaluationReport().toString());
+		EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
+	}
+
 
 	@Override
 	public void postCycle() throws ExecutionException {
@@ -463,14 +474,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 	}
 	
-//	public void iniciaNormal(){
-//		Gui gui = new Gui();
-//		gui.setVisible(true);
-//		this.addObserver(gui);
-//	}
 	
 	public JTree getLocalizaciones() {
 		return tree;
 	}
-
 }

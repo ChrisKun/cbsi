@@ -20,8 +20,8 @@ import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 public class VentanaPpal extends JFrame implements ActionListener, Observer{
 	private static final long serialVersionUID = 1L;
 	private MenuBar barraMenus;
-	private Menu mTasador;
-	private MenuItem modoEval, modoNormal;
+	private Menu mTasador, modoEval;
+	private MenuItem modoNormal, leaveOneOut, holdOut, nFold;
 	private boolean flag = false;
 	private Gui g;
 	private VentanaResult vResult;
@@ -51,7 +51,16 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		modoNormal = new MenuItem("Normal");
 		mTasador.add(modoNormal);
 		modoNormal.setEnabled(false);
-		modoEval = new MenuItem("Evaluación");
+		modoEval = new Menu("Evaluación");
+		modoEval.addActionListener(this);
+		
+		leaveOneOut = new MenuItem("Leave One Out");
+		holdOut = new MenuItem("Hold Out");
+		nFold = new MenuItem("N-Fold");
+		modoEval.add(leaveOneOut);
+		modoEval.add(holdOut);
+		modoEval.add(nFold);
+		
 		mTasador.add(modoEval);
 		modoEval.setEnabled(false);
 		mTasador.addSeparator();
@@ -76,8 +85,18 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 			if (vResult != null)
 				vResult.setVisible(false);
 		}
-		else if (flag && arg.getActionCommand().equals("Evaluación")){
-			Controlador.getInstance().repite(null);
+		else if (flag && arg.getActionCommand().equals("Leave One Out")){
+			Controlador.getInstance().repite(null, 0);
+			if(g != null)
+				g.setVisible(false);
+		}
+		else if (flag && arg.getActionCommand().equals("Hold Out")){
+			Controlador.getInstance().repite(null, 1);
+			if(g != null)
+				g.setVisible(false);
+		}
+		else if (flag && arg.getActionCommand().equals("N-Fold")){
+			Controlador.getInstance().repite(null, 2);
 			if(g != null)
 				g.setVisible(false);
 		}

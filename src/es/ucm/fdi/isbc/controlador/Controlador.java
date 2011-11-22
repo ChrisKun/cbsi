@@ -25,10 +25,10 @@ public class Controlador {
 		this.rv = recomendador;
 	}
 	
-	public void repite(DescripcionVivienda descr){
+	public void repite(DescripcionVivienda descr, int modo){
 		if (descr == null) rv.setEvaluacionSistema(true);
 		else rv.setEvaluacionSistema(false);
-		rv.repite(descr);
+		rv.repite(descr, modo);
 	}
 	
 	public void setEvaluacionSistema(boolean b){
