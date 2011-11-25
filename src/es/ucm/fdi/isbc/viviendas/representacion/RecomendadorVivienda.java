@@ -1,6 +1,7 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
 import java.io.FileOutputStream;
+
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Observable;
@@ -10,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -51,7 +53,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	final double PESOExtrasO = 0.07;
 	final double PESOExtrasB = 0.01;
 	
-	final int NUMSELECTCASOS = 3;
+	final int NUMSELECTCASOS = 1;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -85,10 +87,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			// Crear el conector con la base de casos
 			_connector = new ViviendasConnector();
 			// Inicializar el conector con su archivo xml de configuración
-			// En este caso no hace falta porque carga los casos mediante
-			// retrieveAllCases
-			// La organización en memoria será lineal
-			_caseBase = new LinealCaseBase();
+
+			_caseBase = new CachedLinealCaseBase();
 		} catch (Exception e) {
 			throw new ExecutionException(e);
 		}
@@ -313,32 +313,14 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			
 			// Hemos acertado con margen < 10000 --> prediccion == 1
 			double prediccion = 0.0;
-			if (Math.abs(precio_prediccion - precio_real) < 10000)
+			if (Math.abs(precio_prediccion - precio_real) < 0.1*precio_real)
 				prediccion = 1.0;
 			
 			DescripcionVivienda descrip = (DescripcionVivienda) query.getDescription();
-			if(prediccion == 1.0)
-				fich = fichAc;
-			else
-				fich = fichFa;
-			
-			fich.println("\n\n-------------------------------------------\n");
-			fich.println("Tipo "+descrip.getTipo().toString()+"\n");
-			fich.println("Estado "+descrip.getEstado().toString()+"\n");
-			fich.println("Superficie "+String.valueOf(descrip.getSuperficie())+"\n");
-			fich.println("Habitaciones "+String.valueOf(descrip.getHabitaciones())+"\n");
-			fich.println("Banio "+String.valueOf(descrip.getBanios())+"\n");
-			fich.println("Precio Medio "+String.valueOf(descrip.getPrecioMedio())+"\n");
-			fich.println("Precio Zona "+String.valueOf(descrip.getPrecioZona())+"\n");
-			fich.println("Localizacion "+String.valueOf(descrip.getLocalizacion())+"\n");
-			fich.println("Latitud "+String.valueOf(descrip.getCoordenada().getLatitud())+"\n");
-			fich.println("Longitud "+String.valueOf(descrip.getCoordenada().getLongitud())+"\n\n");
-			fich.println("Prediccion: "+String.valueOf(precio_prediccion)+"\n");
-			fich.println("Real: "+String.valueOf(precio_real)+"\n");
-			fich.println("Confianza: "+String.valueOf(confianza_prediccion)+"\n");
 
-			System.out.println((descrip)
-					.getId().toString()
+//			tester(prediccion, descrip, precio_real, precio_prediccion, confianza_prediccion);
+			
+			System.out.println((descrip).getId().toString()
 					+ "\n--------------"
 					+ "\nPrecio Estimado: " + Integer.toString(precio_prediccion)
 					+ "\nPrecio Real : " + Integer.toString(precio_real)
@@ -353,6 +335,29 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		}
 	}
 	
+	private void tester(double prediccion, DescripcionVivienda descrip, Integer precio_real, 
+			Integer precio_prediccion, double confianza_prediccion) {
+		if(prediccion == 1.0)
+			fich = fichAc;
+		else
+			fich = fichFa;
+		
+		fich.println("\n\n-------------------------------------------\n");
+		fich.println("Tipo "+descrip.getTipo().toString()+"\n");
+		fich.println("Estado "+descrip.getEstado().toString()+"\n");
+		fich.println("Superficie "+String.valueOf(descrip.getSuperficie())+"\n");
+		fich.println("Habitaciones "+String.valueOf(descrip.getHabitaciones())+"\n");
+		fich.println("Banio "+String.valueOf(descrip.getBanios())+"\n");
+		fich.println("Precio Medio "+String.valueOf(descrip.getPrecioMedio())+"\n");
+		fich.println("Precio Zona "+String.valueOf(descrip.getPrecioZona())+"\n");
+		fich.println("Localizacion "+String.valueOf(descrip.getLocalizacion())+"\n");
+		fich.println("Latitud "+String.valueOf(descrip.getCoordenada().getLatitud())+"\n");
+		fich.println("Longitud "+String.valueOf(descrip.getCoordenada().getLongitud())+"\n\n");
+		fich.println("Prediccion: "+String.valueOf(precio_prediccion)+"\n");
+		fich.println("Real: "+String.valueOf(precio_real)+"\n");
+		fich.println("Confianza: "+String.valueOf(confianza_prediccion)+"\n");
+	}
+
 	private double calcularConfianza(Collection<RetrievalResult> eval) {
 		double total = 0;
 		 for (RetrievalResult nse: eval){
@@ -422,7 +427,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 					// Hold-Out				
 					HoldOutEvaluator eval = new HoldOutEvaluator();
 					eval.init(this);
-					eval.HoldOut(100, 1);
+					eval.HoldOut(20, 1);
 					
 					getEvaluation(eval);
 				}
@@ -448,7 +453,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		double media = 0.0;
 		for (Double acierto: vectorAciertos)
 			media += acierto;
+		System.out.println("Num de aciertos"+String.valueOf(media));
 		media = media / (double)Evaluator.getEvaluationReport().getNumberOfCycles();
+		System.out.println("Media de aciertos: "+String.valueOf(media));
 		
 		System.out.println(Evaluator.getEvaluationReport().toString());
 		EvaluationResultGUI.show(Evaluator.getEvaluationReport(), "Evaluación Tasador", false);
