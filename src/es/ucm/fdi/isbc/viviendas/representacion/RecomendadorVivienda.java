@@ -21,6 +21,7 @@ import jcolibri.cbrcore.CBRQuery;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
+import jcolibri.evaluation.evaluators.NFoldEvaluator;
 import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -73,12 +74,12 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	public void setEvaluacionSistema(boolean b){
 		evaluacionSistema = b;
 		
-		try{
-			fichAc = new PrintWriter(new FileOutputStream("Aciertos.txt"));
-			fichFa = new PrintWriter(new FileOutputStream("Fallos.txt"));
-		  }catch(Exception e){
-			  JOptionPane.showMessageDialog(null,e.getMessage());
-		  }
+//		try{
+//			fichAc = new PrintWriter(new FileOutputStream("Aciertos.txt"));
+//			fichFa = new PrintWriter(new FileOutputStream("Fallos.txt"));
+//		  }catch(Exception e){
+//			  JOptionPane.showMessageDialog(null,e.getMessage());
+//		  }
 	}
 
 	@Override
@@ -427,13 +428,17 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 					// Hold-Out				
 					HoldOutEvaluator eval = new HoldOutEvaluator();
 					eval.init(this);
-					eval.HoldOut(20, 1);
+					eval.HoldOut(20, 3);
 					
 					getEvaluation(eval);
 				}
 				else if (modo == 2){
 					// N-Fold
+					NFoldEvaluator eval = new NFoldEvaluator();
+					eval.init(this);
+					eval.NFoldEvaluation(10, 3);
 					
+					getEvaluation(eval);
 				}	
 			}
 		} catch (ExecutionException e) {
