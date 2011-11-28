@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
@@ -88,7 +89,8 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
         //Dividimos la pantalla en dos.
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane.add(pDatos);
-		splitPane.add(localizaciones);
+		JScrollPane scrollocaliz = new JScrollPane(localizaciones);
+		splitPane.add(scrollocaliz);
 		
 		Dimension minimumSize = new Dimension(170, 130);
         pDatos.setMinimumSize(minimumSize);
