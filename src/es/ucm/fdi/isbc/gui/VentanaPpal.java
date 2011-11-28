@@ -120,9 +120,16 @@ public class VentanaPpal extends JFrame implements ActionListener, Observer{
 		}
 		// Ya ha terminado de hacer el inicio
 		else{
-			modoEval.setEnabled(true);
-			modoNormal.setEnabled(true);
-			flag = true;
+			if (flag){
+				modoEval.setEnabled(false);
+				modoNormal.setEnabled(false);
+				flag = false;
+			}
+			else{
+				modoEval.setEnabled(true);
+				modoNormal.setEnabled(true);
+				flag = true;
+			}
 		}
 	}
 	

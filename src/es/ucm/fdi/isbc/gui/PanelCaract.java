@@ -118,7 +118,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 			textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
 			textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -160,16 +159,10 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 		
 		if ((!textAreas[6].getText().isEmpty() && !textAreas[7].getText().isEmpty()) 
 				&& (!textAreas[6].getText().equals("0.0") && !textAreas[7].getText().equals("0.0"))){
-			// A partir de la localización obtenemos las coordenadas
-			try {
-				//this.getStringCoordinate(textAreas[5].getText());
-				coordenada.setLatitud(Double.parseDouble(textAreas[6].getText()));
-				coordenada.setLongitud(Double.parseDouble(textAreas[7].getText()));
-				caract.setCoordenada(coordenada);
-			} catch(NumberFormatException e){
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			coordenada.setLatitud(Double.parseDouble(textAreas[6].getText()));
+			coordenada.setLongitud(Double.parseDouble(textAreas[7].getText()));
+			caract.setCoordenada(coordenada);
+
 		}
 		else if (!textAreas[5].getText().isEmpty()){  
 			//En caso de que le de al ok tras estar editando la localizacion
@@ -180,8 +173,7 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 				else
 					caract.setCoordenada(coordenada);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("No se ha podido encontrar la localización dada.");
 			}
 		}
 		return caract;
@@ -200,7 +192,7 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 	   
 
 	    private String[] Split(String Text, int Character) {
-	        Vector vector = new Vector();
+	        Vector<String> vector = new Vector<String>();
 
 	        int current = 0;
 	        int prior = 0;
@@ -223,7 +215,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 	    }
 	    
 	    private String getKey() {
-	    	// TODO: De momento pongo esto 
 			return "1";
 		}
 
@@ -244,12 +235,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 	    }
 
 		@Override
-		public void focusGained(FocusEvent e) {
-			//Nada en particular tenemos que hacer
-			
-		}
-
-		@Override
 		public void focusLost(FocusEvent event) {
 			//Llamamos al buscador de coordenadas
 			if (!textAreas[5].getText().isEmpty()){
@@ -258,10 +243,15 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 					textAreas[6].setText(((Double)coordenada.getLatitud()).toString());
 					textAreas[7].setText(((Double)coordenada.getLongitud()).toString());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("No se ha podido encontrar la localización dada.");
 				}
 			}
+			
+		}
+
+		@Override
+		public void focusGained(FocusEvent arg0) {
+			// No tenemos que hacer nada
 			
 		}
 

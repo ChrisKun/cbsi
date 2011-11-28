@@ -1,18 +1,14 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
-import java.io.FileOutputStream;
-
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import jcolibri.casebase.CachedLinealCaseBase;
-import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
@@ -54,7 +50,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	final double PESOExtrasO = 0.07;
 	final double PESOExtrasB = 0.01;
 	
-	final int NUMSELECTCASOS = 1;
+	final int NUMSELECTCASOS = 3;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -336,6 +332,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void tester(double prediccion, DescripcionVivienda descrip, Integer precio_real, 
 			Integer precio_prediccion, double confianza_prediccion) {
 		if(prediccion == 1.0)
@@ -404,6 +401,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	}
 	
 	public void repite(DescripcionVivienda descr, int modo){
+		// Deshabilitar GUI
+		this.setChanged();
+		this.notifyObservers();
+		
 		// Obtener los valores de la consulta
 		if (descr != null){
 			query.setDescription(descr);
@@ -439,16 +440,15 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 					eval.NFoldEvaluation(10, 3);
 					
 					getEvaluation(eval);
-				}	
+				}
 			}
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 		
-		if (!evaluacionSistema) {
-			this.setChanged();
-			this.notifyObservers();
-		}	
+		// Habilitar GUI
+		this.setChanged();
+		this.notifyObservers();	
 	}
 
 

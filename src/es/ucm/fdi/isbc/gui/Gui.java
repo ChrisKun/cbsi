@@ -3,8 +3,6 @@ package es.ucm.fdi.isbc.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -17,7 +15,7 @@ import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 @SuppressWarnings("serial")
-public class Gui extends JInternalFrame implements ActionListener, Observer{
+public class Gui extends JInternalFrame implements ActionListener{
 	private JButton button;
 	private JPanel minipanel, panel;
 	private PanelCaract panelCaract;
@@ -26,19 +24,9 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 	private PanelExtrasOtros panelExtrasOtros;
 	private JTabbedPane tabbed;
 	private DescripcionVivienda descr;
-//	private MenuBar barraMenus;
-//	private Menu mArchivo;
-	private boolean flag = true;
 	
 	public Gui(JTree localizaciones){
 		super("Recomendador Viviendas");
-		
-		/*barraMenus = new MenuBar();
-		mArchivo = new Menu( "Archivo" );
-		mArchivo.addActionListener(this);
-		mArchivo.add(new MenuItem( "Salir"));
-		barraMenus.add(mArchivo);
-		this.setMenuBar(barraMenus);*/
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		panel = new JPanel(new BorderLayout());
@@ -72,7 +60,7 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-        if (flag && "OK".equals(e.getActionCommand())) {
+        if ("OK".equals(e.getActionCommand())) {
         	// Obtener datos paneles y crear DescripcionVivienda
         	descr = panelCaract.getDescripcionVivienda(-1);
         	descr.setExtrasFinca(panelExtrasFinca.getExtrasFinca(-1));
@@ -85,13 +73,6 @@ public class Gui extends JInternalFrame implements ActionListener, Observer{
 
 	public DescripcionVivienda getDescripcionVivienda() {
 		return descr;
-	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// Ya ha terminado de hacer el inicio
-		button.setEnabled(true);
-		flag = true;
 	}
 
 }
