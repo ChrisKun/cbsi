@@ -56,24 +56,27 @@ public class VentanaResult extends JFrame
 			String[] loca = descrs.get(i).getLocalizacion().split("/");
 			loca[0] = loca[loca.length - 1].replaceAll("-", " ");
 			localización += loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1);
-			System.out.println(localización);
-			
-			String descr =	"<html><p align=\"justify\"><b><u>NOMBRE</u></b>: " + descrs.get(i).getTitulo() + "<br>" +
+			String descr =	"<html><p align=\"justify\"><meta charset=\"UTF-8\">" +
+					"<b><u>NOMBRE</u></b>: " + descrs.get(i).getTitulo() + "<br>" +
 					"<b><u>LOCALIZACIÓN</u></b>: " + localización + "<br>" +
 					"<b><u>PRECIO</u></b>: " + descrs.get(i).getPrecio() + " €<br>" +
-					"<b><u>DESCRIPCIÓN</u></b>: " + descrs.get(i).getDescripcion() + "</p></html>";			
+					"<b><u>DESCRIPCIÓN</u></b>: " + descrs.get(i).getDescripcion() + "</meta></p></html>";			
 			
 			JLabel imagen = new JLabel(" ");
 			JLabel label = new JLabel(descr);
 			
 			try {
-				imagen.setIcon(new ImageIcon(new URL(descrs.get(i).getUrlFoto())));
+				ImageIcon imageIcon = new ImageIcon(new URL(descrs.get(i).getUrlFoto()));
+				System.out.println(descrs.get(i).getUrlFoto());
+				if (imageIcon.getIconHeight() == -1)
+					imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7169/6588964063_17173887ba.jpg"), "No hay foto");
+				
+				imagen.setIcon(imageIcon);
 				imagen.setBorder(BorderUIResource.getEtchedBorderUIResource());
 				imagen.setMinimumSize(new Dimension(50, 50));
 				imagen.setMaximumSize(new Dimension(50, 50));
 			}
 			catch (MalformedURLException e) {
-				System.out.println("Error");
 				e.printStackTrace();
 			}
 
