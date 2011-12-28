@@ -30,7 +30,7 @@ public class PanelFiltro extends JPanel
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static JComboBox<String> tipoVivienda, estadoVivienda;
+	private static JComboBox tipoVivienda, estadoVivienda;
 	private static JLabel tipo, estado, localiz, metros;
 	private static JTextField localizacion, m;
 	private static JButton button;
@@ -50,7 +50,7 @@ public class PanelFiltro extends JPanel
 		metros = new JLabel("<html>Superficie (m<sup>2</sup>)</html>");
 		
 		// insertar tipos de vivienda
-		tipoVivienda = new JComboBox<String>();
+		tipoVivienda = new JComboBox();
 		tipoVivienda.addItem("Adosado");
 		tipoVivienda.addItem("Apartamento");
 		tipoVivienda.addItem("Ático");
@@ -63,7 +63,7 @@ public class PanelFiltro extends JPanel
 		tipoVivienda.addItem("Planta baja");
 		
 		// insertar estados de vivienda
-		estadoVivienda = new JComboBox<String>();
+		estadoVivienda = new JComboBox();
 		estadoVivienda.addItem("Muy bien");
 		estadoVivienda.addItem("Casi nuevo");
 		estadoVivienda.addItem("Reformado");
