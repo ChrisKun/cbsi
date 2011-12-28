@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
-import java.util.Vector;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -15,11 +14,6 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
-import jcolibri.evaluation.Evaluator;
-import jcolibri.evaluation.evaluators.HoldOutEvaluator;
-import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
-import jcolibri.evaluation.evaluators.NFoldEvaluator;
-import jcolibri.evaluation.tools.EvaluationResultGUI;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
@@ -60,6 +54,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	/** Árbol de localización */
 	private JTree tree;
 	private CBRQuery query;
+	@SuppressWarnings("unused")
 	private boolean evaluacionSistema;
 	Controlador controlador;
 	
@@ -117,17 +112,17 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 				calle = s[3];
 				break;
 			}
-			System.out.println(((DescripcionVivienda) c.getDescription())
+			/*System.out.println(((DescripcionVivienda) c.getDescription())
 					.getId().toString()
 					+ "\n--------------\n Zona: "
 					+ zona
 					+ "\n Barrio: " + barrio + "\n Calle: " + calle);
-
+			*/
 			
 			//Creamos el nodo dentro del arbol
 			createNodes(top, zona, barrio, calle);
 		}
-		System.out.println("Árbol creado");
+		//System.out.println("Árbol creado");
 		return _caseBase;
 	}
 
@@ -358,6 +353,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		fich.println("Confianza: "+String.valueOf(confianza_prediccion)+"\n");
 	}
 
+	@SuppressWarnings("unused")
 	private double calcularConfianza(Collection<RetrievalResult> eval) {
 		double total = 0;
 		 for (RetrievalResult nse: eval){
@@ -366,6 +362,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 return total / eval.size();
 	}
 
+	@SuppressWarnings("unused")
 	private Integer getPrediccionPrecio(Collection<RetrievalResult> eval) {
 		double pesos = 0; double total = 0;
 		 for (RetrievalResult nse: eval){
@@ -427,20 +424,19 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	}
 
 	public static void main(String[] args) {
+		
 		// Crear el objeto que implementa la aplicación CBR
 		Controlador controlador = Controlador.getInstance();
 		RecomendadorVivienda rv = new RecomendadorVivienda();		
 		controlador.setRecomendadorVivienda(rv);		
 		VentanaPpal v = new VentanaPpal();
-		v.setVisible(true);
 		rv.addObserver(v);
 		
 		// Configura y realiza el precycle
 		rv.inicia();
 		
-		// TODO obtener kNN viviendas diversas e introducirlas en el panelDiversidad
+		// Obtener kNN viviendas diversas e introducirlas en el panelDiversidad
 
-			
 	}
 	
 	
