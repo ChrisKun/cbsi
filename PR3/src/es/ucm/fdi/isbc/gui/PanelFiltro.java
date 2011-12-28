@@ -27,9 +27,9 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda
 
 public class PanelFiltro extends JPanel
 {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private static JComboBox tipoVivienda, estadoVivienda;
 	private static JLabel tipo, estado, localiz, metros;
 	private static JTextField localizacion, m;
@@ -48,7 +48,7 @@ public class PanelFiltro extends JPanel
 		estado = new JLabel("Estado vivienda");
 		localiz = new JLabel("Localización");
 		metros = new JLabel("<html>Superficie (m<sup>2</sup>)</html>");
-		
+
 		// insertar tipos de vivienda
 		tipoVivienda = new JComboBox();
 		tipoVivienda.addItem("Adosado");
@@ -61,7 +61,7 @@ public class PanelFiltro extends JPanel
 		tipoVivienda.addItem("Loft");
 		tipoVivienda.addItem("Piso");
 		tipoVivienda.addItem("Planta baja");
-		
+
 		// insertar estados de vivienda
 		estadoVivienda = new JComboBox();
 		estadoVivienda.addItem("Muy bien");
@@ -69,17 +69,17 @@ public class PanelFiltro extends JPanel
 		estadoVivienda.addItem("Reformado");
 		estadoVivienda.addItem("Bien");
 		estadoVivienda.addItem("A reformar");
-		
+
 		localizacion = new JTextField(20);
 		m = new JTextField(20);
 		
 		JLabel[] label = new JLabel[10];
 		for (int i = 0; i < 10; i++)
 			label[i] = new JLabel();
-		
+
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(9, 2, 10, 0));
-		
+
 		panel.add(label[0]);	panel.add(label[1]);
 		panel.add(tipo);		panel.add(tipoVivienda);
 		panel.add(label[2]);	panel.add(label[3]);
@@ -88,16 +88,16 @@ public class PanelFiltro extends JPanel
 		panel.add(localiz);		panel.add(localizacion);
 		panel.add(label[6]);	panel.add(label[7]);
 		panel.add(metros);		panel.add(m);
-		panel.add(label[8]);	panel.add(label[9]);		
-		
+		panel.add(label[8]);	panel.add(label[9]);
+
 		button = new JButton("OK");
 		button.setEnabled(false);
 		JPanel minipanel = new JPanel();
 		minipanel.add(button);
-		
+
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		dim.setSize(dim.width - 100, dim.height - 100);
-		
+
 		setMinimumSize(new Dimension((int) (dim.width * 0.25), dim.height));
 		setSize(new Dimension((int) (dim.width * 0.25), dim.height));
 		
@@ -122,7 +122,7 @@ public class PanelFiltro extends JPanel
 			}
 		}
 		);
-		
+
 		estadoVivienda.addItemListener(new ItemListener()
 		{
 			public void itemStateChanged(ItemEvent e)
@@ -136,7 +136,7 @@ public class PanelFiltro extends JPanel
 			}
 		}
 		);
-		
+
 		button.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -157,19 +157,19 @@ public class PanelFiltro extends JPanel
 	}
 
 	/* AUXILIARES */
-	
+
 		public void enableButton(boolean b)
 		{
 			button.setEnabled(b);
 		}
-	
+
 		private boolean enteroEsCorrecto(String entero)
 		{
 			/** Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
 			 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
 			 * Si la cadena es vacía devolvemos true;
 			 */
-			
+
 			if (entero.isEmpty()) return true;
 			try {
 				Integer ent = Integer.valueOf(entero);

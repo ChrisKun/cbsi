@@ -417,8 +417,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		this.notifyObservers();	
 	}
 
-
-	@Override
 	public void postCycle() throws ExecutionException {
 		this._caseBase.close();
 	}

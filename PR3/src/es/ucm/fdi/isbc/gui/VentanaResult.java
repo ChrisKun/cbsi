@@ -3,6 +3,8 @@ package es.ucm.fdi.isbc.gui;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -50,15 +52,30 @@ public class VentanaResult extends JFrame
 		
 		for (int i = 0; i < descrs.size(); i++) {
 			
-			String descr =	"<html><b><u>Nombre</u></b>: " + descrs.get(i).getTitulo() + "<br>" +
-					"<b><u>Localización</u></b>: " + descrs.get(i).getLocalizacion() + "<br>" +
-					"<b><u>Precio</u></b>: " + descrs.get(i).getPrecio() + " €<br>" +
-					"<b><u>Descripción</u></b>: " + descrs.get(i).getDescripcion() + "</html>";			
+			String localización = "Madrid, ";
+			String[] loca = descrs.get(i).getLocalizacion().split("/");
+			loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+			localización += loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1);
+			System.out.println(localización);
 			
-			JLabel imagen = new JLabel();
-			imagen.setIcon(new ImageIcon(descrs.get(i).getUrlFoto()));
-			imagen.setBorder(BorderUIResource.getEtchedBorderUIResource());
+			String descr =	"<html><p align=\"justify\"><b><u>NOMBRE</u></b>: " + descrs.get(i).getTitulo() + "<br>" +
+					"<b><u>LOCALIZACIÓN</u></b>: " + localización + "<br>" +
+					"<b><u>PRECIO</u></b>: " + descrs.get(i).getPrecio() + " €<br>" +
+					"<b><u>DESCRIPCIÓN</u></b>: " + descrs.get(i).getDescripcion() + "</p></html>";			
+			
+			JLabel imagen = new JLabel(" ");
 			JLabel label = new JLabel(descr);
+			
+			try {
+				imagen.setIcon(new ImageIcon(new URL(descrs.get(i).getUrlFoto())));
+				imagen.setBorder(BorderUIResource.getEtchedBorderUIResource());
+				imagen.setMinimumSize(new Dimension(50, 50));
+				imagen.setMaximumSize(new Dimension(50, 50));
+			}
+			catch (MalformedURLException e) {
+				System.out.println("Error");
+				e.printStackTrace();
+			}
 
 			p.add(imagen);
 			p.add(label);
