@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
+//import javax.swing.JTree;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -26,7 +25,7 @@ import jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 import es.ucm.fdi.isbc.funcSimilitud.MyCoordinateSimilarityFunction;
-import es.ucm.fdi.isbc.funcSimilitud.MyTreeSimilarityFunction;
+import es.ucm.fdi.isbc.funcSimilitud.SimilitudArbol;
 import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
@@ -52,7 +51,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	/** CaseBase object */
 	CBRCaseBase _caseBase;
 	/** Árbol de localización */
-	private JTree tree;
+	//public static JTree tree;
+	public static Arbol tree;
+	
 	private CBRQuery query;
 	@SuppressWarnings("unused")
 	private boolean evaluacionSistema;
@@ -62,7 +63,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private PrintWriter fichFa;
 	private PrintWriter fich;
 	
-
 	@Override
 	public void configure() throws ExecutionException {
 		try {
@@ -83,50 +83,59 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Imprimir los casos leídos
 		// Puedes comentar las siguientes líneas una vez que funcione.
 		Collection<CBRCase> cases = _caseBase.getCases();
-		String l = "", barrio = "", zona = "", calle = "";
-		String[] s = {};
+		
+		/*String l = "", barrio = "", zona = "", calle = "";
+		String[] s = {};*/
+		
 		// Raíz árbol
-		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Madrid");
-		tree = new JTree(top);
+		//DefaultMutableTreeNode top = new DefaultMutableTreeNode("Madrid");
+		
+		//tree = new JTree(top);
+		tree = new Arbol("/");
 		for (CBRCase c : cases) {
-			// System.out.println(c);
-			barrio = "";
-			zona = "";
-			calle = "";
-			l = ((DescripcionVivienda) c.getDescription()).getLocalizacion();
 			
-			//Dividimos el string en campos.
-			s = l.split("/");
-			switch (s.length) {
-			// s[0] es dato Madrid.
-			case 2:
-				zona = s[1];
-				break;
-			case 3:
-				zona = s[1];
-				barrio = s[2];
-				break;
-			case 4:
-				zona = s[1];
-				barrio = s[2];
-				calle = s[3];
-				break;
-			}
-			/*System.out.println(((DescripcionVivienda) c.getDescription())
-					.getId().toString()
-					+ "\n--------------\n Zona: "
-					+ zona
-					+ "\n Barrio: " + barrio + "\n Calle: " + calle);
-			*/
+			DescripcionVivienda dV = (DescripcionVivienda)c.getDescription();
+			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
 			
-			//Creamos el nodo dentro del arbol
-			createNodes(top, zona, barrio, calle);
+				/*// System.out.println(c);
+				barrio = "";
+				zona = "";
+				calle = "";
+				l = ((DescripcionVivienda) c.getDescription()).getLocalizacion();
+				
+				//Dividimos el string en campos.
+				s = l.split("/");
+				switch (s.length) {
+				// s[0] es dato Madrid.
+				case 2:
+					zona = s[1];
+					break;
+				case 3:
+					zona = s[1];
+					barrio = s[2];
+					break;
+				case 4:
+					zona = s[1];
+					barrio = s[2];
+					calle = s[3];
+					break;
+				}*/
+				
+				/*System.out.println(((DescripcionVivienda) c.getDescription())
+						.getId().toString()
+						+ "\n--------------\n Zona: "
+						+ zona
+						+ "\n Barrio: " + barrio + "\n Calle: " + calle);
+				*/
+				
+				//Creamos el nodo dentro del arbol
+				//createNodes(top, zona, barrio, calle);
 		}
-		//System.out.println("Árbol creado");
+			//System.out.println("Árbol creado");
 		return _caseBase;
 	}
 
-	private void createNodes(DefaultMutableTreeNode top, String zona, String barrio, String calle) {
+	/*private void createNodes(DefaultMutableTreeNode top, String zona, String barrio, String calle) {
 		DefaultMutableTreeNode zonas = null;
 		DefaultMutableTreeNode barrios = null;
 		DefaultMutableTreeNode calles = null;
@@ -188,7 +197,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			}
 		}
 
-	}
+	}*/
 
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {	
@@ -198,7 +207,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.setDescriptionSimFunction(new Average());
 		
 		 if (((DescripcionVivienda)query.getDescription()).getLocalizacion() != null)
-			 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
+			 simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class), new SimilitudArbol(tree)/*new MyTreeSimilarityFunction(tree)*/);
 		 // Fijamos las funciones de similitud locales
 		 if (((DescripcionVivienda)query.getDescription()).getTipo() != null)
 			 simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
@@ -438,7 +447,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	}
 	
 	
-	public JTree getLocalizaciones() {
+	/*public JTree getLocalizaciones() {
 		return tree;
-	}
+	}*/
 }
