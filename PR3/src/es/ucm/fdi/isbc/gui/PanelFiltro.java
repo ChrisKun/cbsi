@@ -1,5 +1,6 @@
 package es.ucm.fdi.isbc.gui;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -28,7 +29,7 @@ import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
  *
  */
 
-public class PanelFiltro extends JPanel implements KeyListener
+public class PanelFiltro extends Container implements KeyListener
 {
 
 	/** Atributos **/
@@ -40,7 +41,6 @@ public class PanelFiltro extends JPanel implements KeyListener
 		private static JLabel tipo, estado, localiz, metros;
 		private static JTextField localizacion, m;
 		private static JButton button;
-		private static JPanel panel;
 		private static TipoVivienda type = TipoVivienda.Piso;
 		private static EstadoVivienda state = EstadoVivienda.Muybien;
 		
@@ -91,7 +91,7 @@ public class PanelFiltro extends JPanel implements KeyListener
 			for (int i = 0; i < 10; i++)
 				label[i] = new JLabel();
 	
-			panel = new JPanel();
+			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(9, 2, 10, 0));
 	
 			panel.add(label[0]);	panel.add(label[1]);
@@ -200,23 +200,6 @@ public class PanelFiltro extends JPanel implements KeyListener
 		{
 			button.setEnabled(b);
 		}
-
-		private boolean enteroEsCorrecto(String entero)
-		{
-			/** Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
-			 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
-			 * Si la cadena es vacía devolvemos true;
-			 */
-
-			if (entero.isEmpty()) return true;
-			try {
-				Integer ent = Integer.valueOf(entero);
-				return ent >= 0;
-			}
-			catch (NumberFormatException e) {
-				return false;
-			}
-		}
 		
 		private void acciónDelBotón()
 		{
@@ -230,7 +213,7 @@ public class PanelFiltro extends JPanel implements KeyListener
 			descr.setEstado(state);				
 			descr.setLocalizacion(sLocalizacion);
 			String entero = m.getText();
-			if (enteroEsCorrecto(entero)) {
+			if (VentanaPpal.enteroEsCorrecto(entero)) {
 				if (!entero.isEmpty()) descr.setSuperficie(Integer.valueOf(entero));
 				Controlador.getInstance().repite(descr);
 			}

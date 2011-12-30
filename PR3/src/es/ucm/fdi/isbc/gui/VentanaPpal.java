@@ -48,9 +48,9 @@ public class VentanaPpal extends JFrame implements Observer
 			panelVisitados = new PanelVisitados();
 
 			vertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDiversidad, panelVisitados);
-			vertical.setDividerSize(5);
+			vertical.setDividerSize(7);
 			vertical.setDividerLocation(0.8);
-			vertical.setOneTouchExpandable(false);
+			vertical.setOneTouchExpandable(true);
 			vertical.setEnabled(false);
 
 			horizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelFiltro, vertical);
@@ -60,6 +60,7 @@ public class VentanaPpal extends JFrame implements Observer
 
 			this.setContentPane(horizontal);
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+			setMinimumSize(new Dimension(dim.width - 100, dim.height - 100));
 			setSize(dim.width - 100, dim.height - 100);
 			setLocation((dim.width - getWidth()) / 2, (dim.height - getHeight()) / 2);
 
@@ -68,17 +69,19 @@ public class VentanaPpal extends JFrame implements Observer
 		}
 
 	/** Métodos **/
-
+		
 		/* Métodos que implementan la interfaz Observer */
 
 			public void update(Observable o, Object arg)
 			{
 				if (arg instanceof MuestraSolEvent) {
-
+					
 					vResult = new VentanaResult();
 					vResult.setResultado(((MuestraSolEvent)arg).getDescrs());
+					panelVisitados.actualizarPanel();
 					vResult = null;
 					System.gc();
+
 				}
 				else {
 					if (flag) {
@@ -116,6 +119,25 @@ public class VentanaPpal extends JFrame implements Observer
 				);
 
 				return barra;
+			}
+			
+		/* AUXILIARES */
+			
+			public static boolean enteroEsCorrecto(String entero)
+			{
+				/** Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
+				 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
+				 * Si la cadena es vacía devolvemos true;
+				 */
+
+				if (entero.isEmpty()) return true;
+				try {
+					Integer ent = Integer.valueOf(entero);
+					return ent >= 0;
+				}
+				catch (NumberFormatException e) {
+					return false;
+				}
 			}
 
 }

@@ -44,7 +44,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	final double PESOExtrasO = 0.07;
 	final double PESOExtrasB = 0.01;
 	
-	final int NUMSELECTCASOS = 3;
+	final int NUMSELECTCASOS = 5;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -300,7 +300,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Se los mandamos a la ventana de resultados
 		this.setChanged();
 		this.notifyObservers(new MuestraSolEvent(descrs));
-		
 //		COSAS PRACTICA ANTERIOR	
 //		 // Aquí se incluiría el código para adaptar la solución
 //		Integer precio_prediccion = getPrediccionPrecio(eval);
