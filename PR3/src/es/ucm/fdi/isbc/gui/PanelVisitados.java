@@ -17,7 +17,7 @@ import javax.swing.plaf.BorderUIResource;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
-public class PanelVisitados extends Container
+public class PanelVisitados extends JPanel
 {
 
 	/** Atributos **/
@@ -35,20 +35,18 @@ public class PanelVisitados extends Container
 			vistas = new ArrayList<DescripcionVivienda>();
 			imágenes = new ArrayList<JLabel>();
 			
-			JPanel panel = new JPanel();
-			
-			panel.setLayout(new BorderLayout());
+			/*setLayout(new BorderLayout());
 			String holaMundo = "<html><p align=\"center\"><font face=\"Comic Sans MS, verdana\"; color=\"teal\"; size = 24>" +
 					"HOLA MUNDO</font></p></html>";	
-			panel.add(new JLabel(holaMundo), BorderLayout.CENTER);
-			
-			add(panel);
+			add(new JLabel(holaMundo), BorderLayout.CENTER);*/
 			
 			dim = Toolkit.getDefaultToolkit().getScreenSize();
 			dim.setSize(dim.width - 100, dim.height - 100);
 
 			setMinimumSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
 			setSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
+			
+			setVisible(true);
 		}
 
 	/** Métodos **/
@@ -106,15 +104,8 @@ public class PanelVisitados extends Container
 
 			public void actualizarPanel()
 			{
-				JPanel panel = new JPanel();
-				panel.setLayout(new FlowLayout());
-				
 				for (Iterator<JLabel> it = imágenes.iterator(); it.hasNext(); )
-					panel.add(it.next());
-				
-				panel.setVisible(true);
-				this.add(panel);
-				this.setVisible(true);
+					add(it.next());
 			}
 
 		/* AUXILIARES */

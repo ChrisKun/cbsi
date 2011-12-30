@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,7 +19,7 @@ import javax.swing.plaf.BorderUIResource;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
-public class VentanaResult extends JFrame
+public class VentanaResult extends JDialog
 {
 
 	/** Atributos **/
@@ -36,7 +36,8 @@ public class VentanaResult extends JFrame
 		
 		public VentanaResult()
 		{
-			super("Viviendas");
+			setName("Viviendas");
+			setModalityType(DEFAULT_MODALITY_TYPE);	
 			setLayout(new BorderLayout());
 
 			JPanel[] margen = new JPanel[4];
@@ -144,8 +145,8 @@ public class VentanaResult extends JFrame
 											VentanaPpal.panelVisitados.setVivienda(aL.get(j));
 											VentanaPpal.panelVisitados.actualizarPanel();
 										}
-										dispose();
 										encontrado = true;
+										dispose();
 									}
 							}
 						}

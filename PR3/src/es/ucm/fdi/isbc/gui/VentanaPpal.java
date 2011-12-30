@@ -78,9 +78,7 @@ public class VentanaPpal extends JFrame implements Observer
 					
 					vResult = new VentanaResult();
 					vResult.setResultado(((MuestraSolEvent)arg).getDescrs());
-					panelVisitados.actualizarPanel();
-					vResult = null;
-					System.gc();
+					paintAll(getGraphics());
 
 				}
 				else {
