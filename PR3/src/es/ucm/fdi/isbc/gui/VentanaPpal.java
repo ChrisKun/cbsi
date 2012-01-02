@@ -39,6 +39,7 @@ public class VentanaPpal extends JFrame implements Observer
 		public VentanaPpal()
 		{
 			super("Recomendador Viviendas");
+			setExtendedState(MAXIMIZED_BOTH);
 
 			barraMenus = inicializaMenus();
 			this.setJMenuBar(barraMenus);
@@ -78,7 +79,6 @@ public class VentanaPpal extends JFrame implements Observer
 					
 					vResult = new VentanaResult();
 					vResult.setResultado(((MuestraSolEvent)arg).getDescrs());
-					paintAll(getGraphics());
 
 				}
 				else {

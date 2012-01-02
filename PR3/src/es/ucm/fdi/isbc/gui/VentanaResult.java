@@ -4,18 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.plaf.BorderUIResource;
+import javax.swing.border.BevelBorder;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
@@ -104,7 +105,7 @@ public class VentanaResult extends JDialog
 					JLabel label = new JLabel(descr);
 					JScrollPane scrollPane = new JScrollPane(label,
 							JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-					scrollPane.setBorder(BorderUIResource.getLoweredBevelBorderUIResource());
+					scrollPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 					try {
 
@@ -115,17 +116,8 @@ public class VentanaResult extends JDialog
 									"No hay foto");
 
 						imagen[i].setIcon(imageIcon);
-						imagen[i].setBorder(BorderUIResource.getLoweredBevelBorderUIResource());
-						imagen[i].addMouseListener(new MouseListener() {
-
-							public void mouseClicked(MouseEvent e) {;}
-
-							public void mouseEntered(MouseEvent e) {;}
-
-							public void mouseExited(MouseEvent e) {;}
-
-							public void mousePressed(MouseEvent e) {;}
-
+						imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+						imagen[i].addMouseListener(new MouseAdapter() {
 							public void mouseReleased(MouseEvent e)
 							{
 								/**
