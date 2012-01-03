@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Galeria
+class Galeria
 {
 
 	/** Atributos **/
 	
 		private ArrayList<ImageIcon> fotos;
-		private static ImageIcon noFoto;
+		private static Image noFoto;
 
     /** Constructores **/
 	
@@ -23,8 +23,9 @@ public class Galeria
 		{
 			try {
 				fotos = new ArrayList<ImageIcon>();
-				noFoto = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
+				ImageIcon imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
 						"No hay foto");
+				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
 			catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -35,8 +36,9 @@ public class Galeria
 		{
 			try {
 				this.fotos = fotos;
-				noFoto = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
+				ImageIcon imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
 						"No hay foto");
+				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
 			catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -58,16 +60,13 @@ public class Galeria
 			 * @param num
 			 * @return una imagen de tamaño 100 x 100 VISTA PREVIA
 			 */
-			public Icon getVistaPrevia(int num)
+			public Icon getVistaPrevia(final int NUM, final int LENGTH)
 			{
-				if (num >= 0 && num < fotos.size()) {
-					Image mini = fotos.get(num).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
+				if (NUM >= 0 && NUM < fotos.size()) {
+					Image mini = fotos.get(NUM).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 					return new ImageIcon(mini);
 				}
-				else {
-					Image mini = noFoto.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
-					return new ImageIcon(mini);
-				}
+				else return new ImageIcon(noFoto);
 			}
 
 			/**
@@ -89,10 +88,7 @@ public class Galeria
 					}
 					else return fotos.get(num);
 				}
-				else {
-					Image mini = noFoto.getImage().getScaledInstance(400, 400, Image.SCALE_AREA_AVERAGING);
-					return new ImageIcon(mini);
-				}
+				else return new ImageIcon(noFoto.getScaledInstance(400, 400, Image.SCALE_AREA_AVERAGING));
 			}
 			
 			/**
@@ -102,8 +98,8 @@ public class Galeria
 			 */
 			private ImageIcon Disminuir(ImageIcon imageIcon, float value)
 			{
-				int valEscalaX =  (int) (imageIcon.getIconWidth() * value );
-				int valEscalaY =  (int) (imageIcon.getIconHeight() * value );
+				int valEscalaX = (int) (imageIcon.getIconWidth() * value );
+				int valEscalaY = (int) (imageIcon.getIconHeight() * value );
 				Image mini = imageIcon.getImage().getScaledInstance(valEscalaX, valEscalaY, Image.SCALE_AREA_AVERAGING);
 				return new ImageIcon(mini);
 			}

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  */
 
-public class PanelDiversidad extends JPanel
+class PanelDiversidad extends JPanel
 {
 	
 	private static final long serialVersionUID = 1L;

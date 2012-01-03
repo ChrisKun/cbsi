@@ -28,8 +28,7 @@ import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
  *  Panel que implementa el filtro de la consulta.
  *
  */
-
-public class PanelFiltro extends Container implements KeyListener
+class PanelFiltro extends Container implements KeyListener
 {
 
 	/** Atributos **/
@@ -91,8 +90,7 @@ public class PanelFiltro extends Container implements KeyListener
 			for (int i = 0; i < 10; i++)
 				label[i] = new JLabel();
 	
-			JPanel panel = new JPanel();
-			panel.setLayout(new GridLayout(9, 2, 10, 0));
+			JPanel panel = new JPanel(new GridLayout(9, 2, 10, 0));
 	
 			panel.add(label[0]);	panel.add(label[1]);
 			panel.add(tipo);		panel.add(tipoVivienda);

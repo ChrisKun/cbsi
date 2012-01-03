@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -20,11 +19,14 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
 
-public class PanelVisitados extends JPanel
+class PanelVisitados extends JPanel
 {
 
 	/** Atributos **/
@@ -43,7 +45,11 @@ public class PanelVisitados extends JPanel
 		private static int[] imagen;
 		
 		private static final int LENGTH = 6;
-		
+		private static final Dimension DIM_PANEL_PRINCIPAL = new Dimension(120, 120);
+		private static final Dimension DIM_PANEL_FOTOS = new Dimension(120, 120);
+		private static final Dimension DIM_LABEL = new Dimension(100, 100);
+		private static final Color COLOR_PANEL_FOTOS = Color.white;
+		private static final Color COLOR_BORDE_PANEL_FOTOS = Color.black;
 
 	/** Constructores **/
 
@@ -62,8 +68,9 @@ public class PanelVisitados extends JPanel
 
 			//setMinimumSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
 			//setSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
-			setMinimumSize(new Dimension(120, 120));
-			setSize(120, 120);
+			setMinimumSize(DIM_PANEL_PRINCIPAL);
+			setMaximumSize(DIM_PANEL_PRINCIPAL);
+			setSize(DIM_PANEL_PRINCIPAL);
 
 			bAnterior = new JButton("<<");
 			bSiguiente = new JButton(">>");
@@ -73,12 +80,12 @@ public class PanelVisitados extends JPanel
 			
 			for (int i = 0; i < LENGTH; i++) {
 				panel[i] = new JPanel();
-				panel[i].setPreferredSize(new Dimension(120, 120));
-				panel[i].setBackground(new Color(255, 255, 255));
-				panel[i].setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2));
+				panel[i].setPreferredSize(DIM_PANEL_FOTOS);
+				panel[i].setBackground(COLOR_PANEL_FOTOS);
+				panel[i].setBorder(BorderFactory.createLineBorder(COLOR_BORDE_PANEL_FOTOS, 2));
 				panel[i].setLayout(new GridBagLayout());
 				label[i] = new JLabel();
-				label[i].setPreferredSize(new Dimension(100, 100));
+				label[i].setPreferredSize(DIM_LABEL);
 				imagen[i] = i;
 				
 				gridBagConstraints = new GridBagConstraints();
@@ -93,6 +100,34 @@ public class PanelVisitados extends JPanel
 				gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
 				gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 				add(panel[i], gridBagConstraints);
+				
+				label[i].addMouseMotionListener(new MouseMotionAdapter()
+				{
+					public void mouseMoved(MouseEvent e)
+					{
+						int j;
+						boolean encontrado = false;
+						for (j = 0; j < LENGTH && !encontrado; j++)
+							if (e.getSource() == label[j]) encontrado = true;
+						
+						if (j <= vistas.size()) {
+							DescripcionVivienda dV = vistas.get(imagen[j - 1]);
+							String localización = "Madrid, ";
+							String[] loca = dV.getLocalizacion().split("/");
+							loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+							localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+							String mensaje = "<html><p>Nombre:" + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
+									"Tipo:" + tipoToString(dV.getTipo()) + "<br>" +
+									"Estado:" + estadoToString(dV.getEstado()) + "<br>" +
+									"Localización:" + localización + "<br>" +
+									"Superficie:" + dV.getSuperficie() +"m<sup>2</sup></p></html>";
+
+							JOptionPane.showMessageDialog(PanelVisitados.this, mensaje, 
+									"Nombre", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				);
 			}
 
 			bAnterior.setPreferredSize(new Dimension(55, 120));
@@ -118,12 +153,12 @@ public class PanelVisitados extends JPanel
 			
 			// Se inicia la vista previa
 			for (int i = 0; i < LENGTH; i++)
-				label[i].setIcon(galeria.getVistaPrevia(imagen[i]));
+				label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
 			
 			for (int i = 0; i < LENGTH; i++)
 				label[i].addMouseListener(new MouseAdapter()
 				{
-					public void mouseReleased(MouseEvent e)
+					public void mouseClicked(MouseEvent e)
 					{
 						/**
 						 * Aquí habría que implementar el método de recuperación de las casas ya visitadas...
@@ -131,26 +166,30 @@ public class PanelVisitados extends JPanel
 					}
 				}
 				);
-			
+
 			bAnterior.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					for (int i = 0; i < LENGTH; i++) {
-						imagen[i]--;
-						label[i].setIcon(galeria.getVistaPrevia(imagen[i]));
+					if (imagen[0] > 0) {
+						for (int i = 0; i < LENGTH; i++) {
+							imagen[i]--;
+							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+						}
 					}
 				}
 			}
 			);
-			
+
 			bSiguiente.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					for (int i = 0; i < LENGTH; i++) {
-						imagen[i]++;
-						label[i].setIcon(galeria.getVistaPrevia(imagen[i]));
+					if (imagen[LENGTH - 1] < imágenes.size() - 1) {
+						for (int i = 0; i < LENGTH; i++) {
+							imagen[i]++;
+							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+						}
 					}
 				}
 			}
@@ -181,22 +220,10 @@ public class PanelVisitados extends JPanel
 
 		/* Setters */
 			
-			public void setVivienda(DescripcionVivienda vivienda)
+			public void setVivienda(DescripcionVivienda vivienda, ImageIcon imagen)
 			{
-				try {
-					ImageIcon imageIcon = new ImageIcon(new URL(vivienda.getUrlFoto()));
-					Image image1 = Toolkit.getDefaultToolkit().getImage(new URL(vivienda.getUrlFoto()));
-					if (imageIcon.getIconHeight() == -1)
-						image1 = Toolkit.getDefaultToolkit().getImage(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"));
-					Image image2 = image1.getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
-					imageIcon.setImage(image2);
-					
-					vistas.add(vivienda);
-					imágenes.add(imageIcon);
-				}
-				catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
+				vistas.add(vivienda);
+				imágenes.add(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING)));
 			}
 
 		/* Otros métodos */
@@ -214,8 +241,11 @@ public class PanelVisitados extends JPanel
 			public void actualizarPanel()
 			{
 				galeria.setFotos(imágenes);
-				for (int i = 0; i < LENGTH; i++)
-					label[i].setIcon(galeria.getVistaPrevia(imagen[i]));
+				for (int i = 0; i < LENGTH; i++) {
+					if (imágenes.size() > LENGTH)
+						imagen[i] = imágenes.size() - LENGTH + i;
+					label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+				}
 			}
 
 		/* AUXILIARES */
@@ -228,6 +258,29 @@ public class PanelVisitados extends JPanel
 				for (Iterator<DescripcionVivienda> it = vistas.iterator(); it.hasNext(); )
 					System.out.println(it.next().getTitulo());
 				System.out.println();
+			}
+			
+			private String tipoToString(TipoVivienda tipo)
+			{
+				switch(tipo) {
+					case Atico : return "Ático";
+					case Plantabaja: return "Planta baja";
+					case Casaadosada: return "Adosado";
+					case CasaChalet: return "Chalet";
+					case Duplex: return "Dúplex";
+					case Fincarustica: return "Finca rústica";
+					default: return tipo.toString();
+				}
+			}
+			
+			private String estadoToString(EstadoVivienda estado)
+			{
+				switch(estado) {
+					case Muybien : return "Muy bien";
+					case Areformar: return "A reformar";
+					case Casinuevo: return "Casi nuevo";
+					default: return estado.toString();
+				}
 			}
 
 }

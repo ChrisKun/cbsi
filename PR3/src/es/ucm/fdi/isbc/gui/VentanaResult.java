@@ -20,7 +20,7 @@ import javax.swing.border.BevelBorder;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
-public class VentanaResult extends JDialog
+class VentanaResult extends JDialog
 {
 
 	/** Atributos **/
@@ -88,12 +88,13 @@ public class VentanaResult extends JDialog
 
 				for (int i = 0; i < aL.size(); i++) {
 
-					String título = transformar(descrs.get(i).getTitulo());
+					String título = VentanaPpal.transformar(descrs.get(i).getTitulo());
 					String localización = "Madrid, ";
 					String[] loca = descrs.get(i).getLocalizacion().split("/");
 					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-					localización += transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
-					String descripción = cortarString(transformar(descrs.get(i).getDescripcion()), "DESCRIPCIÓN: ".length());
+					localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+					String descripción = VentanaPpal.cortarString(VentanaPpal.transformar(descrs.get(i).getDescripcion()), 
+							TOPE, "DESCRIPCIÓN: ".length());
 
 					String descr =	"<html><p align=\"justify\">" +
 							"<b><u>NOMBRE</u></b>: " + título + "<br>" +
@@ -117,8 +118,9 @@ public class VentanaResult extends JDialog
 
 						imagen[i].setIcon(imageIcon);
 						imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
 						imagen[i].addMouseListener(new MouseAdapter() {
-							public void mouseReleased(MouseEvent e)
+							public void mouseClicked(MouseEvent e)
 							{
 								/**
 								 * Al pinchar en una foto tenemos que ir a una descripción detallada de la casa 
@@ -134,8 +136,13 @@ public class VentanaResult extends JDialog
 								for (int j = 0; j < aL.size() && !encontrado; j++)
 									if (e.getSource() == imagen[j]) {
 										if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
-											VentanaPpal.panelVisitados.setVivienda(aL.get(j));
+/////////////////////////////////////////
+											System.out.println(aL.get(j).getTitulo() + "\t1");
+											VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
+											System.out.println(aL.get(j).getTitulo() + "\t2");
 											VentanaPpal.panelVisitados.actualizarPanel();
+											System.out.println(aL.get(j).getTitulo() + "\t3\n");
+/////////////////////////////////////////
 										}
 										encontrado = true;
 										dispose();
@@ -159,146 +166,5 @@ public class VentanaResult extends JDialog
 			}
 
 		/* AUXILIARES */
-			
-			private String cortarString(String string, final int PRIMERO)
-			{
-				String s = string;
-				String cortarString = "";
-				
-				try {
-					int cantidad = TOPE - PRIMERO;
-					cortarString += s.substring(0, cantidad);
-					s = s.substring(cantidad);
-					while (!s.isEmpty() && s.charAt(0) != ' ') {
-						cortarString += s.charAt(0);
-						s = s.substring(1);
-					}
-					if (!s.isEmpty()) {
-						cortarString += "<br>";
-						s = s.substring(1);
-					}
-					while (!s.isEmpty()) {
-						cortarString += s.substring(0, TOPE);
-						s = s.substring(TOPE);
-						while (!s.isEmpty() && s.charAt(0) != ' ') {
-							cortarString += s.charAt(0);
-							s = s.substring(1);
-						}
-						if (!s.isEmpty()) {
-							cortarString += "<br>";
-							s = s.substring(1);
-						}
-					}
-				}
-				catch (StringIndexOutOfBoundsException ex) {
-					cortarString += s;
-				}
-				
-				return cortarString;
-			}
-			
-			private String transformar(String string)
-			{
-				String s = string;
-				String transformar = "";
-				while (!s.isEmpty()) {
-					String car = s.substring(0, 1);
-					s = s.substring(1);
-					if (car.equals("Ã") || car.equals("Â") || car.equals("m") || car.equals(",") || car.equals(".")) {
-						if (s.length() > 1) {
-							car += s.substring(0, 1);
-							s = s.substring(1);
-							if (car.charAt(0) == 'm' && car.charAt(1) != '2') {
-								transformar += "m";
-								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
-									car += s.substring(0, 1);
-									s = s.substring(1);
-								}
-							}
-							else if (car.charAt(0) == ',' && car.charAt(1) != ' ') {
-								transformar += ", ";
-								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
-									car = s.substring(0, 1);
-									s = s.substring(1);
-								}
-							}
-							else if (car.charAt(0) == '.' && car.charAt(1) != ' ' && car.charAt(1) != '.'
-									&& !VentanaPpal.enteroEsCorrecto(car.substring(1))) {
-								transformar += ". ";
-								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
-									car = s.substring(0, 1);
-									s = s.substring(1);
-								}
-							}
-						}
-					}
-					else if (car.equals("â")) {
-						if (s.length() > 1) {
-							car += s.substring(0, 1);
-							s = s.substring(1);
-							if (car.charAt(1) == '‚') {
-								car += s.substring(0, 1);
-								s = s.substring(1);
-								if (car.charAt(2) != '¬') {
-									transformar += car.substring(0, 2);
-									car = car.substring(2);
-									if (car.equals("Ã") || car.equals("Â")) {
-										car = s.substring(0, 1);
-										s = s.substring(1);
-									}
-								}
-							}
-							else {
-								transformar += "â";
-								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
-									car = s.substring(0, 1);
-									s = s.substring(1);
-								}
-							}
-						}
-					}
-					transformar += codificar(car);
-				}
-				return transformar;
-			}
-			
-			private String codificar(String cod)
-			{
-				// Debido a la propia codificación del Eclipse y a que no reconoce ciertos caracteres: Á, Í, Ï se escriben aquí
-				// de la misma forma lo cuál generaría un problema en la conversión, por suerte, las dos últimas no son letras
-				// muy utilizadas.
-				
-				if (cod.equals("Ã­")) return "í";
-				else if (cod.equals("Ã©")) return "é";
-				else if (cod.equals("Ã¡")) return "á";
-				else if (cod.equals("Ã³")) return "ó";
-				else if (cod.equals("Ãº")) return "ú";
-				else if (cod.equals("Ã±")) return "ñ";
-				else if (cod.equals("Ã�")) return "Á";
-				else if (cod.equals("Ã‰")) return "É";
-				else if (cod.equals("Ã�")) return "Í";
-				else if (cod.equals("Ã“")) return "Ó";
-				else if (cod.equals("Ãš")) return "Ú";
-				else if (cod.equals("Ã‘")) return "Ñ";
-				else if (cod.equals("Ã„")) return "Ä";
-				else if (cod.equals("Ã‹")) return "Ë";
-				else if (cod.equals("Ã�")) return "Ï";
-				else if (cod.equals("Ã–")) return "Ö";
-				else if (cod.equals("Ãœ")) return "Ü";
-				else if (cod.equals("Ã¤")) return "ä";
-				else if (cod.equals("Ã«")) return "ë";
-				else if (cod.equals("Ã¯")) return "ï";
-				else if (cod.equals("Ã¶")) return "ö";
-				else if (cod.equals("Ã¼")) return "ü";
-				else if (cod.equals("Âª")) return "ª";
-				else if (cod.equals("Âº")) return "º";
-				else if (cod.equals("â‚¬")) return "€";
-				else if (cod.equals("m2")) return "m<sup>2</sup>";
-				else return cod;
-			}
 
 }

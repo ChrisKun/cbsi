@@ -65,13 +65,13 @@ public class VentanaPpal extends JFrame implements Observer
 			setSize(dim.width - 100, dim.height - 100);
 			setLocation((dim.width - getWidth()) / 2, (dim.height - getHeight()) / 2);
 
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
 			setVisible(true);
 		}
 
-	/** M�todos **/
+	/** Métodos **/
 		
-		/* M�todos que implementan la interfaz Observer */
+		/* Métodos que implementan la interfaz Observer */
 
 			public void update(Observable o, Object arg)
 			{
@@ -93,11 +93,11 @@ public class VentanaPpal extends JFrame implements Observer
 				}
 			}
 
-		/* Otros m�todos */
+		/* Otros métodos */
 
 			/**
-			* Devuelve el men� de la ventana
-			* @return El men� de la ventana
+			* Devuelve el menú de la ventana
+			* @return El menú de la ventana
 			*/
 			private JMenuBar inicializaMenus()
 			{
@@ -121,11 +121,12 @@ public class VentanaPpal extends JFrame implements Observer
 			
 		/* AUXILIARES */
 			
-			public static boolean enteroEsCorrecto(String entero)
+			static boolean enteroEsCorrecto(String entero)
 			{
-				/** Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
-				 * que cero ya que la superficie, el n�mero de habitaciones y de ba�os no puede ser negativo.
-				 * Si la cadena es vac�a devolvemos true;
+				/**
+				 * Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
+				 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
+				 * Si la cadena es vacía devolvemos true;
 				 */
 
 				if (entero.isEmpty()) return true;
@@ -136,6 +137,147 @@ public class VentanaPpal extends JFrame implements Observer
 				catch (NumberFormatException e) {
 					return false;
 				}
+			}
+			
+			static String cortarString(String string, final int TOPE, final int PRIMERO)
+			{
+				String s = string;
+				String cortarString = "";
+				
+				try {
+					int cantidad = TOPE - PRIMERO;
+					cortarString += s.substring(0, cantidad);
+					s = s.substring(cantidad);
+					while (!s.isEmpty() && s.charAt(0) != ' ') {
+						cortarString += s.charAt(0);
+						s = s.substring(1);
+					}
+					if (!s.isEmpty()) {
+						cortarString += "<br>";
+						s = s.substring(1);
+					}
+					while (!s.isEmpty()) {
+						cortarString += s.substring(0, TOPE);
+						s = s.substring(TOPE);
+						while (!s.isEmpty() && s.charAt(0) != ' ') {
+							cortarString += s.charAt(0);
+							s = s.substring(1);
+						}
+						if (!s.isEmpty()) {
+							cortarString += "<br>";
+							s = s.substring(1);
+						}
+					}
+				}
+				catch (StringIndexOutOfBoundsException ex) {
+					cortarString += s;
+				}
+				
+				return cortarString;
+			}
+			
+			static String transformar(String string)
+			{
+				String s = string;
+				String transformar = "";
+				while (!s.isEmpty()) {
+					String car = s.substring(0, 1);
+					s = s.substring(1);
+					if (car.equals("Ã") || car.equals("Â") || car.equals("m") || car.equals(",") || car.equals(".")) {
+						if (s.length() > 0) {
+							car += s.substring(0, 1);
+							s = s.substring(1);
+							if (car.charAt(0) == 'm' && car.charAt(1) != '2') {
+								transformar += "m";
+								car = car.substring(1);
+								if (car.equals("Ã") || car.equals("Â")) {
+									car += s.substring(0, 1);
+									s = s.substring(1);
+								}
+							}
+							else if (car.charAt(0) == ',' && car.charAt(1) != ' ') {
+								transformar += ", ";
+								car = car.substring(1);
+								if (car.equals("Ã") || car.equals("Â")) {
+									car = s.substring(0, 1);
+									s = s.substring(1);
+								}
+							}
+							else if (car.charAt(0) == '.' && car.charAt(1) != ' ' && car.charAt(1) != '.'
+									&& !VentanaPpal.enteroEsCorrecto(car.substring(1))) {
+								transformar += ". ";
+								car = car.substring(1);
+								if (car.equals("Ã") || car.equals("Â")) {
+									car = s.substring(0, 1);
+									s = s.substring(1);
+								}
+							}
+						}
+					}
+					else if (car.equals("â")) {
+						if (s.length() > 1) {
+							car += s.substring(0, 1);
+							s = s.substring(1);
+							if (car.charAt(1) == '‚') {
+								car += s.substring(0, 1);
+								s = s.substring(1);
+								if (car.charAt(2) != '¬') {
+									transformar += car.substring(0, 2);
+									car = car.substring(2);
+									if (car.equals("Ã") || car.equals("Â")) {
+										car = s.substring(0, 1);
+										s = s.substring(1);
+									}
+								}
+							}
+							else {
+								transformar += "â";
+								car = car.substring(1);
+								if (car.equals("Ã") || car.equals("Â")) {
+									car = s.substring(0, 1);
+									s = s.substring(1);
+								}
+							}
+						}
+					}
+					transformar += codificar(car);
+				}
+				return transformar;
+			}
+			
+			static String codificar(String cod)
+			{
+				// Debido a la propia codificación del Eclipse y a que no reconoce ciertos caracteres: Á, Í, Ï se escriben aquí
+				// de la misma forma lo cuál generaría un problema en la conversión, por suerte, las dos últimas no son letras
+				// muy utilizadas.
+				
+				if (cod.equals("Ã­")) return "í";
+				else if (cod.equals("Ã©")) return "é";
+				else if (cod.equals("Ã¡")) return "á";
+				else if (cod.equals("Ã³")) return "ó";
+				else if (cod.equals("Ãº")) return "ú";
+				else if (cod.equals("Ã±")) return "ñ";
+				else if (cod.equals("Ã�")) return "Á";
+				else if (cod.equals("Ã‰")) return "É";
+				else if (cod.equals("Ã�")) return "Í";
+				else if (cod.equals("Ã“")) return "Ó";
+				else if (cod.equals("Ãš")) return "Ú";
+				else if (cod.equals("Ã‘")) return "Ñ";
+				else if (cod.equals("Ã„")) return "Ä";
+				else if (cod.equals("Ã‹")) return "Ë";
+				else if (cod.equals("Ã�")) return "Ï";
+				else if (cod.equals("Ã–")) return "Ö";
+				else if (cod.equals("Ãœ")) return "Ü";
+				else if (cod.equals("Ã¤")) return "ä";
+				else if (cod.equals("Ã«")) return "ë";
+				else if (cod.equals("Ã¯")) return "ï";
+				else if (cod.equals("Ã¶")) return "ö";
+				else if (cod.equals("Ã¼")) return "ü";
+				else if (cod.equals("Âª")) return "ª";
+				else if (cod.equals("Âº")) return "º";
+				else if (cod.equals("â‚¬")) return "€";
+				else if (cod.equals("m2")) return "m<sup>2</sup>";
+				else return cod;
 			}
 
 }

@@ -436,6 +436,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		RecomendadorVivienda rv = new RecomendadorVivienda();		
 		controlador.setRecomendadorVivienda(rv);		
 		VentanaPpal v = new VentanaPpal();
+
 		rv.addObserver(v);
 		
 		// Configura y realiza el precycle
