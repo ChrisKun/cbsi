@@ -101,33 +101,34 @@ class PanelVisitados extends JPanel
 				gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 				add(panel[i], gridBagConstraints);
 				
-				label[i].addMouseMotionListener(new MouseMotionAdapter()
-				{
-					public void mouseMoved(MouseEvent e)
-					{
-						int j;
-						boolean encontrado = false;
-						for (j = 0; j < LENGTH && !encontrado; j++)
-							if (e.getSource() == label[j]) encontrado = true;
-						
-						if (j <= vistas.size()) {
-							DescripcionVivienda dV = vistas.get(imagen[j - 1]);
-							String localización = "Madrid, ";
-							String[] loca = dV.getLocalizacion().split("/");
-							loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-							localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
-							String mensaje = "<html><p>Nombre:" + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
-									"Tipo:" + tipoToString(dV.getTipo()) + "<br>" +
-									"Estado:" + estadoToString(dV.getEstado()) + "<br>" +
-									"Localización:" + localización + "<br>" +
-									"Superficie:" + dV.getSuperficie() +"m<sup>2</sup></p></html>";
-
-							JOptionPane.showMessageDialog(PanelVisitados.this, mensaje, 
-									"Nombre", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				}
-				);
+//				label[i].addMouseMotionListener(new MouseMotionAdapter()
+//				{
+//					public void mouseMoved(MouseEvent e)
+//					{
+//						int j;
+//						boolean encontrado = false;
+//						for (j = 0; j < LENGTH && !encontrado; j++)
+//							if (e.getSource() == label[j]) encontrado = true;
+//						
+//						if (j <= vistas.size()) {
+//							DescripcionVivienda dV = vistas.get(imagen[j - 1]);
+//							String localización = "Madrid, ";
+//							String[] loca = dV.getLocalizacion().split("/");
+//							loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+//							localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+//							String mensaje = "<html><p>Nombre:" + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
+//									"Tipo:" + tipoToString(dV.getTipo()) + "<br>" +
+//									"Estado:" + estadoToString(dV.getEstado()) + "<br>" +
+//									"Localización:" + localización + "<br>" +
+//									"Superficie:" + dV.getSuperficie() +"m<sup>2</sup></p></html>";
+//							label[j].setToolTipText(mensaje);
+//
+//							JOptionPane.showMessageDialog(PanelVisitados.this, mensaje, 
+//									"Nombre", JOptionPane.INFORMATION_MESSAGE);
+//						}
+//					}
+//				}
+//				);
 			}
 
 			bAnterior.setPreferredSize(new Dimension(55, 120));
@@ -245,6 +246,20 @@ class PanelVisitados extends JPanel
 					if (imágenes.size() > LENGTH)
 						imagen[i] = imágenes.size() - LENGTH + i;
 					label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+					
+					if (i < vistas.size()){
+						DescripcionVivienda dV = vistas.get(imagen[i]);
+						String localización = "Madrid, ";
+						String[] loca = dV.getLocalizacion().split("/");
+						loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+						localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+						String mensaje = "<html><p>Nombre:" + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
+								"Tipo:" + tipoToString(dV.getTipo()) + "<br>" +
+								"Estado:" + estadoToString(dV.getEstado()) + "<br>" +
+								"Localización:" + localización + "<br>" +
+								"Superficie:" + dV.getSuperficie() +"m<sup>2</sup></p></html>";
+						label[i].setToolTipText(mensaje);
+					}
 				}
 			}
 
