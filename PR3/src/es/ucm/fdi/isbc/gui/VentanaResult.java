@@ -136,13 +136,8 @@ class VentanaResult extends JDialog
 								for (int j = 0; j < aL.size() && !encontrado; j++)
 									if (e.getSource() == imagen[j]) {
 										if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
-/////////////////////////////////////////
-											System.out.println(aL.get(j).getTitulo() + "\t1");
 											VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
-											System.out.println(aL.get(j).getTitulo() + "\t2");
 											VentanaPpal.panelVisitados.actualizarPanel();
-											System.out.println(aL.get(j).getTitulo() + "\t3\n");
-/////////////////////////////////////////
 										}
 										encontrado = true;
 										dispose();
