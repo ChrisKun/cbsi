@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -33,7 +32,6 @@ class PanelVisitados extends JPanel
 
 		private static Dimension dim;
 		private static ArrayList<DescripcionVivienda> vistas;
-		//private static ArrayList<ImageIcon> imagenes;
 		private static Galeria galeria;
 		
 		private static JButton bAnterior;
@@ -58,14 +56,11 @@ class PanelVisitados extends JPanel
 			setBorder(BorderFactory.createEtchedBorder());
 			
 			vistas = new ArrayList<DescripcionVivienda>();
-			//imagenes = new ArrayList<ImageIcon>();
 			galeria = new Galeria();
 	
 			dim = Toolkit.getDefaultToolkit().getScreenSize();
 			dim.setSize(dim.width - 100, dim.height - 100);
 
-			//setMinimumSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
-			//setSize(new Dimension((int) (dim.width * 0.73), (int) (dim.height * 0.12)));
 			setMinimumSize(DIM_PANEL_PRINCIPAL);
 			setMaximumSize(DIM_PANEL_PRINCIPAL);
 			setSize(DIM_PANEL_PRINCIPAL);
@@ -146,9 +141,6 @@ class PanelVisitados extends JPanel
 							imagen[i] = imagen[i - 1];
 							label[i].setIcon(label[i - 1].getIcon());
 							label[i].setToolTipText(label[i - 1].getToolTipText());
-//							imagen[i]--;
-//							actualizarToolTip(i);
-//							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
 						}
 						imagen[0]--;
 						actualizarToolTip(0);
@@ -166,9 +158,6 @@ class PanelVisitados extends JPanel
 							imagen[i] = imagen[i + 1];
 							label[i].setIcon(label[i + 1].getIcon());
 							label[i].setToolTipText(label[i + 1].getToolTipText());
-//							imagen[i]++;
-//							actualizarToolTip(i);
-//							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
 						}
 						imagen[LENGTH - 1]++;
 						actualizarToolTip(LENGTH-1);
@@ -206,8 +195,6 @@ class PanelVisitados extends JPanel
 			{
 				vistas.add(vivienda);
 				galeria.addFoto(imagen, vivienda.getId());
-				//imagenes.add(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING)));
-				//Añadimos al final del visitados la nueva vivienda, mas adelante se actualiza y recoloca todo en su sitio
 			}
 
 		/* Otros métodos */
@@ -226,9 +213,7 @@ class PanelVisitados extends JPanel
 			 *  Sirve para actualizar el panel a las últimas casas visitadas por el usuario
 			 */
 		 	public void actualizarPanel()
-			{
-				//galeria.setFotos(imagenes);
-		 		
+			{		 		
 				//Rellenamos con los últimos añadidos por el usuario.
 				if (vistas.size() > LENGTH)
 					for (int i = 0; i < LENGTH; i++) {
@@ -236,16 +221,15 @@ class PanelVisitados extends JPanel
 						imagen[i] = vistas.size() - LENGTH + i;
 						actualizarToolTip(i);
 					}
-				else
-					actualizarToolTip(vistas.size()-1);
-			}   
+				else actualizarToolTip(vistas.size()-1);
+			}
 
 		/* AUXILIARES */
 
 			/**
 			 * Esto sólo es para ver en la consola el contenido del ArrayList y depurar más rápido.
 			 */
-			public void mostrarViviendas()
+			void mostrarViviendas()
 			{
 				for (Iterator<DescripcionVivienda> it = vistas.iterator(); it.hasNext(); )
 					System.out.println(it.next().getTitulo());
@@ -279,31 +263,38 @@ class PanelVisitados extends JPanel
 			{
 				
 				if (index < vistas.size()) {
-					if (vistas.get(imagen[index]).getId() != galeria.getIdIcon((ImageIcon)label[index].getIcon())){  //Si tienen mismo id, entonces tienen mismo contenido
-						DescripcionVivienda dV = vistas.get(imagen[index]);
-						String localización = "Madrid, ";
-						String[] loca = dV.getLocalizacion().split("/");
-						loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-						localización += /*VentanaPpal.transformar(*/loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1)/*)*/;
-						String mensaje = "<html>" +
-								"Nombre:  " + /*VentanaPpal.transformar(*/dV.getTitulo()/*)*/ + "<br>" +
+					DescripcionVivienda dV = vistas.get(imagen[index]);
+					String localización = "Madrid, ";
+					String[] loca = dV.getLocalizacion().split("/");
+					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+					localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+					String mensaje = "<html>" +
+							"Nombre:  " + /*VentanaPpal.transformar(*/dV.getTitulo()/*)*/ + "<br>" +
+							"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
+							"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
+							"Localización:  " + localización + "<br>" +
+							"Superficie:  " + dV.getSuperficie() + "m<sup>2</sup></html>";
+					
+					label[index].setToolTipText(mensaje);
+
+					//Si tienen mismo id, entonces tienen mismo contenido
+					if (vistas.get(imagen[index]).getId() != galeria.getIdIcon((ImageIcon)label[index].getIcon())) {
+						dV = vistas.get(imagen[index]);
+						localización = "Madrid, ";
+						String[] loca1 = dV.getLocalizacion().split("/");
+						loca1[0] = loca1[loca1.length - 1].replaceAll("-", " ");
+						localización += VentanaPpal.transformar(loca1[0].substring(0, 1).toUpperCase() + loca1[0].substring(1));
+						String mensaje1 = "<html>" +
+								"Nombre:  " + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
 								"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
 								"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
 								"Localización:  " + localización + "<br>" +
 								"Superficie:  " + dV.getSuperficie() +"m<sup>2</sup></html>";
 						
-						label[index].setToolTipText(mensaje);
+						label[index].setToolTipText(mensaje1);
 						label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
 					}
-					//ELSE
-					//		No se hace nada, porque está actualizado.
 				}
-				else
-					//Cargamos fake-image
-					label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
-
-				
 			}
 
 }
-

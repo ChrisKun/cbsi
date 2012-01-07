@@ -9,9 +9,6 @@ import java.util.Iterator;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
-import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 class Galeria
 {
@@ -21,7 +18,7 @@ class Galeria
 		private ArrayList<ImageIcon> fotos;
 		private ArrayList<Integer> idFotos;
 		private static Image noFoto;
-		private static String noFotoPath = "http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg";
+		private static final String NO_FOTO_PATH = "http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg";
 
     /** Constructores **/
 	
@@ -30,7 +27,7 @@ class Galeria
 			try {
 				fotos = new ArrayList<ImageIcon>();
 				idFotos = new ArrayList<Integer>();
-				ImageIcon imageIcon = new ImageIcon(new URL(noFotoPath), "No hay foto");
+				ImageIcon imageIcon = new ImageIcon(new URL(NO_FOTO_PATH), "No hay foto");
 				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
 			catch (MalformedURLException e) {
@@ -43,8 +40,7 @@ class Galeria
 			try {
 				this.fotos = fotos;
 				this.idFotos = idFotos;
-				ImageIcon imageIcon = new ImageIcon(new URL(noFotoPath), 
-						"No hay foto");
+				ImageIcon imageIcon = new ImageIcon(new URL(NO_FOTO_PATH), "No hay foto");
 				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
 			catch (MalformedURLException e) {
@@ -54,6 +50,23 @@ class Galeria
 
 	/** Métodos **/
 		
+		/* Getters */
+
+			public ArrayList<ImageIcon> getFotos()
+			{
+				return fotos;
+			}
+
+			public ImageIcon getFoto(int pos)
+			{
+				return fotos.get(pos);
+			}
+
+			public int getIdPos(int index)
+			{
+				return idFotos.get(index);
+			}
+
 		/* Setters */
 		
 			public void setFotos(ArrayList<ImageIcon> fotos, ArrayList<Integer> idFotos)
@@ -66,23 +79,6 @@ class Galeria
 			{
 				fotos.add(newFoto);
 				idFotos.add(idFoto);
-			}
-			
-		/* Getters */
-			
-			public ArrayList<ImageIcon> getFotos()
-			{
-				return fotos;
-			}
-			
-			public ImageIcon getFoto(int pos)
-			{
-				return fotos.get(pos);
-			}
-			
-			
-			public int getIdPos(int index) {
-				return idFotos.get(index);
 			}
 			
 			//Dada una imagen, devuelve su id correspondiente Importante: usa la descripcion de la imagen

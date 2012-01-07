@@ -88,12 +88,12 @@ class VentanaResult extends JDialog
 
 				for (int i = 0; i < aL.size(); i++) {
 
-					String titulo = /*VentanaPpal.transformar(*/descrs.get(i).getTitulo()/*)*/;
+					String titulo = VentanaPpal.transformar(descrs.get(i).getTitulo());
 					String localizacion = "Madrid, ";
 					String[] loca = descrs.get(i).getLocalizacion().split("/");
 					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-					localizacion += /*VentanaPpal.transformar(*/loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1)/*)*/;
-					String descripcion = VentanaPpal.cortarString(/*VentanaPpal.transformar(*/descrs.get(i).getDescripcion()/*)*/, 
+					localizacion += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+					String descripcion = VentanaPpal.cortarString(VentanaPpal.transformar(descrs.get(i).getDescripcion()), 
 							TOPE, "DESCRIPCIÓN: ".length());
 
 					String descr =	"<html><p align=\"justify\">" +
