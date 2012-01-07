@@ -69,9 +69,9 @@ public class VentanaPpal extends JFrame implements Observer
 			setVisible(true);
 		}
 
-	/** Métodos **/
+	/** MÃ©todos **/
 		
-		/* Métodos que implementan la interfaz Observer */
+		/* MÃ©todos que implementan la interfaz Observer */
 
 			public void update(Observable o, Object arg)
 			{
@@ -93,11 +93,11 @@ public class VentanaPpal extends JFrame implements Observer
 				}
 			}
 
-		/* Otros métodos */
+		/* Otros mÃ©todos */
 
 			/**
-			* Devuelve el menú de la ventana
-			* @return El menú de la ventana
+			* Devuelve el menÃº de la ventana
+			* @return El menÃº de la ventana
 			*/
 			private JMenuBar inicializaMenus()
 			{
@@ -125,8 +125,8 @@ public class VentanaPpal extends JFrame implements Observer
 			{
 				/**
 				 * Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
-				 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
-				 * Si la cadena es vacía devolvemos true;
+				 * que cero ya que la superficie, el nÃºmero de habitaciones y de baÃ±os no puede ser negativo.
+				 * Si la cadena es vacÃ­a devolvemos true;
 				 */
 
 				if (entero.isEmpty()) return true;
@@ -176,21 +176,21 @@ public class VentanaPpal extends JFrame implements Observer
 				return cortarString;
 			}
 			
-			static String transformar(String string)
+		/*	static String transformar(String string)
 			{
 				String s = string;
 				String transformar = "";
 				while (!s.isEmpty()) {
 					String car = s.substring(0, 1);
 					s = s.substring(1);
-					if (car.equals("Ã") || car.equals("Â") || car.equals("m") || car.equals(",") || car.equals(".")) {
+					if (car.equals("Ãƒ") || car.equals("Ã‚") || car.equals("m") || car.equals(",") || car.equals(".")) {
 						if (s.length() > 0) {
 							car += s.substring(0, 1);
 							s = s.substring(1);
 							if (car.charAt(0) == 'm' && car.charAt(1) != '2') {
 								transformar += "m";
 								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
+								if (car.equals("Ãƒ") || car.equals("Ã‚")) {
 									car += s.substring(0, 1);
 									s = s.substring(1);
 								}
@@ -198,7 +198,7 @@ public class VentanaPpal extends JFrame implements Observer
 							else if (car.charAt(0) == ',' && car.charAt(1) != ' ') {
 								transformar += ", ";
 								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
+								if (car.equals("Ãƒ") || car.equals("Ã‚")) {
 									car = s.substring(0, 1);
 									s = s.substring(1);
 								}
@@ -207,33 +207,33 @@ public class VentanaPpal extends JFrame implements Observer
 									&& !VentanaPpal.enteroEsCorrecto(car.substring(1))) {
 								transformar += ". ";
 								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
+								if (car.equals("Ãƒ") || car.equals("Ã‚")) {
 									car = s.substring(0, 1);
 									s = s.substring(1);
 								}
 							}
 						}
 					}
-					else if (car.equals("â")) {
+					else if (car.equals("Ã¢")) {
 						if (s.length() > 1) {
 							car += s.substring(0, 1);
 							s = s.substring(1);
-							if (car.charAt(1) == '‚') {
+							if (car.charAt(1) == 'â€š') {
 								car += s.substring(0, 1);
 								s = s.substring(1);
-								if (car.charAt(2) != '¬') {
+								if (car.charAt(2) != 'Â¬') {
 									transformar += car.substring(0, 2);
 									car = car.substring(2);
-									if (car.equals("Ã") || car.equals("Â")) {
+									if (car.equals("Ãƒ") || car.equals("Ã‚")) {
 										car = s.substring(0, 1);
 										s = s.substring(1);
 									}
 								}
 							}
 							else {
-								transformar += "â";
+								transformar += "Ã¢";
 								car = car.substring(1);
-								if (car.equals("Ã") || car.equals("Â")) {
+								if (car.equals("Ãƒ") || car.equals("Ã‚")) {
 									car = s.substring(0, 1);
 									s = s.substring(1);
 								}
@@ -243,39 +243,39 @@ public class VentanaPpal extends JFrame implements Observer
 					transformar += codificar(car);
 				}
 				return transformar;
-			}
+			}*/
 			
 			static String codificar(String cod)
 			{
-				// Debido a la propia codificación del Eclipse y a que no reconoce ciertos caracteres: Á, Í, Ï se escriben aquí
-				// de la misma forma lo cuál generaría un problema en la conversión, por suerte, las dos últimas no son letras
+				// Debido a la propia codificaciÃ³n del Eclipse y a que no reconoce ciertos caracteres: Ã�, Ã�, Ã� se escriben aquÃ­
+				// de la misma forma lo cuÃ¡l generarÃ­a un problema en la conversiÃ³n, por suerte, las dos Ãºltimas no son letras
 				// muy utilizadas.
 				
-				if (cod.equals("Ã­")) return "í";
-				else if (cod.equals("Ã©")) return "é";
-				else if (cod.equals("Ã¡")) return "á";
-				else if (cod.equals("Ã³")) return "ó";
-				else if (cod.equals("Ãº")) return "ú";
-				else if (cod.equals("Ã±")) return "ñ";
-				else if (cod.equals("Ã�")) return "Á";
-				else if (cod.equals("Ã‰")) return "É";
-				else if (cod.equals("Ã�")) return "Í";
-				else if (cod.equals("Ã“")) return "Ó";
-				else if (cod.equals("Ãš")) return "Ú";
-				else if (cod.equals("Ã‘")) return "Ñ";
-				else if (cod.equals("Ã„")) return "Ä";
-				else if (cod.equals("Ã‹")) return "Ë";
-				else if (cod.equals("Ã�")) return "Ï";
-				else if (cod.equals("Ã–")) return "Ö";
-				else if (cod.equals("Ãœ")) return "Ü";
-				else if (cod.equals("Ã¤")) return "ä";
-				else if (cod.equals("Ã«")) return "ë";
-				else if (cod.equals("Ã¯")) return "ï";
-				else if (cod.equals("Ã¶")) return "ö";
-				else if (cod.equals("Ã¼")) return "ü";
-				else if (cod.equals("Âª")) return "ª";
-				else if (cod.equals("Âº")) return "º";
-				else if (cod.equals("â‚¬")) return "€";
+				if (cod.equals("ÃƒÂ­")) return "Ã­";
+				else if (cod.equals("ÃƒÂ©")) return "Ã©";
+				else if (cod.equals("ÃƒÂ¡")) return "Ã¡";
+				else if (cod.equals("ÃƒÂ³")) return "Ã³";
+				else if (cod.equals("ÃƒÂº")) return "Ãº";
+				else if (cod.equals("ÃƒÂ±")) return "Ã±";
+				else if (cod.equals("Ãƒï¿½")) return "Ã�";
+				else if (cod.equals("Ãƒâ€°")) return "Ã‰";
+				else if (cod.equals("Ãƒï¿½")) return "Ã�";
+				else if (cod.equals("Ãƒâ€œ")) return "Ã“";
+				else if (cod.equals("ÃƒÅ¡")) return "Ãš";
+				else if (cod.equals("Ãƒâ€˜")) return "Ã‘";
+				else if (cod.equals("Ãƒâ€ž")) return "Ã„";
+				else if (cod.equals("Ãƒâ€¹")) return "Ã‹";
+				else if (cod.equals("Ãƒï¿½")) return "Ã�";
+				else if (cod.equals("Ãƒâ€“")) return "Ã–";
+				else if (cod.equals("ÃƒÅ“")) return "Ãœ";
+				else if (cod.equals("ÃƒÂ¤")) return "Ã¤";
+				else if (cod.equals("ÃƒÂ«")) return "Ã«";
+				else if (cod.equals("ÃƒÂ¯")) return "Ã¯";
+				else if (cod.equals("ÃƒÂ¶")) return "Ã¶";
+				else if (cod.equals("ÃƒÂ¼")) return "Ã¼";
+				else if (cod.equals("Ã‚Âª")) return "Âª";
+				else if (cod.equals("Ã‚Âº")) return "Âº";
+				else if (cod.equals("Ã¢â€šÂ¬")) return "â‚¬";
 				else if (cod.equals("m2")) return "m<sup>2</sup>";
 				else return cod;
 			}

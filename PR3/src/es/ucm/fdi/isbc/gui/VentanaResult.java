@@ -88,19 +88,19 @@ class VentanaResult extends JDialog
 
 				for (int i = 0; i < aL.size(); i++) {
 
-					String título = VentanaPpal.transformar(descrs.get(i).getTitulo());
-					String localización = "Madrid, ";
+					String titulo = /*VentanaPpal.transformar(*/descrs.get(i).getTitulo()/*)*/;
+					String localizacion = "Madrid, ";
 					String[] loca = descrs.get(i).getLocalizacion().split("/");
 					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-					localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
-					String descripción = VentanaPpal.cortarString(VentanaPpal.transformar(descrs.get(i).getDescripcion()), 
+					localizacion += /*VentanaPpal.transformar(*/loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1)/*)*/;
+					String descripcion = VentanaPpal.cortarString(/*VentanaPpal.transformar(*/descrs.get(i).getDescripcion()/*)*/, 
 							TOPE, "DESCRIPCIÓN: ".length());
 
 					String descr =	"<html><p align=\"justify\">" +
-							"<b><u>NOMBRE</u></b>: " + título + "<br>" +
-							"<b><u>LOCALIZACIÓN</u></b>: " + localización + "<br>" +
+							"<b><u>NOMBRE</u></b>: " + titulo + "<br>" +
+							"<b><u>LOCALIZACIÓN</u></b>: " + localizacion + "<br>" +
 							"<b><u>PRECIO</u></b>: " + descrs.get(i).getPrecio() + " €<br>" +
-							"<b><u>DESCRIPCIÓN</u></b>: " + descripción + "</p></html>";			
+							"<b><u>DESCRIPCIÓN</u></b>: " + descripcion + "</p></html>";			
 
 					imagen[i] = new JLabel();
 					JLabel label = new JLabel(descr);

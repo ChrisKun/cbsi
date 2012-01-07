@@ -5,9 +5,13 @@ import java.awt.Image;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 class Galeria
 {
@@ -15,7 +19,9 @@ class Galeria
 	/** Atributos **/
 	
 		private ArrayList<ImageIcon> fotos;
+		private ArrayList<Integer> idFotos;
 		private static Image noFoto;
+		private static String noFotoPath = "http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg";
 
     /** Constructores **/
 	
@@ -23,8 +29,8 @@ class Galeria
 		{
 			try {
 				fotos = new ArrayList<ImageIcon>();
-				ImageIcon imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
-						"No hay foto");
+				idFotos = new ArrayList<Integer>();
+				ImageIcon imageIcon = new ImageIcon(new URL(noFotoPath), "No hay foto");
 				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
 			catch (MalformedURLException e) {
@@ -32,11 +38,12 @@ class Galeria
 			}
 		}
 		
-		public Galeria(ArrayList<ImageIcon> fotos)
+		public Galeria(ArrayList<ImageIcon> fotos, ArrayList<Integer> idFotos)
 		{
 			try {
 				this.fotos = fotos;
-				ImageIcon imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
+				this.idFotos = idFotos;
+				ImageIcon imageIcon = new ImageIcon(new URL(noFotoPath), 
 						"No hay foto");
 				noFoto = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 			}
@@ -49,9 +56,73 @@ class Galeria
 		
 		/* Setters */
 		
-			public void setFotos(ArrayList<ImageIcon> fotos)
+			public void setFotos(ArrayList<ImageIcon> fotos, ArrayList<Integer> idFotos)
 			{
 				this.fotos = fotos;
+				this.idFotos = idFotos;
+			}
+			
+			public void addFoto(ImageIcon newFoto, int idFoto)
+			{
+				fotos.add(newFoto);
+				idFotos.add(idFoto);
+			}
+			
+		/* Getters */
+			
+			public ArrayList<ImageIcon> getFotos()
+			{
+				return fotos;
+			}
+			
+			public ImageIcon getFoto(int pos)
+			{
+				return fotos.get(pos);
+			}
+			
+			
+			public int getIdPos(int index) {
+				return idFotos.get(index);
+			}
+			
+			//Dada una imagen, devuelve su id correspondiente Importante: usa la descripcion de la imagen
+			public Integer getIdIcon(ImageIcon img) {
+				
+				ImageIcon imageIconFake = new ImageIcon(noFoto, "No hay foto");
+				
+				if(imageIconFake.getDescription() == img.getDescription())
+					return -1;
+				
+				int pos = 0;
+				boolean found = false;
+				Iterator<ImageIcon> it = fotos.iterator();
+				while(!found && it.hasNext())
+				{
+					found = it.next().getDescription() == img.getDescription();
+					if(found)
+						return idFotos.get(pos);
+					else
+						pos++;
+				}
+				return -1; //No se encontró la foto y por tanto el id
+			}
+
+			
+			// Busca una imagen através del id de su descripcion y devuelve la imagen
+			public ImageIcon getidFoto(int idFoto)
+			{
+				int pos = 0;
+				boolean found = false;
+				Iterator<Integer> it = idFotos.iterator();
+				while(!found && it.hasNext())
+				{
+					found = it.next() == idFoto;
+					if(found)
+						return fotos.get(pos);
+					else
+						pos++;
+				}
+				return null; //No se encontró la foto
 			}
 	
 		/* Otros métodos */
@@ -60,13 +131,13 @@ class Galeria
 			 * @param num
 			 * @return una imagen de tamaño 100 x 100 VISTA PREVIA
 			 */
-			public Icon getVistaPrevia(final int NUM, final int LENGTH)
+			public Icon getVistaPrevia(final int NUM)
 			{
 				if (NUM >= 0 && NUM < fotos.size()) {
-					Image mini = fotos.get(NUM).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
-					return new ImageIcon(mini);
+					Image mini = fotos.get(NUM).getImage().getScaledInstance(100, 100, Image.SCALE_FAST); //Image.SCALE_AREA_AVERAGING
+					return new ImageIcon(mini, fotos.get(NUM).getDescription());
 				}
-				else return new ImageIcon(noFoto);
+				else return new ImageIcon(noFoto, "No hay foto");
 			}
 
 			/**
@@ -88,7 +159,7 @@ class Galeria
 					}
 					else return fotos.get(num);
 				}
-				else return new ImageIcon(noFoto.getScaledInstance(400, 400, Image.SCALE_AREA_AVERAGING));
+				else return new ImageIcon(noFoto.getScaledInstance(400, 400, Image.SCALE_FAST)); //Image.SCALE_AREA_AVERAGING
 			}
 			
 			/**
@@ -100,7 +171,7 @@ class Galeria
 			{
 				int valEscalaX = (int) (imageIcon.getIconWidth() * value );
 				int valEscalaY = (int) (imageIcon.getIconHeight() * value );
-				Image mini = imageIcon.getImage().getScaledInstance(valEscalaX, valEscalaY, Image.SCALE_AREA_AVERAGING);
+				Image mini = imageIcon.getImage().getScaledInstance(valEscalaX, valEscalaY, Image.SCALE_FAST); //Image.SCALE_AREA_AVERAGING
 				return new ImageIcon(mini);
 			}
 
@@ -113,4 +184,5 @@ class Galeria
 			{
 				return Math.abs((a / new Float(b)) - 2f);
 			}
+
 }

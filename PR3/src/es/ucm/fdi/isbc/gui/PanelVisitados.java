@@ -33,7 +33,7 @@ class PanelVisitados extends JPanel
 
 		private static Dimension dim;
 		private static ArrayList<DescripcionVivienda> vistas;
-		private static ArrayList<ImageIcon> imágenes;
+		//private static ArrayList<ImageIcon> imagenes;
 		private static Galeria galeria;
 		
 		private static JButton bAnterior;
@@ -58,7 +58,7 @@ class PanelVisitados extends JPanel
 			setBorder(BorderFactory.createEtchedBorder());
 			
 			vistas = new ArrayList<DescripcionVivienda>();
-			imágenes = new ArrayList<ImageIcon>();
+			//imagenes = new ArrayList<ImageIcon>();
 			galeria = new Galeria();
 	
 			dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -123,7 +123,7 @@ class PanelVisitados extends JPanel
 			
 			// Se inicia la vista previa
 			for (int i = 0; i < LENGTH; i++)
-				label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+				label[i].setIcon(galeria.getVistaPrevia(imagen[i]));
 			
 			for (int i = 0; i < LENGTH; i++)
 				label[i].addMouseListener(new MouseAdapter()
@@ -142,11 +142,16 @@ class PanelVisitados extends JPanel
 				public void actionPerformed(ActionEvent e)
 				{
 					if (imagen[0] > 0) {
-						for (int i = 0; i < LENGTH; i++) {
-							imagen[i]--;
-							actualizarToolTip(i);
-							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+						for (int i = LENGTH-1; i > 0; i--) {
+							imagen[i] = imagen[i - 1];
+							label[i].setIcon(label[i - 1].getIcon());
+							label[i].setToolTipText(label[i - 1].getToolTipText());
+//							imagen[i]--;
+//							actualizarToolTip(i);
+//							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
 						}
+						imagen[0]--;
+						actualizarToolTip(0);
 					}
 				}
 			}
@@ -156,12 +161,17 @@ class PanelVisitados extends JPanel
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					if (imagen[LENGTH - 1] < imágenes.size() - 1) {
-						for (int i = 0; i < LENGTH; i++) {
-							imagen[i]++;
-							actualizarToolTip(i);
-							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
+					if (imagen[LENGTH - 1] < vistas.size() - 1) {
+						for (int i = 0; i < LENGTH-1; i++) {
+							imagen[i] = imagen[i + 1];
+							label[i].setIcon(label[i + 1].getIcon());
+							label[i].setToolTipText(label[i + 1].getToolTipText());
+//							imagen[i]++;
+//							actualizarToolTip(i);
+//							label[i].setIcon(galeria.getVistaPrevia(imagen[i], LENGTH));
 						}
+						imagen[LENGTH - 1]++;
+						actualizarToolTip(LENGTH-1);
 					}
 				}
 			}
@@ -185,9 +195,9 @@ class PanelVisitados extends JPanel
 				return vistas;
 			}
 			
-			public ArrayList<ImageIcon> getImágenes()
+			public ArrayList<ImageIcon> getImagenes()
 			{
-				return imágenes;
+				return galeria.getFotos();
 			}
 
 		/* Setters */
@@ -195,7 +205,9 @@ class PanelVisitados extends JPanel
 			public void setVivienda(DescripcionVivienda vivienda, ImageIcon imagen)
 			{
 				vistas.add(vivienda);
-				imágenes.add(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING)));
+				galeria.addFoto(imagen, vivienda.getId());
+				//imagenes.add(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING)));
+				//Añadimos al final del visitados la nueva vivienda, mas adelante se actualiza y recoloca todo en su sitio
 			}
 
 		/* Otros métodos */
@@ -209,18 +221,24 @@ class PanelVisitados extends JPanel
 				if (index >= 0 && index < vistas.size()) return vistas.remove(index);
 				else return null;
 			}
-
-			public void actualizarPanel()
+			
+			/**
+			 *  Sirve para actualizar el panel a las últimas casas visitadas por el usuario
+			 */
+		 	public void actualizarPanel()
 			{
-				galeria.setFotos(imágenes);
-				for (int i = 0; i < LENGTH; i++) {
-
-					if (imágenes.size() > LENGTH)
-						imagen[i] = imágenes.size() - LENGTH + i;
-					
-					actualizarToolTip(i);
-				}
-			}
+				//galeria.setFotos(imagenes);
+		 		
+				//Rellenamos con los últimos añadidos por el usuario.
+				if (vistas.size() > LENGTH)
+					for (int i = 0; i < LENGTH; i++) {
+						//imagen[i] = vistas.size() - LENGTH + i;
+						imagen[i] = vistas.size() - LENGTH + i;
+						actualizarToolTip(i);
+					}
+				else
+					actualizarToolTip(vistas.size()-1);
+			}   
 
 		/* AUXILIARES */
 
@@ -259,23 +277,32 @@ class PanelVisitados extends JPanel
 			
 			private void actualizarToolTip(int index)
 			{
+				
 				if (index < vistas.size()) {
-					DescripcionVivienda dV = vistas.get(imagen[index]);
-					String localización = "Madrid, ";
-					String[] loca = dV.getLocalizacion().split("/");
-					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-					localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
-					String mensaje = "<html>" +
-							"Nombre:  " + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
-							"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
-							"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
-							"Localización:  " + localización + "<br>" +
-							"Superficie:  " + dV.getSuperficie() +"m<sup>2</sup></html>";
-					
-					label[index].setToolTipText(mensaje);
+					if (vistas.get(imagen[index]).getId() != galeria.getIdIcon((ImageIcon)label[index].getIcon())){  //Si tienen mismo id, entonces tienen mismo contenido
+						DescripcionVivienda dV = vistas.get(imagen[index]);
+						String localización = "Madrid, ";
+						String[] loca = dV.getLocalizacion().split("/");
+						loca[0] = loca[loca.length - 1].replaceAll("-", " ");
+						localización += /*VentanaPpal.transformar(*/loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1)/*)*/;
+						String mensaje = "<html>" +
+								"Nombre:  " + /*VentanaPpal.transformar(*/dV.getTitulo()/*)*/ + "<br>" +
+								"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
+								"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
+								"Localización:  " + localización + "<br>" +
+								"Superficie:  " + dV.getSuperficie() +"m<sup>2</sup></html>";
+						
+						label[index].setToolTipText(mensaje);
+						label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
+					}
+					//ELSE
+					//		No se hace nada, porque está actualizado.
 				}
+				else
+					//Cargamos fake-image
+					label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
 
-				label[index].setIcon(galeria.getVistaPrevia(imagen[index], LENGTH));
+				
 			}
 
 }
