@@ -327,7 +327,8 @@ public class VentanaPpal extends JFrame implements Observer
 				else if (cod.equals("â‚¬")) return "€";
 				else if (cod.equals("Âº")) return "º";
 				else if (cod.equals("Âª")) return "ª";
-				else if (cod.equals("m2")) return "metros cuadrados";
+				else if (cod.equals("Â¡")) return "¡";
+				else if (cod.equals("m2")) return " metros cuadrados";
 				else return cod;
 			}
 

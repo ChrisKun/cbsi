@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -29,9 +27,9 @@ class VentanaResult extends JDialog
 		private static Dimension dim;
 		private static ArrayList<DescripcionVivienda> aL;
 		private static JLabel[] imagen;
-		private static int TOPE;
 		private static final double TOPE_FIJO = 70;
 		private static final double WIDTH_FIJO = 1130;
+		static int TOPE;
 		
 	/** Constructores **/
 		
@@ -95,6 +93,7 @@ class VentanaResult extends JDialog
 					localizacion += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
 					String descripcion = VentanaPpal.cortarString(VentanaPpal.transformar(descrs.get(i).getDescripcion()), 
 							TOPE, "DESCRIPCIÓN: ".length());
+					descripcion = descripcion.substring(0, 1).toUpperCase() + descripcion.substring(1);
 
 					// Actualizamos las DescripcionesVivienda con los textos ya corregidos para no tener que volver a corregirlos
 						// luego. La localización no la actualizamos por si tenemos que usar la ruta del árbol más adelante.
@@ -114,39 +113,27 @@ class VentanaResult extends JDialog
 							JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 					scrollPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-					try {
+					imagen[i].setIcon(Galeria.IMAGENES[descrs.get(i).getId()]);
+					imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-						ImageIcon imageIcon = new ImageIcon(new URL(descrs.get(i).getUrlFoto()));
-
-						if (imageIcon.getIconHeight() == -1)
-							imageIcon = Galeria.NO_FOTO_NORMAL;
-
-						imagen[i].setIcon(imageIcon);
-						imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-
-						imagen[i].addMouseListener(new MouseAdapter() {
-							public void mouseClicked(MouseEvent e)
-							{
-								boolean encontrado = false;
-								for (int j = 0; j < aL.size() && !encontrado; j++)
-									if (e.getSource() == imagen[j]) {
-										if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
-											setVisible(false);
-											new VentanaDescripcion(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
-											VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
-											VentanaPpal.panelVisitados.actualizarPanel();
-										}
-										encontrado = true;
-										dispose();
+					imagen[i].addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e)
+						{
+							boolean encontrado = false;
+							for (int j = 0; j < aL.size() && !encontrado; j++)
+								if (e.getSource() == imagen[j]) {
+									if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
+										setVisible(false);
+										new VentanaDescripcion(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
+										VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
+										VentanaPpal.panelVisitados.actualizarPanel();
 									}
-							}
+									encontrado = true;
+									dispose();
+								}
 						}
-						);
-
 					}
-					catch (MalformedURLException e) {
-						e.printStackTrace();
-					}
+					);
 					
 					p.add(imagen[i]);
 					p.add(scrollPane);

@@ -1,9 +1,12 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
+
+import javax.swing.ImageIcon;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -24,6 +27,7 @@ import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 import es.ucm.fdi.isbc.funcSimilitud.MyCoordinateSimilarityFunction;
 import es.ucm.fdi.isbc.funcSimilitud.SimilitudArbol;
+import es.ucm.fdi.isbc.gui.Galeria;
 import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
@@ -90,13 +94,16 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 		//tree = new JTree(top);
 		tree = new Arbol("/");
+		Galeria.IMAGENES = new ImageIcon[cases.size()];
+
 		for (CBRCase c : cases) {
 			
 			DescripcionVivienda dV = (DescripcionVivienda)c.getDescription();
 			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
-			
-			//VentanaPpal.guardarImagenes(dV.getId(), dV.getUrlFoto());
-			
+			File file = new File("images\\" + dV.getId() + ".jpg");
+			if (file.exists()) Galeria.IMAGENES[dV.getId()] = new ImageIcon(file.getPath());
+			else Galeria.IMAGENES[dV.getId()] = Galeria.NO_FOTO_NORMAL;
+
 				/*// System.out.println(c);
 				barrio = "";
 				zona = "";

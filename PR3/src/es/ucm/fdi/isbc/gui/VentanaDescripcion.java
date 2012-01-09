@@ -23,7 +23,9 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasFinca;
+import es.ucm.fdi.isbc.viviendas.representacion.ExtrasOtros;
 
 public class VentanaDescripcion extends JDialog implements ItemListener
 {
@@ -38,7 +40,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			private static JEditorPane[] editorPane;
 			private static DescripcionVivienda vivienda;
 			private static ImageIcon imageIcon;
-			
+
 			JCheckBox ascensor;
 			JCheckBox trastero;
 			JCheckBox energiaSolar;
@@ -46,6 +48,35 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			JCheckBox parkingComunitario;
 			JCheckBox garajePrivado;
 			JCheckBox videoPortero;
+
+			JCheckBox lavadero;
+			JCheckBox internet;
+			JCheckBox microondas;
+			JCheckBox horno;
+			JCheckBox amueblado;
+			JCheckBox cocinaOffice;
+			JCheckBox parquet;
+			JCheckBox domotica;
+			JCheckBox armarios;
+			JCheckBox tv;
+			JCheckBox lavadora;
+			JCheckBox electrodomesticos;
+			JCheckBox suiteConBanio;
+			JCheckBox puertaBlindada;
+			JCheckBox gresCeramica;
+			JCheckBox calefaccion;
+			JCheckBox aireAcondicionado;
+			JCheckBox nevera;
+
+			JCheckBox patio;
+			JCheckBox balcon;
+			JCheckBox zonaDeportiva;
+			JCheckBox zonaComunitaria;
+			JCheckBox terraza;
+			JCheckBox piscinaComunitaria;
+			JCheckBox jardinPrivado;
+			JCheckBox zonaInfantil;
+			JCheckBox piscina;
 
 	/** Constructores **/
 
@@ -96,7 +127,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 			panel.add(button[1], gridBagConstraints);
 
-			// JEditorPane en la fila 0, columna 6 y que ocupa 6x5 celdas
+			// JEditorPane en la fila 0, columna 5 y que ocupa 6x5 celdas
 			editorPane[0] = new JEditorPane();
 			gridBagConstraints.gridx = 5;
 			gridBagConstraints.gridy = 0;
@@ -134,7 +165,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			editorPane[0].setDisabledTextColor(Color.black);
 			editorPane[0].setText(texto);
 
-			// JEditorPane en la fila 6, columna 0 y que ocupa 3x5 celdas
+			// JEditorPane en la fila 6, columna 0 y que ocupa 4xREMAINDER celdas (REMAINDER es que ocupa el ancho máximo)
 			editorPane[1] = new JEditorPane();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 6;
@@ -150,24 +181,43 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			editorPane[1].setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 			editorPane[1].setEnabled(false);
 			editorPane[1].setDisabledTextColor(Color.black);
-			editorPane[1].setText("<html><font face = \"Arial\", size = 4>" + vivienda.getDescripcion() + "</html>");
-
-			// Meter las fincas en la fila 10, columna 0 y que ocupe 3x3 celdas
+			editorPane[1].setText("<html><body align=\"justify\"><font face = \"Arial\", size = 4>" + vivienda.getDescripcion().replaceAll("<br>", " ") + "</font></body></html>");
+			
+			// Meter las fincas en la fila 10, columna 0 y que ocupe 5x6 celdas
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 10;
-			gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+			gridBagConstraints.gridwidth = 6;
 			gridBagConstraints.gridheight = 5;
 			gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 			gridBagConstraints.anchor = GridBagConstraints.WEST;
 			gridBagConstraints.fill = GridBagConstraints.BOTH;
 			panel.add(getPanelFinca(), gridBagConstraints);
+			
+			// Meter los otros en la fila 10, columna 10 y que ocupa 5x6 celdas
+			gridBagConstraints.gridx = 10;
+			gridBagConstraints.gridy = 10;
+			gridBagConstraints.gridwidth = 6;
+			gridBagConstraints.gridheight = 5;
+			gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+			gridBagConstraints.anchor = GridBagConstraints.EAST;
+			gridBagConstraints.fill = GridBagConstraints.BOTH;
+			panel.add(getPanelOtros(), gridBagConstraints);
+			
+			// Meter los básicos en la fila 0, columna 10 y que ocupe 6x3 celdas
+			gridBagConstraints.gridx = 10;
+			gridBagConstraints.gridy = 0;
+			gridBagConstraints.gridwidth = 3;
+			gridBagConstraints.gridheight = 6;
+			gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+			gridBagConstraints.anchor = GridBagConstraints.CENTER;
+			gridBagConstraints.fill = GridBagConstraints.BOTH;
+			panel.add(getPanelBasicos(), gridBagConstraints);
 
 			// Hacerlo visible
 			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-			setMinimumSize(new Dimension(700, 550));
+			setMinimumSize(new Dimension(dim.width - 150, dim.height - 150));
 			setLocation((dim.width - getWidth()) / 2, (dim.height - getHeight()) / 2);
-			
-			//pack();
+
 			add(panel);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setVisible(true);
@@ -217,6 +267,60 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 					garajePrivado.setSelected(vivienda.getExtrasFinca().isGarajePrivado());
 				else if (e.getSource() == videoPortero)
 					videoPortero.setSelected(vivienda.getExtrasFinca().isVideoportero());
+				else if (e.getSource() == lavadero)
+					lavadero.setSelected(vivienda.getExtrasBasicos().isLavadero());
+				else if (e.getSource() == internet)
+					internet.setSelected(vivienda.getExtrasBasicos().isInternet());
+				else if (e.getSource() == microondas)
+					microondas.setSelected(vivienda.getExtrasBasicos().isMicroondas());
+				else if (e.getSource() == horno)
+					horno.setSelected(vivienda.getExtrasBasicos().isHorno());
+				else if (e.getSource() == amueblado)
+					amueblado.setSelected(vivienda.getExtrasBasicos().isAmueblado());
+				else if (e.getSource() == cocinaOffice)
+					cocinaOffice.setSelected(vivienda.getExtrasBasicos().isCocinaOffice());
+				else if (e.getSource() == parquet)
+					parquet.setSelected(vivienda.getExtrasBasicos().isParquet());
+				else if (e.getSource() == domotica)
+					domotica.setSelected(vivienda.getExtrasBasicos().isDomotica());
+				else if (e.getSource() == armarios)
+					armarios.setSelected(vivienda.getExtrasBasicos().isArmarios());
+				else if (e.getSource() == tv)
+					tv.setSelected(vivienda.getExtrasBasicos().isTv());
+				else if (e.getSource() == lavadora)
+					lavadora.setSelected(vivienda.getExtrasBasicos().isLavadora());
+				else if (e.getSource() == electrodomesticos)
+					electrodomesticos.setSelected(vivienda.getExtrasBasicos().isElectrodomesticos());
+				else if (e.getSource() == suiteConBanio)
+					suiteConBanio.setSelected(vivienda.getExtrasBasicos().isSuiteConBanio());
+				else if (e.getSource() == puertaBlindada)
+					puertaBlindada.setSelected(vivienda.getExtrasBasicos().isPuertaBlindada());
+				else if (e.getSource() == gresCeramica)
+					gresCeramica.setSelected(vivienda.getExtrasBasicos().isGresCeramica());
+				else if (e.getSource() == calefaccion)
+					calefaccion.setSelected(vivienda.getExtrasBasicos().isCalefaccion());
+				else if (e.getSource() == aireAcondicionado)
+					aireAcondicionado.setSelected(vivienda.getExtrasBasicos().isAireAcondicionado());
+				else if (e.getSource() == nevera)
+					nevera.setSelected(vivienda.getExtrasBasicos().isNevera());
+				else if (e.getSource() == patio)
+					patio.setSelected(vivienda.getExtrasOtros().isPatio());	
+				else if (e.getSource() == balcon)
+					balcon.setSelected(vivienda.getExtrasOtros().isBalcon());
+				else if (e.getSource() == zonaDeportiva)
+					zonaDeportiva.setSelected(vivienda.getExtrasOtros().isZonaDeportiva());
+				else if (e.getSource() == zonaComunitaria)
+					zonaComunitaria.setSelected(vivienda.getExtrasOtros().isZonaComunitaria());
+				else if (e.getSource() == terraza)
+					terraza.setSelected(vivienda.getExtrasOtros().isTerraza());
+				else if (e.getSource() == piscinaComunitaria)
+					piscinaComunitaria.setSelected(vivienda.getExtrasOtros().isPiscinaComunitaria());
+				else if (e.getSource() == jardinPrivado)
+					jardinPrivado.setSelected(vivienda.getExtrasOtros().isJardinPrivado());
+				else if (e.getSource() == zonaInfantil)
+					zonaInfantil.setSelected(vivienda.getExtrasOtros().isZonaInfantil());
+				else if (e.getSource() == piscina)
+					piscina.setSelected(vivienda.getExtrasOtros().isPiscina());
 			}
 			
 		/* Otros métodos */
@@ -253,8 +357,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 
 			private JPanel getPanelFinca()
 			{
-				JPanel panel = new JPanel();
-				panel.setLayout(new GridLayout(3, 3));
+				JPanel panel = new JPanel(new GridLayout(3, 3));
 
 				ascensor = new JCheckBox("Ascensor");
 				trastero = new JCheckBox("Trastero");
@@ -272,14 +375,6 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 				parkingComunitario.setSelected(eF.isParkingComunitario());
 				garajePrivado.setSelected(eF.isGarajePrivado());
 				videoPortero.setSelected(eF.isVideoportero());
-
-				ascensor.setEnabled(true);
-				trastero.setEnabled(true);
-				energiaSolar.setEnabled(true);
-				servPorteria.setEnabled(true);
-				parkingComunitario.setEnabled(true);
-				garajePrivado.setEnabled(true);
-				videoPortero.setEnabled(true);
 				
 				ascensor.addItemListener(this);
 				trastero.addItemListener(this);
@@ -299,25 +394,136 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 
 				return panel;
 			}
-			
-			/**
-			 * Hay que hacer lo mismo que en getPanelFinca
-			 * @return panelBasicos
-			 */
-			@SuppressWarnings("unused")
+
 			private JPanel getPanelBasicos()
 			{
-				return null;
+				JPanel panel = new JPanel(new GridLayout(6, 3));
+
+				lavadero = new JCheckBox("Lavedero");
+				internet = new JCheckBox("Internet");
+				microondas = new JCheckBox("Microondas");
+				horno = new JCheckBox("Horno");
+				amueblado = new JCheckBox("Amueblado");
+				cocinaOffice = new JCheckBox("Cocina-Office");
+				parquet = new JCheckBox("Parquet");
+				domotica = new JCheckBox("Domótica");
+				armarios = new JCheckBox("Armarios");
+				tv = new JCheckBox("Televisión");
+				lavadora = new JCheckBox("Lavadora");
+				electrodomesticos = new JCheckBox("Electrodomésticos");
+				suiteConBanio = new JCheckBox("Suite con baño");
+				puertaBlindada = new JCheckBox("Puerta blindada");
+				gresCeramica = new JCheckBox("Cerámica gres");
+				calefaccion = new JCheckBox("Calefacción");
+				aireAcondicionado = new JCheckBox("Aire acondicionado");
+				nevera = new JCheckBox("Nevera");
+
+				ExtrasBasicos eB = vivienda.getExtrasBasicos();
+				lavadero.setSelected(eB.isLavadero());
+				internet.setSelected(eB.isInternet());
+				microondas.setSelected(eB.isMicroondas());
+				horno.setSelected(eB.isHorno());
+				amueblado.setSelected(eB.isAmueblado());
+				cocinaOffice.setSelected(eB.isCocinaOffice());
+				parquet.setSelected(eB.isParquet());
+				domotica.setSelected(eB.isDomotica());
+				armarios.setSelected(eB.isArmarios());
+				tv.setSelected(eB.isTv());
+				lavadora.setSelected(eB.isLavadora());
+				electrodomesticos.setSelected(eB.isElectrodomesticos());
+				suiteConBanio.setSelected(eB.isSuiteConBanio());
+				puertaBlindada.setSelected(eB.isPuertaBlindada());
+				gresCeramica.setSelected(eB.isGresCeramica());
+				calefaccion.setSelected(eB.isCalefaccion());
+				aireAcondicionado.setSelected(eB.isAireAcondicionado());
+				nevera.setSelected(eB.isNevera());
+
+				lavadero.addItemListener(this);
+				internet.addItemListener(this);
+				microondas.addItemListener(this);
+				horno.addItemListener(this);
+				amueblado.addItemListener(this);
+				cocinaOffice.addItemListener(this);
+				parquet.addItemListener(this);
+				domotica.addItemListener(this);
+				armarios.addItemListener(this);
+				tv.addItemListener(this);
+				lavadora.addItemListener(this);
+				electrodomesticos.addItemListener(this);
+				suiteConBanio.addItemListener(this);
+				puertaBlindada.addItemListener(this);
+				gresCeramica.addItemListener(this);
+				calefaccion.addItemListener(this);
+				aireAcondicionado.addItemListener(this);
+				nevera.addItemListener(this);
+
+				panel.add(lavadero);
+				panel.add(internet);
+				panel.add(microondas);
+				panel.add(horno);
+				panel.add(amueblado);
+				panel.add(cocinaOffice);
+				panel.add(parquet);
+				panel.add(domotica);
+				panel.add(armarios);
+				panel.add(tv);
+				panel.add(lavadora);
+				panel.add(electrodomesticos);
+				panel.add(suiteConBanio);
+				panel.add(puertaBlindada);
+				panel.add(gresCeramica);
+				panel.add(calefaccion);
+				panel.add(aireAcondicionado);
+				panel.add(nevera);
+				
+				return panel;
 			}
-			
-			/**
-			 * Hay que hacer lo mismo que en getPanelFinca
-			 * @return panelOtros
-			 */
-			@SuppressWarnings("unused")
+
 			private JPanel getPanelOtros()
 			{
-				return null;
+				JPanel panel = new JPanel(new GridLayout(3, 3));
+				
+				patio = new JCheckBox("Patio");
+				balcon = new JCheckBox("Balcón");
+				zonaDeportiva = new JCheckBox("Zona deportiva");
+				zonaComunitaria = new JCheckBox("Zona comunitaria");
+				terraza = new JCheckBox("Terraza");
+				piscinaComunitaria = new JCheckBox("Piscina comunitaria");
+				jardinPrivado = new JCheckBox("Jardín privado");
+				zonaInfantil = new JCheckBox("Zona infantil");
+				piscina = new JCheckBox("Piscina");
+				ExtrasOtros eO = vivienda.getExtrasOtros();
+				patio.setSelected(eO.isPatio());
+				balcon.setSelected(eO.isBalcon());
+				zonaDeportiva.setSelected(eO.isZonaDeportiva());
+				zonaComunitaria.setSelected(eO.isZonaComunitaria());
+				terraza.setSelected(eO.isTerraza());
+				piscinaComunitaria.setSelected(eO.isPiscinaComunitaria());
+				jardinPrivado.setSelected(eO.isJardinPrivado());
+				zonaInfantil.setSelected(eO.isZonaInfantil());
+				piscina.setSelected(eO.isPiscina());
+
+				patio.addItemListener(this);
+				balcon.addItemListener(this);
+				zonaDeportiva.addItemListener(this);
+				zonaComunitaria.addItemListener(this);
+				terraza.addItemListener(this);
+				piscinaComunitaria.addItemListener(this);
+				jardinPrivado.addItemListener(this);
+				zonaInfantil.addItemListener(this);
+				piscina.addItemListener(this);
+
+				panel.add(patio);
+				panel.add(balcon);
+				panel.add(zonaDeportiva);
+				panel.add(zonaComunitaria);
+				panel.add(terraza);
+				panel.add(piscinaComunitaria);
+				panel.add(jardinPrivado);
+				panel.add(zonaInfantil);
+				panel.add(piscina);
+				
+				return panel;
 			}
 
 }

@@ -7,18 +7,24 @@ import java.util.Iterator;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-class Galeria
+public class Galeria
 {
 
 	/** Atributos **/
-	
-		private ArrayList<ImageIcon> fotos;
-		private ArrayList<Integer> idFotos;
-		private static final String NO_FOTO_PATH = "images\\No hay foto.png";
-		private static final Image NO_FOTO = new ImageIcon(NO_FOTO_PATH, "No hay foto").getImage();
-		static final ImageIcon NO_FOTO_NORMAL = new ImageIcon(NO_FOTO);
-		static final ImageIcon NO_FOTO_100x100 =  new ImageIcon(NO_FOTO.getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING));
 
+		/* Estáticos */
+
+			public static final String NO_FOTO_PATH = "images\\No hay foto.jpg";
+			public static final Image NO_FOTO = new ImageIcon(NO_FOTO_PATH, "No hay foto").getImage();
+			public static final ImageIcon NO_FOTO_NORMAL = new ImageIcon(NO_FOTO);
+			public static final ImageIcon NO_FOTO_100x100 =  new ImageIcon(NO_FOTO.getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING));
+			public static ImageIcon[] IMAGENES;
+
+		/* No estáticos */
+
+			private ArrayList<ImageIcon> fotos;
+			private ArrayList<Integer> idFotos;
+		
     /** Constructores **/
 	
 		public Galeria()
