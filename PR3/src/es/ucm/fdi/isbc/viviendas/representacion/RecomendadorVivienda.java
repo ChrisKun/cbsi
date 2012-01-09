@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 
-//import javax.swing.JTree;
-
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -96,6 +94,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			
 			DescripcionVivienda dV = (DescripcionVivienda)c.getDescription();
 			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
+			
+			//VentanaPpal.guardarImagenes(dV.getId(), dV.getUrlFoto());
 			
 				/*// System.out.println(c);
 				barrio = "";

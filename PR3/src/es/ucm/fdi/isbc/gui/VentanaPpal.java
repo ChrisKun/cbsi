@@ -1,12 +1,20 @@
 package es.ucm.fdi.isbc.gui;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -96,8 +104,7 @@ public class VentanaPpal extends JFrame implements Observer
 		/* Otros métodos */
 
 			/**
-			* Devuelve el menÃº de la ventana
-			* @return El menÃº de la ventana
+			* @return El menú de la ventana
 			*/
 			private JMenuBar inicializaMenus()
 			{
@@ -121,12 +128,56 @@ public class VentanaPpal extends JFrame implements Observer
 			
 		/* AUXILIARES */
 			
+			/**
+			 * Si guardamos las imágenes en una carpeta, cada vez que queramos acceder a ellas sería mucho
+			 * más rápido ya que la tendremos en el propio ordenador. Esto se ejecutaría durante el preciclo
+			 * así cargamos todas las fotos y luego intentamos cargar images\\id.png, si el archivo no existe
+			 * porque no existiese ya la foto en la web cargamos la NO_FOTO también de la carpeta y ya está.
+			 * Esto habría que hacerlo una sóla vez, se descargan todas las fotos posibles y una vez hecho se
+			 * cambian los métodos que emplen new URL(String url) por "images\\" + dV.getId() + "png" o como sea.
+			 * 
+			 * @param dV
+			 */
+			public static void guardarImagenes(int id, String urlFoto)
+			{
+				try {
+					URL url = new URL(urlFoto);
+					VentanaPpal.writeTo(url.openStream(), new FileOutputStream(new File(
+							"images\\" + id + ".png")));
+				}
+				catch (IOException e) {;}
+			}
+			
+			private static void writeTo(InputStream in, OutputStream out) throws IOException
+			{
+				try {
+					int c;
+					while ((c = in.read()) != -1)
+						out.write(c);
+				}
+				finally {
+					if (in != null) {
+						try { in.close(); }
+						catch (Exception e) {;} 
+					}
+					if (out != null) {
+						try { out.close(); }
+						catch (Exception e) {;}
+					}
+				}
+			}
+			
+			static ImageIcon redimensionarImageIcon(Image image, int width, int height)
+			{
+				return new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_FAST));
+			}
+			
 			static boolean enteroEsCorrecto(String entero)
 			{
 				/**
 				 * Para que el entero sea correcto tiene que tener formato de Integer y ser mayor o igual
-				 * que cero ya que la superficie, el nÃºmero de habitaciones y de baÃ±os no puede ser negativo.
-				 * Si la cadena es vacÃ­a devolvemos true;
+				 * que cero ya que la superficie, el número de habitaciones y de baños no puede ser negativo.
+				 * Si la cadena es vacía devolvemos true;
 				 */
 
 				if (entero.isEmpty()) return true;
@@ -176,7 +227,7 @@ public class VentanaPpal extends JFrame implements Observer
 				return cortarString;
 			}
 			
-		static String transformar(String string)
+			static String transformar(String string)
 			{
 				String s = string;
 				String transformar = "";
@@ -276,7 +327,7 @@ public class VentanaPpal extends JFrame implements Observer
 				else if (cod.equals("â‚¬")) return "€";
 				else if (cod.equals("Âº")) return "º";
 				else if (cod.equals("Âª")) return "ª";
-				else if (cod.equals("m2")) return "m<sup>2</sup>";
+				else if (cod.equals("m2")) return "metros cuadrados";
 				else return cod;
 			}
 

@@ -33,13 +33,13 @@ class PanelVisitados extends JPanel
 		private static Dimension dim;
 		private static ArrayList<DescripcionVivienda> vistas;
 		private static Galeria galeria;
-		
+
 		private static JButton bAnterior;
 		private static JButton bSiguiente;
 		private static JPanel[] panel;
 		private static JLabel[] label;
 		private static int[] imagen;
-		
+
 		private static final int LENGTH = 6;
 		private static final Dimension DIM_PANEL_PRINCIPAL = new Dimension(120, 120);
 		private static final Dimension DIM_PANEL_FOTOS = new Dimension(120, 120);
@@ -54,10 +54,10 @@ class PanelVisitados extends JPanel
 			GridBagConstraints gridBagConstraints;
 			setLayout(new GridBagLayout());
 			setBorder(BorderFactory.createEtchedBorder());
-			
+
 			vistas = new ArrayList<DescripcionVivienda>();
 			galeria = new Galeria();
-	
+
 			dim = Toolkit.getDefaultToolkit().getScreenSize();
 			dim.setSize(dim.width - 100, dim.height - 100);
 
@@ -70,7 +70,7 @@ class PanelVisitados extends JPanel
 			panel = new JPanel[LENGTH];
 			label = new JLabel[LENGTH];
 			imagen = new int[LENGTH];
-			
+
 			for (int i = 0; i < LENGTH; i++) {
 				panel[i] = new JPanel();
 				panel[i].setPreferredSize(DIM_PANEL_FOTOS);
@@ -100,6 +100,7 @@ class PanelVisitados extends JPanel
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 0;
 			gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+			gridBagConstraints.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints.insets = new Insets(5, 5, 5, 0);
 			add(bAnterior, gridBagConstraints);
 
@@ -108,6 +109,7 @@ class PanelVisitados extends JPanel
 			gridBagConstraints.gridx = 7;
 			gridBagConstraints.gridy = 0;
 			gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+			gridBagConstraints.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints.insets = new Insets(5, 0, 5, 5);
 			add(bSiguiente, gridBagConstraints);
 
@@ -261,39 +263,22 @@ class PanelVisitados extends JPanel
 			
 			private void actualizarToolTip(int index)
 			{
-				
-				if (index < vistas.size()) {
+				//Si tienen mismo id, entonces tienen mismo contenido
+				if (vistas.get(imagen[index]).getId() != galeria.getIdIcon((ImageIcon)label[index].getIcon())) {
 					DescripcionVivienda dV = vistas.get(imagen[index]);
 					String localización = "Madrid, ";
-					String[] loca = dV.getLocalizacion().split("/");
-					loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-					localización += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
+					String[] loca1 = dV.getLocalizacion().split("/");
+					loca1[0] = loca1[loca1.length - 1].replaceAll("-", " ");
+					localización += VentanaPpal.transformar(loca1[0].substring(0, 1).toUpperCase() + loca1[0].substring(1));
 					String mensaje = "<html>" +
-							"Nombre:  " + /*VentanaPpal.transformar(*/dV.getTitulo()/*)*/ + "<br>" +
-							"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
-							"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
-							"Localización:  " + localización + "<br>" +
-							"Superficie:  " + dV.getSuperficie() + "m<sup>2</sup></html>";
-					
-					label[index].setToolTipText(mensaje);
+						"Nombre:  " + dV.getTitulo() + "<br>" +
+						"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
+						"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
+						"Localización:  " + localización + "<br>" +
+						"Superficie:  " + dV.getSuperficie() +"m<sup>2</sup></html>";
 
-					//Si tienen mismo id, entonces tienen mismo contenido
-					if (vistas.get(imagen[index]).getId() != galeria.getIdIcon((ImageIcon)label[index].getIcon())) {
-						dV = vistas.get(imagen[index]);
-						localización = "Madrid, ";
-						String[] loca1 = dV.getLocalizacion().split("/");
-						loca1[0] = loca1[loca1.length - 1].replaceAll("-", " ");
-						localización += VentanaPpal.transformar(loca1[0].substring(0, 1).toUpperCase() + loca1[0].substring(1));
-						String mensaje1 = "<html>" +
-								"Nombre:  " + VentanaPpal.transformar(dV.getTitulo()) + "<br>" +
-								"Tipo:  " + tipoToString(dV.getTipo()) + "<br>" +
-								"Estado:  " + estadoToString(dV.getEstado()) + "<br>" +
-								"Localización:  " + localización + "<br>" +
-								"Superficie:  " + dV.getSuperficie() +"m<sup>2</sup></html>";
-						
-						label[index].setToolTipText(mensaje1);
-						label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
-					}
+					label[index].setToolTipText(mensaje);
+					label[index].setIcon(galeria.getVistaPrevia(imagen[index]));
 				}
 			}
 

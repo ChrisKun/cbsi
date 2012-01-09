@@ -37,7 +37,7 @@ class VentanaResult extends JDialog
 		
 		public VentanaResult()
 		{
-			setName("Viviendas");
+			setTitle("Viviendas");
 			setModalityType(DEFAULT_MODALITY_TYPE);	
 			setLayout(new BorderLayout());
 
@@ -96,9 +96,15 @@ class VentanaResult extends JDialog
 					String descripcion = VentanaPpal.cortarString(VentanaPpal.transformar(descrs.get(i).getDescripcion()), 
 							TOPE, "DESCRIPCIÓN: ".length());
 
+					// Actualizamos las DescripcionesVivienda con los textos ya corregidos para no tener que volver a corregirlos
+						// luego. La localización no la actualizamos por si tenemos que usar la ruta del árbol más adelante.
+					descrs.get(i).setTitulo(titulo);
+					descrs.get(i).setDescripcion(descripcion);
+
 					String descr =	"<html><p align=\"justify\">" +
 							"<b><u>NOMBRE</u></b>: " + titulo + "<br>" +
 							"<b><u>LOCALIZACIÓN</u></b>: " + localizacion + "<br>" +
+							"<b><u>SUPERFICIE</u></b>: " + descrs.get(i).getSuperficie() + "m<sup>2</sup><br>" +
 							"<b><u>PRECIO</u></b>: " + descrs.get(i).getPrecio() + " €<br>" +
 							"<b><u>DESCRIPCIÓN</u></b>: " + descripcion + "</p></html>";			
 
@@ -113,8 +119,7 @@ class VentanaResult extends JDialog
 						ImageIcon imageIcon = new ImageIcon(new URL(descrs.get(i).getUrlFoto()));
 
 						if (imageIcon.getIconHeight() == -1)
-							imageIcon = new ImageIcon(new URL("http://farm8.staticflickr.com/7008/6591881587_2c24e9ab39_z.jpg"), 
-									"No hay foto");
+							imageIcon = Galeria.NO_FOTO_NORMAL;
 
 						imagen[i].setIcon(imageIcon);
 						imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
@@ -122,20 +127,12 @@ class VentanaResult extends JDialog
 						imagen[i].addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent e)
 							{
-								/**
-								 * Al pinchar en una foto tenemos que ir a una descripción detallada de la casa 
-								 * seleccionada o volver a hacer la query con la casa seleccionada con lo de MoreLikeThis...
-								 * ya no me acuerdo de qué teníamos que hacer al pinchar aquí.
-								 * 
-								 * El evento creo que es mejor que se produzca al soltar el ratón de la imagen de la casa por 
-								 * si has pinchado sin querer y quieres mover el ratón o algo así para que no cargue y tal que 
-								 * puedas hacerlo, pero esto ya es cuestión de gustos y da un poco igual realmente.
-								 */
-								
 								boolean encontrado = false;
 								for (int j = 0; j < aL.size() && !encontrado; j++)
 									if (e.getSource() == imagen[j]) {
 										if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
+											setVisible(false);
+											new VentanaDescripcion(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
 											VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
 											VentanaPpal.panelVisitados.actualizarPanel();
 										}
@@ -153,9 +150,9 @@ class VentanaResult extends JDialog
 					
 					p.add(imagen[i]);
 					p.add(scrollPane);
-					
+
 				}
-				
+
 				this.add(p, BorderLayout.CENTER);
 				this.setVisible(true);
 			}
