@@ -59,31 +59,29 @@ public class Galeria
 			}
 
 		/* Setters */
-		
+
 			public void setFotos(ArrayList<ImageIcon> fotos, ArrayList<Integer> idFotos)
 			{
 				this.fotos = fotos;
 				this.idFotos = idFotos;
 			}
-			
+
 			public void addFoto(ImageIcon newFoto, int idFoto)
 			{
 				fotos.add(newFoto);
 				idFotos.add(idFoto);
 			}
-			
+
 			//Dada una imagen, devuelve su id correspondiente Importante: usa la descripcion de la imagen
 			public Integer getIdIcon(ImageIcon img)
-			{	
-				ImageIcon imageIconFake = new ImageIcon(NO_FOTO, "No hay foto");
-				
-				if (imageIconFake.getDescription().equals(img.getDescription()))
+			{					
+				if (NO_FOTO_NORMAL.getDescription().equals(img.getDescription()))
 					return -1;
-				
+
 				int pos = 0;
 				boolean found = false;
 				Iterator<ImageIcon> it = fotos.iterator();
-				while(!found && it.hasNext()) {
+				while (!found && it.hasNext()) {
 					if (it.next().getDescription() == img.getDescription())
 						found = true;
 					else pos++;

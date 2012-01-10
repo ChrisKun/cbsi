@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +28,7 @@ class VentanaResult extends JDialog
 		private static JLabel[] imagen;
 		private static final double TOPE_FIJO = 70;
 		private static final double WIDTH_FIJO = 1130;
+		static VentanaDescripcion vD;
 		static int TOPE;
 		
 	/** Constructores **/
@@ -65,7 +65,7 @@ class VentanaResult extends JDialog
 			setSize(dim.width - 150, dim.height - 150);
 			setLocation((dim.width - getWidth()) / 2, (dim.height - getHeight()) / 2);
 			TOPE = (int) (((dim.width - 150) / WIDTH_FIJO) * TOPE_FIJO);
-			
+
 			this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		}
 
@@ -122,12 +122,8 @@ class VentanaResult extends JDialog
 							boolean encontrado = false;
 							for (int j = 0; j < aL.size() && !encontrado; j++)
 								if (e.getSource() == imagen[j]) {
-									if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j))) {
-										setVisible(false);
-										new VentanaDescripcion(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
-										VentanaPpal.panelVisitados.setVivienda(aL.get(j), (ImageIcon) (imagen[j].getIcon()));
-										VentanaPpal.panelVisitados.actualizarPanel();
-									}
+									if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j)))
+										VentanaPpal.lanzarVentanaDescripcion(aL.get(j));
 									encontrado = true;
 									dispose();
 								}

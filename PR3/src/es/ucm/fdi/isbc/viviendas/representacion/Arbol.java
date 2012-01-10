@@ -196,7 +196,8 @@ public class Arbol
 			// Devuelve el nivel del padre común entre dos árboles
 			public int getNivelPadreComun(Arbol arbol)
 			{
-				int nivel = -1;
+				if (this.equals(arbol)) return getProfundidad();
+				int nivel = 0;
 				Arbol a1 = this;
 				Arbol a2 = arbol;
 				while (!a1.isLeaf() && !a2.isLeaf() && a1.getValor().equals(a2.getValor())) {

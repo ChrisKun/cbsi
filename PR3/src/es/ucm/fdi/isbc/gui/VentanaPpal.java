@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 
 import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
+import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 
 public class VentanaPpal extends JFrame implements Observer
 {
@@ -30,15 +32,15 @@ public class VentanaPpal extends JFrame implements Observer
 
 		private static final long serialVersionUID = 1L;
 
-		static PanelVisitados panelVisitados;
-		static PanelFiltro panelFiltro;
-		static PanelDiversidad panelDiversidad;
 		private static JMenuBar barraMenus;
 		private static JMenu mArchivo;
 		private static JMenuItem salir;
 		private static JSplitPane horizontal, vertical;
 
-		private VentanaResult vResult;
+		static PanelVisitados panelVisitados;
+		static PanelFiltro panelFiltro;
+		static PanelDiversidad panelDiversidad;
+		static VentanaResult vResult;
 
 		private boolean flag = false;
 
@@ -48,7 +50,7 @@ public class VentanaPpal extends JFrame implements Observer
 		{
 			super("Recomendador Viviendas");
 			setExtendedState(MAXIMIZED_BOTH);
-
+			
 			barraMenus = inicializaMenus();
 			this.setJMenuBar(barraMenus);
 
@@ -59,7 +61,7 @@ public class VentanaPpal extends JFrame implements Observer
 			vertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDiversidad, panelVisitados);
 			vertical.setDividerSize(7);
 			vertical.setDividerLocation(0.8);
-			vertical.setOneTouchExpandable(true);
+			vertical.setOneTouchExpandable(false);
 			vertical.setEnabled(false);
 
 			horizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelFiltro, vertical);
@@ -84,9 +86,8 @@ public class VentanaPpal extends JFrame implements Observer
 			public void update(Observable o, Object arg)
 			{
 				if (arg instanceof MuestraSolEvent) {
-					
-					vResult = new VentanaResult();
-					vResult.setResultado(((MuestraSolEvent)arg).getDescrs());
+
+					lanzarVentanaResult(((MuestraSolEvent)arg).getDescrs());
 
 				}
 				else {
@@ -127,6 +128,47 @@ public class VentanaPpal extends JFrame implements Observer
 			}
 			
 		/* AUXILIARES */
+			
+			/**
+			 * Lanza a ejecución la ventana resultado en un nuevo hilo para que no se bloqueen las ventanas ni el
+			 * se tenga que quedar el proceso princial esperando a que acaben todas las acciones generadas por esta
+			 * ventana.
+			 * 
+			 * @param ArrayList<DescripcionVivienda> VIVIENDAS
+			 */
+		    static void lanzarVentanaResult(final ArrayList<DescripcionVivienda> VIVIENDAS)
+		    {
+				Runnable runnable = new Runnable()
+				{
+					public void run()
+					{
+						vResult = new VentanaResult();
+						vResult.setResultado(VIVIENDAS);
+					}
+				};
+				Thread hilo = new Thread(runnable);
+				hilo.start();
+		    }
+		    
+			/**
+			 * Lanza a ejecución la ventana descripción en un nuevo hilo para que no se bloqueen las ventanas ni el
+			 * se tenga que quedar el proceso princial esperando a que acaben todas las acciones generadas por esta
+			 * ventana.
+			 * 
+			 * @param DescripcionVivienda VIVIENDAS
+			 */
+		    static void lanzarVentanaDescripcion(final DescripcionVivienda VIVIENDA)
+		    {
+				Runnable runnable = new Runnable()
+				{
+					public void run()
+					{
+						new VentanaDescripcion(VIVIENDA, VIVIENDA.getId());
+					}
+				};
+				Thread hilo = new Thread(runnable);
+				hilo.start();
+		    }
 			
 			/**
 			 * Si guardamos las imágenes en una carpeta, cada vez que queramos acceder a ellas sería mucho

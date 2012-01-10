@@ -46,7 +46,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	final double PESOExtrasO = 0.07;
 	final double PESOExtrasB = 0.01;
 	
-	final int NUMSELECTCASOS = 5;
+	public static final int NUMSELECTCASOS = 5;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -59,6 +59,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private CBRQuery query;
 	@SuppressWarnings("unused")
 	private boolean evaluacionSistema;
+	private NNConfig simConfig;
+	private Collection<CBRCase> cases;
 	Controlador controlador;
 	
 	private PrintWriter fichAc;
@@ -102,7 +104,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
 			File file = new File("images\\" + dV.getId() + ".jpg");
 			if (file.exists()) Galeria.IMAGENES[dV.getId()] = new ImageIcon(file.getPath());
-			else Galeria.IMAGENES[dV.getId()] = Galeria.NO_FOTO_NORMAL;
+			else {
+				Galeria.IMAGENES[dV.getId()] = Galeria.NO_FOTO_NORMAL;
+				Galeria.IMAGENES[dV.getId()].setDescription(String.valueOf(dV.getId()));
+			}
 
 				/*// System.out.println(c);
 				barrio = "";
@@ -209,7 +214,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {	
 		 // Para configurar el KNN se utiliza un objeto NNConfig
-		 NNConfig simConfig = new NNConfig();
+		 simConfig = new NNConfig();
 		 // Fijamos la función de similitud global
 		 simConfig.setDescriptionSimFunction(new Average());
 		
@@ -295,14 +300,15 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		  Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
 		
 		 // Seleccionamos los k mejores casos
-		 eval = SelectCases.selectTopKRR(eval, NUMSELECTCASOS);
+		 //eval = SelectCases.selectTopKRR(eval, NUMSELECTCASOS);
+		 cases = SelectCases.selectTopK(eval, NUMSELECTCASOS);
 		 
 		 // Guardamos los casos más similares
 		 ArrayList<DescripcionVivienda> descrs = new ArrayList<DescripcionVivienda>();
 				 
-		 for (RetrievalResult nse: eval){
-			 descrs.add((DescripcionVivienda) nse.get_case().getDescription());
-		 }
+		for (CBRCase nse: cases){
+			 descrs.add((DescripcionVivienda) nse.getDescription());
+		}
 		
 		// Se los mandamos a la ventana de resultados
 		this.setChanged();
@@ -436,6 +442,26 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		this._caseBase.close();
 	}
 
+	
+	/* Getters */
+	
+		public NNConfig getSimCongfig()
+		{
+			return simConfig;
+		}
+		
+		public Collection<CBRCase> getCases()
+		{
+			return cases;
+		}
+		
+		public CBRCaseBase getCaseBase()
+		{
+			return _caseBase;
+		}
+	
+	/* Método principal MAIN */
+	
 	public static void main(String[] args) {
 		
 		// Crear el objeto que implementa la aplicación CBR

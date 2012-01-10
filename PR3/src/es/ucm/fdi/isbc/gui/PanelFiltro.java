@@ -189,7 +189,7 @@ class PanelFiltro extends Container implements KeyListener
 				}
 			}
 		}
-	
+
 		public void keyTyped(KeyEvent e) {;}
 
 	/* AUXILIARES */
@@ -198,14 +198,14 @@ class PanelFiltro extends Container implements KeyListener
 		{
 			button.setEnabled(b);
 		}
-		
+
 		private void acciónDelBotón()
 		{
 			String sLocalizacion = localizacion.getText().toLowerCase().replaceAll(" ", "-");
 			if (sLocalizacion != null && !sLocalizacion.isEmpty() && !sLocalizacion.contains("/"))
 				sLocalizacion = RecomendadorVivienda.tree.getPath(sLocalizacion).rutaToString();
 			else if (sLocalizacion == null || sLocalizacion.isEmpty()) sLocalizacion = null;
-			
+
 			descr = new DescripcionVivienda(-1);
 			descr.setTipo(type);
 			descr.setEstado(state);				

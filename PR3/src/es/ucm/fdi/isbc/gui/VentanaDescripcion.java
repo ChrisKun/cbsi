@@ -8,8 +8,13 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,6 +27,15 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.exception.ExecutionException;
+import jcolibri.extensions.recommendation.casesDisplay.UserChoice;
+import jcolibri.method.retrieve.RetrievalResult;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterBasedRetrievalMethod;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterConfig;
+import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasFinca;
@@ -41,49 +55,49 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			private static DescripcionVivienda vivienda;
 			private static ImageIcon imageIcon;
 
-			JCheckBox ascensor;
-			JCheckBox trastero;
-			JCheckBox energiaSolar;
-			JCheckBox servPorteria;
-			JCheckBox parkingComunitario;
-			JCheckBox garajePrivado;
-			JCheckBox videoPortero;
+			private static JCheckBox ascensor;
+			private static JCheckBox trastero;
+			private static JCheckBox energiaSolar;
+			private static JCheckBox servPorteria;
+			private static JCheckBox parkingComunitario;
+			private static JCheckBox garajePrivado;
+			private static JCheckBox videoPortero;
 
-			JCheckBox lavadero;
-			JCheckBox internet;
-			JCheckBox microondas;
-			JCheckBox horno;
-			JCheckBox amueblado;
-			JCheckBox cocinaOffice;
-			JCheckBox parquet;
-			JCheckBox domotica;
-			JCheckBox armarios;
-			JCheckBox tv;
-			JCheckBox lavadora;
-			JCheckBox electrodomesticos;
-			JCheckBox suiteConBanio;
-			JCheckBox puertaBlindada;
-			JCheckBox gresCeramica;
-			JCheckBox calefaccion;
-			JCheckBox aireAcondicionado;
-			JCheckBox nevera;
+			private static JCheckBox lavadero;
+			private static JCheckBox internet;
+			private static JCheckBox microondas;
+			private static JCheckBox horno;
+			private static JCheckBox amueblado;
+			private static JCheckBox cocinaOffice;
+			private static JCheckBox parquet;
+			private static JCheckBox domotica;
+			private static JCheckBox armarios;
+			private static JCheckBox tv;
+			private static JCheckBox lavadora;
+			private static JCheckBox electrodomesticos;
+			private static JCheckBox suiteConBanio;
+			private static JCheckBox puertaBlindada;
+			private static JCheckBox gresCeramica;
+			private static JCheckBox calefaccion;
+			private static JCheckBox aireAcondicionado;
+			private static JCheckBox nevera;
 
-			JCheckBox patio;
-			JCheckBox balcon;
-			JCheckBox zonaDeportiva;
-			JCheckBox zonaComunitaria;
-			JCheckBox terraza;
-			JCheckBox piscinaComunitaria;
-			JCheckBox jardinPrivado;
-			JCheckBox zonaInfantil;
-			JCheckBox piscina;
+			private static JCheckBox patio;
+			private static JCheckBox balcon;
+			private static JCheckBox zonaDeportiva;
+			private static JCheckBox zonaComunitaria;
+			private static JCheckBox terraza;
+			private static JCheckBox piscinaComunitaria;
+			private static JCheckBox jardinPrivado;
+			private static JCheckBox zonaInfantil;
+			private static JCheckBox piscina;
 
 	/** Constructores **/
 
-		public VentanaDescripcion(DescripcionVivienda vivienda, ImageIcon imageIcon)
-		{
-			VentanaDescripcion.vivienda = vivienda;
-			VentanaDescripcion.imageIcon = imageIcon;
+		public VentanaDescripcion(final DescripcionVivienda VIVIENDA, final int INDEX)
+		{			
+			VentanaDescripcion.vivienda = VIVIENDA;
+			VentanaDescripcion.imageIcon = Galeria.IMAGENES[INDEX];
 			setTitle(vivienda.getTitulo());
 			setModalityType(DEFAULT_MODALITY_TYPE);
 			
@@ -182,7 +196,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			editorPane[1].setEnabled(false);
 			editorPane[1].setDisabledTextColor(Color.black);
 			editorPane[1].setText("<html><body align=\"justify\"><font face = \"Arial\", size = 4>" + vivienda.getDescripcion().replaceAll("<br>", " ") + "</font></body></html>");
-			
+
 			// Meter las fincas en la fila 10, columna 0 y que ocupe 5x6 celdas
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 10;
@@ -192,7 +206,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			gridBagConstraints.anchor = GridBagConstraints.WEST;
 			gridBagConstraints.fill = GridBagConstraints.BOTH;
 			panel.add(getPanelFinca(), gridBagConstraints);
-			
+
 			// Meter los otros en la fila 10, columna 10 y que ocupa 5x6 celdas
 			gridBagConstraints.gridx = 10;
 			gridBagConstraints.gridy = 10;
@@ -202,7 +216,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			gridBagConstraints.anchor = GridBagConstraints.EAST;
 			gridBagConstraints.fill = GridBagConstraints.BOTH;
 			panel.add(getPanelOtros(), gridBagConstraints);
-			
+
 			// Meter los básicos en la fila 0, columna 10 y que ocupe 6x3 celdas
 			gridBagConstraints.gridx = 10;
 			gridBagConstraints.gridy = 0;
@@ -220,7 +234,28 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 
 			add(panel);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			setVisible(true);
+			VentanaPpal.vResult.dispose();
+			
+			button[1].addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					try {
+						VentanaPpal.panelVisitados.setVivienda(VIVIENDA, Galeria.IMAGENES[INDEX]);
+						VentanaPpal.panelVisitados.actualizarPanel();
+						CBRQuery query = new CBRQuery();
+						query.setDescription(VIVIENDA);
+						moreLikeThis(query, UserChoice.REFINE_QUERY);
+						dispose();
+					}
+					catch (ExecutionException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			);
+			
+			setVisible(true);	
 		}
 
 	/** Métodos **/
@@ -243,14 +278,14 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			{
 				VentanaDescripcion.vivienda = vivienda;
 			}
-			
+
 			public void setImageIcon(ImageIcon imageIcon)
 			{
 				VentanaDescripcion.imageIcon = imageIcon;
 			}
 
 		/* Métodos que implementan ItemListener */
-			
+
 			public void itemStateChanged(ItemEvent e)
 			{
 				if (e.getSource() == ascensor)
@@ -324,34 +359,6 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 			}
 			
 		/* Otros métodos */
-
-			public void actualizarVentanaDescripcion()
-			{
-				setTitle(vivienda.getTitulo());
-				
-				label.setIcon(VentanaPpal.redimensionarImageIcon(imageIcon.getImage(), 300, 200));
-				
-				String localizacion = "Madrid, ";
-				String[] loca = vivienda.getLocalizacion().split("/");
-				loca[0] = loca[loca.length - 1].replaceAll("-", " ");
-				localizacion += VentanaPpal.transformar(loca[0].substring(0, 1).toUpperCase() + loca[0].substring(1));
-
-				String texto = "<html><font face = \"Arial\", size = 4>" +
-								"<b>NOMBRE</b>: " + vivienda.getTitulo() + "<br><br>" +
-								"<b>LOCALIZACIÓN</b>: " + localizacion + "<br><br>" +
-								"<b>SUPERFICIE</b>: " + vivienda.getSuperficie() + "m<sup>2<sup><br><br>" +
-								"<b>HABITACIONES</b>: " + vivienda.getHabitaciones() + "habitaciones<br><br>" +
-								"<b>BAÑOS</b>: " + vivienda.getBanios() + "baños<br><br>" +
-								"<b>PRECIO</b>: " + vivienda.getPrecio() + " €<br>";
-
-				if (vivienda.getPrecioMedio() <= vivienda.getPrecioZona())
-					texto += "<b>PRECIO MEDIO</u></b>: " + vivienda.getPrecioMedio() + "€<br>" +
-								"<b>PRECIO ZONA</u></b>: " + vivienda.getPrecioZona() + "€</font></html>";
-				else texto += "<b>PRECIO MEDIO</u></b>: sin datos.<br>" + "<b>PRECIO ZONA</u></b>: sin datos.</font></html>";
-
-				editorPane[0].setText(texto);
-				editorPane[1].setText("<html><font face = \"Arial\", size = 4>" + vivienda.getDescripcion() + "</html>");
-			}
 
 		/* AUXILIARES */
 
@@ -525,5 +532,30 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 				
 				return panel;
 			}
+			
+		    private void moreLikeThis(CBRQuery query, int choice)  throws ExecutionException
+		    {	
+		    	Controlador control = Controlador.getInstance();
+
+		    	// Execute Filter
+				Collection<CBRCase> filtered = FilterBasedRetrievalMethod.filterCases(control.getCaseBase().getCases(), 
+						query, new FilterConfig());
+				
+				// Execute NN
+				Collection<RetrievalResult> retrievedCases = NNScoringMethod.evaluateSimilarity(filtered, query, control.getSimCongfig());
+
+				ArrayList<DescripcionVivienda> aL = new ArrayList<DescripcionVivienda>();
+
+				int cantidad = 0;
+				for (Iterator<RetrievalResult> it = retrievedCases.iterator(); cantidad < 5 && it.hasNext(); ) {
+					DescripcionVivienda descr = (DescripcionVivienda) it.next().get_case().getDescription();
+					if (!VentanaPpal.panelVisitados.getVistas().contains(descr)) {
+						aL.add(descr);
+						cantidad++;
+					}
+				}
+
+				VentanaPpal.lanzarVentanaResult(aL);
+		    }
 
 }

@@ -127,9 +127,14 @@ class PanelVisitados extends JPanel
 				{
 					public void mouseClicked(MouseEvent e)
 					{
-						/**
-						 * Aquí habría que implementar el método de recuperación de las casas ya visitadas...
-						 */
+						boolean encontrado = false;
+						for (int j = 0; j < LENGTH && !encontrado; j++)
+							if (e.getSource() == label[j]) {
+								DescripcionVivienda dV = sacarVivienda(j);
+								actualizarPanel();
+								VentanaPpal.lanzarVentanaDescripcion(dV);
+								encontrado = true;
+							}
 					}
 				}
 				);
@@ -139,7 +144,7 @@ class PanelVisitados extends JPanel
 				public void actionPerformed(ActionEvent e)
 				{
 					if (imagen[0] > 0) {
-						for (int i = LENGTH-1; i > 0; i--) {
+						for (int i = LENGTH - 1; i > 0; i--) {
 							imagen[i] = imagen[i - 1];
 							label[i].setIcon(label[i - 1].getIcon());
 							label[i].setToolTipText(label[i - 1].getToolTipText());
@@ -156,13 +161,13 @@ class PanelVisitados extends JPanel
 				public void actionPerformed(ActionEvent e)
 				{
 					if (imagen[LENGTH - 1] < vistas.size() - 1) {
-						for (int i = 0; i < LENGTH-1; i++) {
+						for (int i = 0; i < LENGTH - 1; i++) {
 							imagen[i] = imagen[i + 1];
 							label[i].setIcon(label[i + 1].getIcon());
 							label[i].setToolTipText(label[i + 1].getToolTipText());
 						}
 						imagen[LENGTH - 1]++;
-						actualizarToolTip(LENGTH-1);
+						actualizarToolTip(LENGTH - 1);
 					}
 				}
 			}
@@ -219,11 +224,10 @@ class PanelVisitados extends JPanel
 				//Rellenamos con los últimos añadidos por el usuario.
 				if (vistas.size() > LENGTH)
 					for (int i = 0; i < LENGTH; i++) {
-						//imagen[i] = vistas.size() - LENGTH + i;
 						imagen[i] = vistas.size() - LENGTH + i;
 						actualizarToolTip(i);
 					}
-				else actualizarToolTip(vistas.size()-1);
+				else actualizarToolTip(vistas.size() - 1);
 			}
 
 		/* AUXILIARES */
