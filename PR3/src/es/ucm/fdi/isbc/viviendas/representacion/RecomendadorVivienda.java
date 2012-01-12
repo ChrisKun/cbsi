@@ -1,6 +1,5 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,20 +31,24 @@ import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
 public class RecomendadorVivienda extends Observable implements StandardCBRApplication {
 	
-	final double PESOLocaliz = 0.10;
-	final double PESOTipo = 0.15;
-	final double PESOSuperficie = 0.15;
-	final double PESOHabitaciones = 0.08;
-	final double PESOBanios = 0.03;
-	final double PESOEstado = 0.12;
-	final double PESOCoordenadas = 0.09;
-	final double PESOPrecioM = 0.15;
-	final double PESOPrecioZ = 0.15;
-	final double PESOExtrasF = 0.05;
-	final double PESOExtrasO = 0.07;
-	final double PESOExtrasB = 0.01;
+	private final double PESOLocaliz = 0.10;
+	private final double PESOTipo = 0.15;
+	private final double PESOSuperficie = 0.15;
+	private final double PESOHabitaciones = 0.08;
+	private final double PESOBanios = 0.03;
+	private final double PESOEstado = 0.12;
+	private final double PESOCoordenadas = 0.09;
+	private final double PESOPrecioM = 0.15;
+	private final double PESOPrecioZ = 0.15;
+	private final double PESOExtrasF = 0.05;
+	private final double PESOExtrasO = 0.07;
+	private final double PESOExtrasB = 0.01;
 	
 	public static final int NUMSELECTCASOS = 5;
+	public static final int NUMDIVERSIDAD = 6;
+	
+	private boolean once = true;
+	
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -61,10 +64,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private NNConfig simConfig;
 	private Collection<CBRCase> cases;
 	Controlador controlador;
-	
-	private PrintWriter fichAc;
-	private PrintWriter fichFa;
-	private PrintWriter fich;
 	
 	@Override
 	public void configure() throws ExecutionException {
@@ -97,7 +96,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	}
 
 	@Override
-	public void cycle(CBRQuery query) throws ExecutionException {	
+	public void cycle(CBRQuery query) throws ExecutionException {		 
 		 // Para configurar el KNN se utiliza un objeto NNConfig
 		 simConfig = new NNConfig();
 		 // Fijamos la función de similitud global
@@ -122,52 +121,8 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			 simConfig.addMapping(new Attribute("precioMedio",DescripcionVivienda.class), new Interval(500));
 		 if (((DescripcionVivienda)query.getDescription()).getPrecioZona() != null)	 
 			 simConfig.addMapping(new Attribute("precioZona",DescripcionVivienda.class), new Interval(500));
-		 	 
+
 		 
-//		 simConfig.addMapping(new Attribute("extrasFinca",DescripcionVivienda.class), new Average());	 
-//		 simConfig.addMapping(new Attribute("ascensor",ExtrasFinca.class), new Equal()); 
-//		 simConfig.addMapping(new Attribute("trastero",ExtrasFinca.class), new Equal()); 
-//		 simConfig.addMapping(new Attribute("energiaSolar",ExtrasFinca.class), new Equal());
-//		 simConfig.addMapping(new Attribute("servPorteria",ExtrasFinca.class), new Equal());
-//		 simConfig.addMapping(new Attribute("parkingComunitario",ExtrasFinca.class), new Equal());
-//		 simConfig.addMapping(new Attribute("garajePrivado",ExtrasFinca.class), new Equal());
-//		 simConfig.addMapping(new Attribute("videoportero",ExtrasFinca.class), new Equal());
-//	 
-//		 simConfig.addMapping(new Attribute("extrasBasicos",DescripcionVivienda.class), new Average());
-//		 simConfig.addMapping(new Attribute("lavadero",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("internet",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("microondas",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("horno",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("amueblado",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("cocinaOffice",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("parquet",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("domotica",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("armarios",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("tv",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("lavadora",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("electrodomesticos",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("suiteConBanio",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("puertaBlindada",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("gresCeramica",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("calefaccion",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("aireAcondicionado",ExtrasBasicos.class), new Equal());
-//		 simConfig.addMapping(new Attribute("nevera",ExtrasBasicos.class), new Equal());
-//	 
-//		 simConfig.addMapping(new Attribute("extrasOtros",DescripcionVivienda.class), new Average());
-//		 simConfig.addMapping(new Attribute("patio",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("balcon",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("zonaDeportiva",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("zonaComunitaria",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("terraza",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("piscinaComunitaria",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("jardinPrivado",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("zonaInfantil",ExtrasOtros.class), new Equal());
-//		 simConfig.addMapping(new Attribute("piscina",ExtrasOtros.class), new Equal());
-	  
-	 
-		 // Es posible modificar el peso de cada atributo en la media ponderada.
-		 // Por defecto el peso es 1.
-	 
 		 simConfig.setWeight(new Attribute("localizacion", DescripcionVivienda.class), PESOLocaliz);
 		 simConfig.setWeight(new Attribute("tipo", DescripcionVivienda.class), PESOTipo);
 		 simConfig.setWeight(new Attribute("superficie", DescripcionVivienda.class), PESOSuperficie);
@@ -179,119 +134,47 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 simConfig.setWeight(new Attribute("precioZona", DescripcionVivienda.class), PESOPrecioZ);
 		 simConfig.setWeight(new Attribute("extrasFinca", DescripcionVivienda.class), PESOExtrasF);
 		 simConfig.setWeight(new Attribute("extrasBasicos", DescripcionVivienda.class), PESOExtrasB);
-		 simConfig.setWeight(new Attribute("extrasOtros", DescripcionVivienda.class), PESOExtrasO);
+		 simConfig.setWeight(new Attribute("extrasOtros", DescripcionVivienda.class), PESOExtrasO); 
 		 
-		 // Ejecutamos la recuperación por vecino más próximo
-		  Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
-
-		 // Seleccionamos los k mejores casos
-		 //eval = SelectCases.selectTopKRR(eval, NUMSELECTCASOS);
-		 cases = SelectCases.selectTopK(eval, NUMSELECTCASOS);
-		 
-		 // Guardamos los casos más similares
-		 ArrayList<DescripcionVivienda> descrs = new ArrayList<DescripcionVivienda>();
-				 
-		for (CBRCase nse: cases){
-			 descrs.add((DescripcionVivienda) nse.getDescription());
-		}
-		
-		// Se los mandamos a la ventana de resultados
-		this.setChanged();
-		this.notifyObservers(new MuestraSolEvent(descrs, "Similares"));
-		
-		/* Obtenemos los casos diversos */
-		ArrayList<CBRCase> res = new ArrayList<CBRCase>();
-		Iterator<RetrievalResult> it  = eval.iterator();
-		int i = eval.size();
-		while (res.size() < NUMSELECTCASOS && i > 0){
-		    res.add(it.next().get_case());
-			i--;
-		}
-		
-		// Se los mandamos a la ventana de resultados
-		this.setChanged();
-		this.notifyObservers(new MuestraSolEvent(descrs, "Diversos"));
-
-		
-//		COSAS PRACTICA ANTERIOR	
-//		 // Aquí se incluiría el código para adaptar la solución
-//		Integer precio_prediccion = getPrediccionPrecio(eval);
-//		System.out.println("Prediccion precio: " + precio_prediccion);
-//		double confianza_prediccion = calcularConfianza(eval);
-//		System.out.println("Confianza: " + confianza_prediccion);
-//		
-//		if (evaluacionSistema){
-//			
-//			CBRCase casoReal = (CBRCase)query;
-//			SolucionVivienda solucionReal = (SolucionVivienda)casoReal.getSolution();
-//			Integer precio_real = solucionReal.getPrecio();
-//			
-//			// Hemos acertado con margen < 10000 --> prediccion == 1
-//			double prediccion = 0.0;
-//			if (Math.abs(precio_prediccion - precio_real) < 0.1*precio_real)
-//				prediccion = 1.0;
-//			
-//			DescripcionVivienda descrip = (DescripcionVivienda) query.getDescription();
+//		 if (once){
+//			 // DIVERSOS
+//			// Obtenemos las viviendas diversas
+//			HashMap<Attribute,Double> thresholds = new HashMap<Attribute,Double>();
+//			thresholds.put(new Attribute("tipo", DescripcionVivienda.class), 2.0);
+//			thresholds.put(new Attribute("estado", DescripcionVivienda.class), 300.0);
+//			thresholds.put(new Attribute("localizacion", DescripcionVivienda.class), 2.0);
+//			thresholds.put(new Attribute("superficie", DescripcionVivienda.class), 0.99);
 //
-////			tester(prediccion, descrip, precio_real, precio_prediccion, confianza_prediccion);
-//			
-//			System.out.println((descrip).getId().toString()
-//					+ "\n--------------"
-//					+ "\nPrecio Estimado: " + Integer.toString(precio_prediccion)
-//					+ "\nPrecio Real : " + Integer.toString(precio_real)
-//					+ "\nPrediccion :"+ Double.toString(prediccion)+"\n-------------------------------");
-//			
-//			Evaluator.getEvaluationReport().addDataToSeries("Aciertos", prediccion);
-//			Evaluator.getEvaluationReport().addDataToSeries("Confianza", confianza_prediccion);
-//		}
-//		else{
+//			Collection<RetrievalResult> retrievedCases = ExpertClerkMedianScoring.getDiverseByMedian(_caseBase.getCases(), simConfig, thresholds);
+//			Collection<CBRCase> selectedCases = SelectCases.selectTopK(retrievedCases, NUMDIVERSIDAD);
+//			 ArrayList<DescripcionVivienda> descrs = new ArrayList<DescripcionVivienda>();
+//			for (CBRCase nse: selectedCases){
+//				 descrs.add((DescripcionVivienda) nse.getDescription());
+//			}
 //			this.setChanged();
-//			this.notifyObservers(new MuestraSolEvent((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion));
-//		}
-	}
+//			this.notifyObservers(new MuestraSolEvent(descrs, "Diversos"));
+//			once = false;
+//		 }
+//		 else{	 
+			 // SIMILARES
+			 // Ejecutamos la recuperación por vecino más próximo
+			Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
 	
-	@SuppressWarnings("unused")
-	private void tester(double prediccion, DescripcionVivienda descrip, Integer precio_real, 
-			Integer precio_prediccion, double confianza_prediccion) {
-		if(prediccion == 1.0)
-			fich = fichAc;
-		else
-			fich = fichFa;
-		
-		fich.println("\n\n-------------------------------------------\n");
-		fich.println("Tipo "+descrip.getTipo().toString()+"\n");
-		fich.println("Estado "+descrip.getEstado().toString()+"\n");
-		fich.println("Superficie "+String.valueOf(descrip.getSuperficie())+"\n");
-		fich.println("Habitaciones "+String.valueOf(descrip.getHabitaciones())+"\n");
-		fich.println("Banio "+String.valueOf(descrip.getBanios())+"\n");
-		fich.println("Precio Medio "+String.valueOf(descrip.getPrecioMedio())+"\n");
-		fich.println("Precio Zona "+String.valueOf(descrip.getPrecioZona())+"\n");
-		fich.println("Localizacion "+String.valueOf(descrip.getLocalizacion())+"\n");
-		fich.println("Latitud "+String.valueOf(descrip.getCoordenada().getLatitud())+"\n");
-		fich.println("Longitud "+String.valueOf(descrip.getCoordenada().getLongitud())+"\n\n");
-		fich.println("Prediccion: "+String.valueOf(precio_prediccion)+"\n");
-		fich.println("Real: "+String.valueOf(precio_real)+"\n");
-		fich.println("Confianza: "+String.valueOf(confianza_prediccion)+"\n");
-	}
+			 // Seleccionamos los k mejores casos
+			 cases = SelectCases.selectTopK(eval, NUMSELECTCASOS);
+			 
+			 // Guardamos los casos más similares
+			 ArrayList<DescripcionVivienda> descrs = new ArrayList<DescripcionVivienda>();
+					 
+			for (CBRCase nse: cases){
+				 descrs.add((DescripcionVivienda) nse.getDescription());
+			}
+			
+			// Se los mandamos a la ventana de resultados
+			this.setChanged();
+			this.notifyObservers(new MuestraSolEvent(descrs, "Similares"));
+//		 }
 
-	@SuppressWarnings("unused")
-	private double calcularConfianza(Collection<RetrievalResult> eval) {
-		double total = 0;
-		 for (RetrievalResult nse: eval){
-			 total += nse.getEval();
-		 }
-		 return total / eval.size();
-	}
-
-	@SuppressWarnings("unused")
-	private Integer getPrediccionPrecio(Collection<RetrievalResult> eval) {
-		double pesos = 0; double total = 0;
-		 for (RetrievalResult nse: eval){
-			 pesos += nse.getEval();
-			 total += ((SolucionVivienda)nse.get_case().getSolution()).getPrecio() * nse.getEval();
-		 }
-		 
-		 return (int) Math.round(total / pesos);
 	}
 
 	public void inicia(){
@@ -336,6 +219,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Habilitar GUI
 		this.setChanged();
 		this.notifyObservers();	
+		
 	}
 
 	public void postCycle() throws ExecutionException {
@@ -374,8 +258,11 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 		// Configura y realiza el precycle
 		rv.inicia();
-		
 		// Obtener kNN viviendas diversas e introducirlas en el panelDiversidad
+//		DescripcionVivienda descr = new DescripcionVivienda(-1);
+//		descr.setTipo(TipoVivienda.Apartamento);
+//		descr.setEstado(EstadoVivienda.Bien);		
+//		this.repite(descr);
 
 	}
 

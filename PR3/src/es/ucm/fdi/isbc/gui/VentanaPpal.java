@@ -46,7 +46,7 @@ public class VentanaPpal extends JFrame implements Observer {
 
 		galeria = new Galeria();
 		panelFiltro = new PanelFiltro(this);
-		panelDiversidad = new PanelDiversidad(galeria);
+		panelDiversidad = new PanelDiversidad();
 		panelVisitados = new PanelVisitados(galeria, this);
 
 		vertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDiversidad,
