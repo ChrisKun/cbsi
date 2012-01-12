@@ -1,12 +1,10 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Observable;
-
-import javax.swing.ImageIcon;
 
 import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -16,6 +14,8 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterBasedRetrievalMethod;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterConfig;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
@@ -27,7 +27,6 @@ import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.eventos.MuestraSolEvent;
 import es.ucm.fdi.isbc.funcSimilitud.MyCoordinateSimilarityFunction;
 import es.ucm.fdi.isbc.funcSimilitud.SimilitudArbol;
-import es.ucm.fdi.isbc.gui.Galeria;
 import es.ucm.fdi.isbc.gui.VentanaPpal;
 import es.ucm.fdi.isbc.viviendas.ViviendasConnector;
 
@@ -87,129 +86,15 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Imprimir los casos leídos
 		// Puedes comentar las siguientes líneas una vez que funcione.
 		Collection<CBRCase> cases = _caseBase.getCases();
-		
-		/*String l = "", barrio = "", zona = "", calle = "";
-		String[] s = {};*/
-		
-		// Raíz árbol
-		//DefaultMutableTreeNode top = new DefaultMutableTreeNode("Madrid");
-		
-		//tree = new JTree(top);
 		tree = new Arbol("/");
-		//Galeria.IMAGENES = new ImageIcon[cases.size()];
 
 		for (CBRCase c : cases) {
 			
 			DescripcionVivienda dV = (DescripcionVivienda)c.getDescription();
 			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
-			/*File file = new File("images\\" + dV.getId() + ".jpg");
-			if (file.exists()) Galeria.IMAGENES[dV.getId()] = new ImageIcon(file.getPath());
-			else {
-				Galeria.IMAGENES[dV.getId()] = Galeria.NO_FOTO_NORMAL;
-				Galeria.IMAGENES[dV.getId()].setDescription(String.valueOf(dV.getId()));
-			}*/
-
-				/*// System.out.println(c);
-				barrio = "";
-				zona = "";
-				calle = "";
-				l = ((DescripcionVivienda) c.getDescription()).getLocalizacion();
-				
-				//Dividimos el string en campos.
-				s = l.split("/");
-				switch (s.length) {
-				// s[0] es dato Madrid.
-				case 2:
-					zona = s[1];
-					break;
-				case 3:
-					zona = s[1];
-					barrio = s[2];
-					break;
-				case 4:
-					zona = s[1];
-					barrio = s[2];
-					calle = s[3];
-					break;
-				}*/
-				
-				/*System.out.println(((DescripcionVivienda) c.getDescription())
-						.getId().toString()
-						+ "\n--------------\n Zona: "
-						+ zona
-						+ "\n Barrio: " + barrio + "\n Calle: " + calle);
-				*/
-				
-				//Creamos el nodo dentro del arbol
-				//createNodes(top, zona, barrio, calle);
 		}
-			//System.out.println("Árbol creado");
 		return _caseBase;
 	}
-
-	/*private void createNodes(DefaultMutableTreeNode top, String zona, String barrio, String calle) {
-		DefaultMutableTreeNode zonas = null;
-		DefaultMutableTreeNode barrios = null;
-		DefaultMutableTreeNode calles = null;
-		DefaultMutableTreeNode hijo = null, nieto = null, bisnieto = null;
-
-		zonas = new DefaultMutableTreeNode(zona);
-		if (!barrio.equals(""))
-			barrios = new DefaultMutableTreeNode(barrio);
-		if (!calle.equals(""))
-			calles = new DefaultMutableTreeNode(calle);
-
-		// Inicialmente el árbol no tiene nada
-		if (top.getChildCount() == 0) {
-			if (calles != null) barrios.add(calles);
-			if (barrios != null) zonas.add(barrios);
-			top.add(zonas);
-		} else {
-			int i = 0, j = 0, k = 0;
-			boolean found = false;
-			// Buscar zonas
-			while (!found && i < top.getChildCount()) {
-				hijo = (DefaultMutableTreeNode) top.getChildAt(i);
-				// Si no está la zona, el barrio y la calle tampoco
-				found = hijo.getUserObject().equals(zonas.getUserObject());
-				i++;
-			}
-			if (!found) {
-				if (calles != null) barrios.add(calles);
-				if (barrios != null) zonas.add(barrios);
-				top.add(zonas);
-			} else if (barrios != null) {
-				// Si está la zona hay que comprobar que no esté el barrio
-				boolean encontrado = false;
-				while (!encontrado && j < hijo.getChildCount()) {
-					nieto = (DefaultMutableTreeNode) hijo.getChildAt(j);
-					encontrado = nieto.getUserObject().equals(barrios.getUserObject());
-					j++;
-				}
-				if (!encontrado) {
-					// Si no está el barrio, la calle tampoco (si != null)
-					if (calles != null)
-						barrios.add(calles);
-					hijo.add(barrios);
-				} else if (calles != null) {
-					// Si está el barrio hay que comprobar que no esté la calle
-					boolean foundF = false;
-					while (!foundF	&& k < nieto.getChildCount()) {
-						bisnieto = (DefaultMutableTreeNode) nieto.getChildAt(k);
-						foundF = bisnieto.getUserObject().equals(calles.getUserObject());
-						k++;
-					}
-					if (!foundF) {
-						// añadir calle al barrio indicado
-						nieto.add(calles);
-					}
-
-				}
-
-			}
-		}
-
-	}*/
 
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {	
@@ -298,7 +183,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		 
 		 // Ejecutamos la recuperación por vecino más próximo
 		  Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(_caseBase.getCases(), query, simConfig);
-		
+
 		 // Seleccionamos los k mejores casos
 		 //eval = SelectCases.selectTopKRR(eval, NUMSELECTCASOS);
 		 cases = SelectCases.selectTopK(eval, NUMSELECTCASOS);
@@ -312,7 +197,22 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 		// Se los mandamos a la ventana de resultados
 		this.setChanged();
-		this.notifyObservers(new MuestraSolEvent(descrs));
+		this.notifyObservers(new MuestraSolEvent(descrs, "Similares"));
+		
+		/* Obtenemos los casos diversos */
+		ArrayList<CBRCase> res = new ArrayList<CBRCase>();
+		Iterator<RetrievalResult> it  = eval.iterator();
+		int i = eval.size();
+		while (res.size() < NUMSELECTCASOS && i > 0){
+		    res.add(it.next().get_case());
+			i--;
+		}
+		
+		// Se los mandamos a la ventana de resultados
+		this.setChanged();
+		this.notifyObservers(new MuestraSolEvent(descrs, "Diversos"));
+
+		
 //		COSAS PRACTICA ANTERIOR	
 //		 // Aquí se incluiría el código para adaptar la solución
 //		Integer precio_prediccion = getPrediccionPrecio(eval);
@@ -478,9 +378,28 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		// Obtener kNN viviendas diversas e introducirlas en el panelDiversidad
 
 	}
-	
-	
-	/*public JTree getLocalizaciones() {
-		return tree;
-	}*/
+
+	public void moreLikeThis(ArrayList<Integer> idYaVisitadas) {
+		// Execute Filter
+		Collection<CBRCase> filtered = FilterBasedRetrievalMethod.filterCases(
+				cases, query, new FilterConfig());
+
+		Collection<RetrievalResult> retrievedCases = ParallelNNScoringMethod
+				.evaluateSimilarityParallel(filtered, query,
+						simConfig);
+
+		ArrayList<DescripcionVivienda> aL = new ArrayList<DescripcionVivienda>();
+
+		int cantidad = 0;
+		Iterator<RetrievalResult> it = retrievedCases.iterator();
+		while (it.hasNext() && cantidad < NUMSELECTCASOS){
+			DescripcionVivienda descr = (DescripcionVivienda) it.next().get_case().getDescription();
+			if (!idYaVisitadas.contains(descr.getId())) {
+				aL.add(descr);
+				cantidad++;
+			}
+		}
+		this.setChanged();
+		this.notifyObservers(new MuestraSolEvent(aL, "Similares"));
+	}
 }
