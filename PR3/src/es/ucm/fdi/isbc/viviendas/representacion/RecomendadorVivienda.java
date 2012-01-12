@@ -96,18 +96,18 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		
 		//tree = new JTree(top);
 		tree = new Arbol("/");
-		Galeria.IMAGENES = new ImageIcon[cases.size()];
+		//Galeria.IMAGENES = new ImageIcon[cases.size()];
 
 		for (CBRCase c : cases) {
 			
 			DescripcionVivienda dV = (DescripcionVivienda)c.getDescription();
 			tree.add(new Arbol(dV.getLocalizacion().toLowerCase()));
-			File file = new File("images\\" + dV.getId() + ".jpg");
+			/*File file = new File("images\\" + dV.getId() + ".jpg");
 			if (file.exists()) Galeria.IMAGENES[dV.getId()] = new ImageIcon(file.getPath());
 			else {
 				Galeria.IMAGENES[dV.getId()] = Galeria.NO_FOTO_NORMAL;
 				Galeria.IMAGENES[dV.getId()].setDescription(String.valueOf(dV.getId()));
-			}
+			}*/
 
 				/*// System.out.println(c);
 				barrio = "";

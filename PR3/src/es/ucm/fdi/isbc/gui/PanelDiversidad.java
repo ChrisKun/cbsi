@@ -15,10 +15,13 @@ class PanelDiversidad extends JPanel
 {
 	
 	private static final long serialVersionUID = 1L;
+	private Galeria galeria;
 	
-	public PanelDiversidad()
+	public PanelDiversidad(Galeria galeria)
 	{
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		this.galeria = galeria;
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		dim.setSize(dim.width - 100, dim.height - 100);

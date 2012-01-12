@@ -35,6 +35,7 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.FilterBasedRetrieval.FilterBasedRetrievalMethod;
 import jcolibri.method.retrieve.FilterBasedRetrieval.FilterConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import jcolibri.method.retrieve.NNretrieval.ParallelNNScoringMethod;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.ExtrasBasicos;
@@ -47,6 +48,8 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 	/** Atributos **/
 
 		/* Estáticos */
+	
+			public static final int NUM_A_RECOMENDAR = 5; //Numero de casas que vamos a recomendar.
 
 			private static final long serialVersionUID = 1L;
 			private static JLabel label;
@@ -94,10 +97,10 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 
 	/** Constructores **/
 
-		public VentanaDescripcion(final DescripcionVivienda VIVIENDA, final int INDEX)
+		public VentanaDescripcion(final DescripcionVivienda VIVIENDA, final int INDEX, Galeria galeria)
 		{			
 			VentanaDescripcion.vivienda = VIVIENDA;
-			VentanaDescripcion.imageIcon = Galeria.IMAGENES[INDEX];
+			VentanaDescripcion.imageIcon = galeria.getFotoOrig(VIVIENDA.getId());
 			setTitle(vivienda.getTitulo());
 			setModalityType(DEFAULT_MODALITY_TYPE);
 			
@@ -241,8 +244,8 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 				public void actionPerformed(ActionEvent e)
 				{
 					try {
-						VentanaPpal.panelVisitados.setVivienda(VIVIENDA, Galeria.IMAGENES[INDEX]);
-						VentanaPpal.panelVisitados.actualizarPanel();
+//						VentanaPpal.panelVisitados.addVivienda(VIVIENDA);//, Galeria.IMAGENES[INDEX]);
+//						VentanaPpal.panelVisitados.actualizarPanel();
 						CBRQuery query = new CBRQuery();
 						query.setDescription(VIVIENDA);
 						moreLikeThis(query, UserChoice.REFINE_QUERY);
@@ -542,14 +545,17 @@ public class VentanaDescripcion extends JDialog implements ItemListener
 						query, new FilterConfig());
 				
 				// Execute NN
-				Collection<RetrievalResult> retrievedCases = NNScoringMethod.evaluateSimilarity(filtered, query, control.getSimCongfig());
+				//Collection<RetrievalResult> retrievedCases = NNScoringMethod.evaluateSimilarity(filtered, query, control.getSimCongfig());
+				//Lo ponemos en plan paralelo para conseguir mejores velocidades
+				Collection<RetrievalResult> retrievedCases = ParallelNNScoringMethod.evaluateSimilarityParallel(filtered, query, control.getSimCongfig());
 
 				ArrayList<DescripcionVivienda> aL = new ArrayList<DescripcionVivienda>();
 
 				int cantidad = 0;
-				for (Iterator<RetrievalResult> it = retrievedCases.iterator(); cantidad < 5 && it.hasNext(); ) {
+				ArrayList<Integer> idYaVisitadas = VentanaPpal.panelVisitados.getIdDescViviendVisitadas();
+				for (Iterator<RetrievalResult> it = retrievedCases.iterator(); cantidad < NUM_A_RECOMENDAR && it.hasNext(); ) {
 					DescripcionVivienda descr = (DescripcionVivienda) it.next().get_case().getDescription();
-					if (!VentanaPpal.panelVisitados.getVistas().contains(descr)) {
+					if (!idYaVisitadas.contains(descr.getId())) {
 						aL.add(descr);
 						cantidad++;
 					}

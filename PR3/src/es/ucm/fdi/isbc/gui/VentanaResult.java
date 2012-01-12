@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,16 +29,19 @@ class VentanaResult extends JDialog
 		private static JLabel[] imagen;
 		private static final double TOPE_FIJO = 70;
 		private static final double WIDTH_FIJO = 1130;
+		private Galeria galeria;
 		static VentanaDescripcion vD;
 		static int TOPE;
 		
 	/** Constructores **/
 		
-		public VentanaResult()
+		public VentanaResult(Galeria galeria)
 		{
 			setTitle("Viviendas");
 			setModalityType(DEFAULT_MODALITY_TYPE);	
 			setLayout(new BorderLayout());
+			
+			this.galeria = galeria;
 
 			JPanel[] margen = new JPanel[4];
 			for (int i = 0; i < margen.length; i++)
@@ -113,16 +117,23 @@ class VentanaResult extends JDialog
 							JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 					scrollPane.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
-					imagen[i].setIcon(Galeria.IMAGENES[descrs.get(i).getId()]);
+					//Añadimos la foto del panel:
+					int pos = galeria.addFoto(descrs.get(i).getUrlFoto(), descrs.get(i).getId());
+					//La cargamos:
+					imagen[i].setIcon(galeria.getFotoOrigPos(pos));
 					imagen[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 
 					imagen[i].addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e)
 						{
 							boolean encontrado = false;
+							ArrayList<Integer> idYaVisitadas = VentanaPpal.panelVisitados.getIdDescViviendVisitadas();
 							for (int j = 0; j < aL.size() && !encontrado; j++)
 								if (e.getSource() == imagen[j]) {
-									if (!VentanaPpal.panelVisitados.getVistas().contains(aL.get(j)))
+									if (!idYaVisitadas.contains(aL.get(j).getId()))
+										//La añadimos a visitados por haber pinchado sobre ella. Y no en VentanaDescripcion
+										VentanaPpal.panelVisitados.addVivienda(aL.get(j));
+										VentanaPpal.panelVisitados.actualizarPanel();
 										VentanaPpal.lanzarVentanaDescripcion(aL.get(j));
 									encontrado = true;
 									dispose();
