@@ -44,8 +44,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private final double PESOExtrasO = 0.07;
 	private final double PESOExtrasB = 0.01;
 	
-	public static final int NUMSELECTCASOS = 5;
-	public static final int NUMDIVERSIDAD = 6;
+	public static final int NUMSELECTCASOS = 5;  //Numero de casos para la ventana result
+	public static final int NUMCASOSBUSCADOS = 50;  //Numero de casos que se tienen en cuenta cuando buscamos
+	public static final int NUMDIVERSIDAD = 6;  //Numero de casos para la ventana diversidad
 	
 	private boolean once = true;
 	
@@ -268,6 +269,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 
 	public void moreLikeThis(ArrayList<Integer> idYaVisitadas) {
 		// Execute Filter
+		cases = _caseBase.getCases();
 		Collection<CBRCase> filtered = FilterBasedRetrievalMethod.filterCases(
 				cases, query, new FilterConfig());
 
@@ -288,5 +290,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		}
 		this.setChanged();
 		this.notifyObservers(new MuestraSolEvent(aL, "Similares"));
+	}
+	
+	public void getNcasesDiverse(ArrayList<Integer> idYaVisitadas, int numCasos)
+	{
+		
 	}
 }
