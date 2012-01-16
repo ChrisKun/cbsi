@@ -47,22 +47,18 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private static final double PESOExtrasF = 0.05;
 	private static final double PESOExtrasO = 0.07;
 	private static final double PESOExtrasB = 0.01;
-	
-<<<<<<< .mine
+
 	private double precio = 0;
 	private double precioZona = 0;
 	private double precioMedio = 0;
 	private double habitaciones = 0;
 	private double banios = 0;
 	private double superficie = 0;
-	
-	public static final int NUMSELECTCASOS = 5;
-	public static final int NUMDIVERSIDAD = 6;
-=======
+
 	public static final int NUMSELECTCASOS = 5;  //Numero de casos para la ventana result
 	public static final int NUMCASOSBUSCADOS = 50;  //Numero de casos que se tienen en cuenta cuando buscamos
 	public static final int NUMDIVERSIDAD = 6;  //Numero de casos para la ventana diversidad
->>>>>>> .r52
+
 	
 	private boolean once = true;
 	
@@ -383,10 +379,5 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		}
 		this.setChanged();
 		this.notifyObservers(new MuestraSolEvent(aL, "Similares"));
-	}
-	
-	public void getNcasesDiverse(ArrayList<Integer> idYaVisitadas, int numCasos)
-	{
-		
 	}
 }
