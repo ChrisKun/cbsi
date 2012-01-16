@@ -14,6 +14,9 @@ public class ExtrasFinca implements CaseComponent{
 	boolean garajePrivado;
 	boolean videoportero;
 	
+	public ExtrasFinca(){
+		super();
+	}
 	
 	public ExtrasFinca(int id)
 	{

@@ -20,9 +20,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
+
+import com.ibm.icu.util.Calendar;
 
 import jcolibri.cbrcore.CBRQuery;
 import es.ucm.fdi.isbc.controlador.Controlador;
@@ -49,8 +52,7 @@ public class VentanaDescripcion extends JDialog implements ItemListener {
 
 	/** Constructores **/
 
-	public VentanaDescripcion(final DescripcionVivienda VIVIENDA,
-			final int INDEX, Galeria galeria) {
+	public VentanaDescripcion(final DescripcionVivienda VIVIENDA, final int INDEX, Galeria galeria) {
 		vivienda = VIVIENDA;
 		imageIcon = galeria.getFotoOrig(VIVIENDA.getId());
 		setTitle(vivienda.getTitulo());
@@ -203,13 +205,19 @@ public class VentanaDescripcion extends JDialog implements ItemListener {
 
 		add(panel);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		VentanaPpal.disposeResult();
+//		VentanaPpal.disposeResult();
+		button[0].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(VentanaDescripcion.this, "Contacto con el vendedor: "+"699 999 999\n"
+						/*+ "URL: "+ VIVIENDA.getUrl()*/, "Comprando", JOptionPane.INFORMATION_MESSAGE);
 
+			}
+		});
 		button[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					CBRQuery query = new CBRQuery();
 					query.setDescription(VIVIENDA);
-					Controlador.getInstance().moreLikeThis(VentanaPpal.getIdDescViviendVisitadas());
+					Controlador.getInstance().moreLikeThis(query, VentanaPpal.getIdDescViviendVisitadas());
 					dispose();
 
 			}

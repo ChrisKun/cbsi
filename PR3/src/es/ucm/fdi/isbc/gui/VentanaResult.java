@@ -99,24 +99,24 @@ class VentanaResult extends JDialog {
 					.toUpperCase() + loca[0].substring(1));
 			String descripcion = VentanaPpal.cortarString(
 					VentanaPpal.transformar(descrs.get(i).getDescripcion()),
-					TOPE, "DESCRIPCIÓN: ".length());
+					TOPE, "DESCRIPCI�N: ".length());
 			descripcion = descripcion.substring(0, 1).toUpperCase()
 					+ descripcion.substring(1);
 
 			// Actualizamos las DescripcionesVivienda con los textos ya
 			// corregidos para no tener que volver a corregirlos
-			// luego. La localización no la actualizamos por si tenemos que
-			// usar la ruta del árbol más adelante.
+			// luego. La localizacion no la actualizamos por si tenemos que
+			// usar la ruta del Arbol más adelante.
 			descrs.get(i).setTitulo(titulo);
 			descrs.get(i).setDescripcion(descripcion);
 
 			String descr = "<html><p align=\"justify\">"
 					+ "<b><u>NOMBRE</u></b>: " + titulo + "<br>"
-					+ "<b><u>LOCALIZACIÓN</u></b>: " + localizacion + "<br>"
+					+ "<b><u>LOCALIZACI�N</u></b>: " + localizacion + "<br>"
 					+ "<b><u>SUPERFICIE</u></b>: "
 					+ descrs.get(i).getSuperficie() + "m<sup>2</sup><br>"
 					+ "<b><u>PRECIO</u></b>: " + descrs.get(i).getPrecio()
-					+ " €<br>" + "<b><u>DESCRIPCIÓN</u></b>: " + descripcion
+					+ " �<br>" + "<b><u>DESCRIPCI�N</u></b>: " + descripcion
 					+ "</p></html>";
 
 			imagen[i] = new JLabel();

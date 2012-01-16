@@ -2,6 +2,8 @@ package es.ucm.fdi.isbc.controlador;
 
 import java.util.ArrayList;
 
+import jcolibri.cbrcore.CBRQuery;
+
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 
@@ -37,8 +39,8 @@ public class Controlador {
 		rv.fin();
 	}
 
-	public void moreLikeThis(ArrayList<Integer> idDescViviendVisitadas) {
-		rv.moreLikeThis(idDescViviendVisitadas);
+	public void moreLikeThis(CBRQuery query, ArrayList<Integer> idDescViviendVisitadas) {
+		rv.moreLikeThis(query, idDescViviendVisitadas);
 	}
 
 }

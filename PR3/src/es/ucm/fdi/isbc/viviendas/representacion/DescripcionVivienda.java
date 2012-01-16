@@ -13,7 +13,7 @@ public class DescripcionVivienda implements CaseComponent {
 		Muybien, Reformado, Areformar, Casinuevo, Bien
 	};
 
-	EstadoVivienda e = EstadoVivienda.Muybien;
+	//EstadoVivienda e = EstadoVivienda.Muybien;
 
 	Integer id;
 
@@ -28,7 +28,7 @@ public class DescripcionVivienda implements CaseComponent {
 						// Extends InContextLocalSimilarityFiunction Peso: 7
 	Integer habitaciones; // Intervalos Peso: 6
 	Integer banios; // Equal Peso: 5
-	EstadoVivienda estado; // Tabla comparativa Peso: 10
+	EstadoVivienda estado = EstadoVivienda.Muybien; // Tabla comparativa Peso: 10
 	String descripcion; // Peso: 0
 
 	Coordenada coordenada; // NNScoringMethod vecino más próximo Peso: 10
@@ -41,6 +41,8 @@ public class DescripcionVivienda implements CaseComponent {
 	ExtrasBasicos extrasBasicos; // Equal Peso: 3
 	ExtrasOtros extrasOtros; // Equal Peso: 6
 
+	public DescripcionVivienda(){}
+	
 	public DescripcionVivienda(int id) {
 		super();
 		this.id = id;
