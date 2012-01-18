@@ -22,16 +22,21 @@ public class VentanaPpal extends JFrame implements Observer {
 
 	/** Atributos **/
 
+	/* Estaticos */
+
+	private static Galeria galeria;
+	private static PanelVisitados panelVisitados;
+	private static VentanaResult vResult;
+
+	/* No estaticos */
+
 	private JMenuBar barraMenus;
 	private JMenu mArchivo;
 	private JMenuItem salir;
 	private JSplitPane horizontal, vertical;
-	private static Galeria galeria;
 
-	private static PanelVisitados panelVisitados;
 	private PanelFiltro panelFiltro;
 	private PanelDiversidad panelDiversidad;
-	private static VentanaResult vResult;
 
 	private boolean flag = false;
 
@@ -81,10 +86,9 @@ public class VentanaPpal extends JFrame implements Observer {
 		if (arg instanceof MuestraSolEvent) {
 			if (((MuestraSolEvent) arg).getType().equals("Similares"))
 				lanzarVentanaResult(((MuestraSolEvent) arg).getDescrs());
-			else if (((MuestraSolEvent) arg).getType().equals("Diversos")) {
+			else if (((MuestraSolEvent) arg).getType().equals("Diversos"))
 				panelDiversidad.setViviendasDiversas(((MuestraSolEvent) arg)
 						.getDescrs());
-			}
 		} else {
 			if (flag) {
 				panelFiltro.enableButton(false);
@@ -96,10 +100,10 @@ public class VentanaPpal extends JFrame implements Observer {
 		}
 	}
 
-	/* Otros mÃƒÂ©todos */
+	/* Otros métodos */
 
 	/**
-	 * @return El menÃƒÂº de la ventana
+	 * @return El menú de la ventana
 	 */
 	private JMenuBar inicializaMenus() {
 		JMenuBar barra = new JMenuBar();
@@ -120,7 +124,7 @@ public class VentanaPpal extends JFrame implements Observer {
 	/* AUXILIARES */
 
 	/**
-	 * Lanza a ejecuciÃƒÂ³n la ventana resultado en un nuevo hilo para que no se
+	 * Lanza a ejecución la ventana resultado en un nuevo hilo para que no se
 	 * bloqueen las ventanas ni el se tenga que quedar el proceso princial
 	 * esperando a que acaben todas las acciones generadas por esta ventana.
 	 * 
@@ -161,9 +165,9 @@ public class VentanaPpal extends JFrame implements Observer {
 	public static boolean enteroEsCorrecto(String entero) {
 		/**
 		 * Para que el entero sea correcto tiene que tener formato de Integer y
-		 * ser mayor o igual que cero ya que la superficie, el nÃƒÂºmero de
-		 * habitaciones y de baÃƒÂ±os no puede ser negativo. Si la cadena es
-		 * vacÃƒÂ­a devolvemos true;
+		 * ser mayor o igual que cero ya que la superficie, el numero de
+		 * habitaciones y de baños no puede ser negativo. Si la cadena es vacía
+		 * devolvemos true;
 		 */
 
 		if (entero.isEmpty())
@@ -218,7 +222,8 @@ public class VentanaPpal extends JFrame implements Observer {
 		while (!s.isEmpty()) {
 			String car = s.substring(0, 1);
 			s = s.substring(1);
-			if (car.equals("Ã") || car.equals("Â") || car.equals("m") || car.equals(",") || car.equals(".")) {
+			if (car.equals("Ã") || car.equals("Â") || car.equals("m")
+					|| car.equals(",") || car.equals(".")) {
 				if (s.length() > 0) {
 					car += s.substring(0, 1);
 					s = s.substring(1);
@@ -229,16 +234,15 @@ public class VentanaPpal extends JFrame implements Observer {
 							car += s.substring(0, 1);
 							s = s.substring(1);
 						}
-					}
-					else if (car.charAt(0) == ',' && car.charAt(1) != ' ') {
+					} else if (car.charAt(0) == ',' && car.charAt(1) != ' ') {
 						transformar += ", ";
 						car = car.substring(1);
 						if (car.equals("Ã") || car.equals("Â")) {
 							car = s.substring(0, 1);
 							s = s.substring(1);
 						}
-					}
-					else if (car.charAt(0) == '.' && car.charAt(1) != ' ' && car.charAt(1) != '.'
+					} else if (car.charAt(0) == '.' && car.charAt(1) != ' '
+							&& car.charAt(1) != '.'
 							&& !VentanaPpal.enteroEsCorrecto(car.substring(1))) {
 						transformar += ". ";
 						car = car.substring(1);
@@ -248,8 +252,7 @@ public class VentanaPpal extends JFrame implements Observer {
 						}
 					}
 				}
-			}
-			else if (car.equals("â")) {
+			} else if (car.equals("â")) {
 				if (s.length() > 1) {
 					car += s.substring(0, 1);
 					s = s.substring(1);
@@ -264,8 +267,7 @@ public class VentanaPpal extends JFrame implements Observer {
 								s = s.substring(1);
 							}
 						}
-					}
-					else {
+					} else {
 						transformar += "â";
 						car = car.substring(1);
 						if (car.equals("Ã") || car.equals("Â")) {
@@ -281,38 +283,68 @@ public class VentanaPpal extends JFrame implements Observer {
 	}
 
 	private static String codificar(String cod) {
-		// Debido a la propia codificación del Eclipse y a que no reconoce ciertos caracteres: Á, Í, Ï se escriben aquí
-		// de la misma forma lo cuál generará un problema en la conversión, por suerte, las dos últimas no son letras
+		// Debido a la propia codificación del Eclipse y a que no reconoce
+		// ciertos caracteres: Á, Í, Ï se escriben aquí
+		// de la misma forma lo cuál generará un problema en la conversión, por
+		// suerte, las dos últimas no son letras
 		// muy utilizadas.
-		
-		if (cod.equals("Ã¡")) return "á";
-		else if (cod.equals("Ã©")) return "é";
-		else if (cod.equals("Ã­")) return "í";
-		else if (cod.equals("Ã³")) return "ó";
-		else if (cod.equals("Ãº")) return "ú";
-		else if (cod.equals("Ã�")) return "Á";
-		else if (cod.equals("Ã‰")) return "É";
-		else if (cod.equals("Ã�")) return "Í";
-		else if (cod.equals("Ã“")) return "Ó";
-		else if (cod.equals("Ãš")) return "Ú";
-		else if (cod.equals("Ã±")) return "ñ";
-		else if (cod.equals("Ã‘")) return "Ñ";
-		else if (cod.equals("Ã¤")) return "ä";
-		else if (cod.equals("Ã«")) return "ë";
-		else if (cod.equals("Ã¯")) return "ï";
-		else if (cod.equals("Ã¶")) return "ö";
-		else if (cod.equals("Ã¼")) return "ü";
-		else if (cod.equals("Ã„")) return "Ä";
-		else if (cod.equals("Ã‹")) return "Ë";
-		else if (cod.equals("Ã�")) return "Ï";
-		else if (cod.equals("Ã–")) return "Ö";
-		else if (cod.equals("Ãœ")) return "Ü";
-		else if (cod.equals("â‚¬")) return "€";
-		else if (cod.equals("Âº")) return "º";
-		else if (cod.equals("Âª")) return "ª";
-		else if (cod.equals("Â¡")) return "¡";
-		else if (cod.equals("m2")) return " metros cuadrados";
-		else return cod;
+
+		if (cod.equals("Ã¡"))
+			return "á";
+		else if (cod.equals("Ã©"))
+			return "é";
+		else if (cod.equals("Ã­"))
+			return "í";
+		else if (cod.equals("Ã³"))
+			return "ó";
+		else if (cod.equals("Ãº"))
+			return "ú";
+		else if (cod.equals("Ã�"))
+			return "Á";
+		else if (cod.equals("Ã‰"))
+			return "É";
+		else if (cod.equals("Ã�"))
+			return "Í";
+		else if (cod.equals("Ã“"))
+			return "Ó";
+		else if (cod.equals("Ãš"))
+			return "Ú";
+		else if (cod.equals("Ã±"))
+			return "ñ";
+		else if (cod.equals("Ã‘"))
+			return "Ñ";
+		else if (cod.equals("Ã¤"))
+			return "ä";
+		else if (cod.equals("Ã«"))
+			return "ë";
+		else if (cod.equals("Ã¯"))
+			return "ï";
+		else if (cod.equals("Ã¶"))
+			return "ö";
+		else if (cod.equals("Ã¼"))
+			return "ü";
+		else if (cod.equals("Ã„"))
+			return "Ä";
+		else if (cod.equals("Ã‹"))
+			return "Ë";
+		else if (cod.equals("Ã�"))
+			return "Ï";
+		else if (cod.equals("Ã–"))
+			return "Ö";
+		else if (cod.equals("Ãœ"))
+			return "Ü";
+		else if (cod.equals("â‚¬"))
+			return "€";
+		else if (cod.equals("Âº"))
+			return "º";
+		else if (cod.equals("Âª"))
+			return "ª";
+		else if (cod.equals("Â¡"))
+			return "¡";
+		else if (cod.equals("m2"))
+			return " metros cuadrados";
+		else
+			return cod;
 	}
 
 	/*--------- SETTERS DE PANELES --------*/

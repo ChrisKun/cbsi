@@ -42,14 +42,11 @@ class PanelFiltro extends Container implements KeyListener {
 	private EstadoVivienda state = EstadoVivienda.Muybien;
 
 	private DescripcionVivienda descr = null;
-	private VentanaPpal main;
 
 	/** Constructores **/
 
 	public PanelFiltro(VentanaPpal v) {
 		this.setLayout(new GridLayout(5, 1));
-		
-		main = v;
 
 		tipo = new JLabel("Tipo de Vivienda");
 		estado = new JLabel("Estado vivienda");
@@ -227,7 +224,7 @@ class PanelFiltro extends Container implements KeyListener {
 		descr.setEstado(state);
 		descr.setLocalizacion(sLocalizacion);
 		String entero = m.getText();
-		if (main.enteroEsCorrecto(entero)) {
+		if (VentanaPpal.enteroEsCorrecto(entero)) {
 			if (!entero.isEmpty())
 				descr.setSuperficie(Integer.valueOf(entero));
 			Controlador.getInstance().repite(descr);

@@ -25,8 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
-import com.ibm.icu.util.Calendar;
-
 import jcolibri.cbrcore.CBRQuery;
 import es.ucm.fdi.isbc.controlador.Controlador;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
@@ -37,22 +35,27 @@ import es.ucm.fdi.isbc.viviendas.representacion.ExtrasOtros;
 public class VentanaDescripcion extends JDialog implements ItemListener {
 	private static final long serialVersionUID = 1L;
 	/** Atributos **/
-	
+
 	private JLabel label;
 	private JButton[] button;
 	private JEditorPane[] editorPane;
 	private DescripcionVivienda vivienda;
 	private ImageIcon imageIcon;
 
-	private JCheckBox ascensor, trastero, energiaSolar, servPorteria, parkingComunitario, garajePrivado, videoPortero;
+	private JCheckBox ascensor, trastero, energiaSolar, servPorteria,
+			parkingComunitario, garajePrivado, videoPortero;
 
-	private JCheckBox lavadero, internet, microondas, horno, amueblado, cocinaOffice, parquet, domotica, armarios,
-		tv, lavadora, electrodomesticos, suiteConBanio, puertaBlindada, gresCeramica, calefaccion, aireAcondicionado, nevera, 
-		patio, balcon, zonaDeportiva, zonaComunitaria, terraza, piscinaComunitaria, jardinPrivado, zonaInfantil, piscina;
+	private JCheckBox lavadero, internet, microondas, horno, amueblado,
+			cocinaOffice, parquet, domotica, armarios, tv, lavadora,
+			electrodomesticos, suiteConBanio, puertaBlindada, gresCeramica,
+			calefaccion, aireAcondicionado, nevera, patio, balcon,
+			zonaDeportiva, zonaComunitaria, terraza, piscinaComunitaria,
+			jardinPrivado, zonaInfantil, piscina;
 
 	/** Constructores **/
 
-	public VentanaDescripcion(final DescripcionVivienda VIVIENDA, final int INDEX, Galeria galeria) {
+	public VentanaDescripcion(final DescripcionVivienda VIVIENDA,
+			final int INDEX, Galeria galeria) {
 		vivienda = VIVIENDA;
 		imageIcon = galeria.getFotoOrig(VIVIENDA.getId());
 		setTitle(vivienda.getTitulo());
@@ -205,20 +208,23 @@ public class VentanaDescripcion extends JDialog implements ItemListener {
 
 		add(panel);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//		VentanaPpal.disposeResult();
+		// VentanaPpal.disposeResult();
 		button[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(VentanaDescripcion.this, "Contacto con el vendedor: "+"699 999 999\n"
-						/*+ "URL: "+ VIVIENDA.getUrl()*/, "Comprando", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(VentanaDescripcion.this,
+						"Contacto con el vendedor: " + "699 999 999\n"
+						/* + "URL: "+ VIVIENDA.getUrl() */, "Comprando",
+						JOptionPane.INFORMATION_MESSAGE);
 
 			}
 		});
 		button[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					CBRQuery query = new CBRQuery();
-					query.setDescription(VIVIENDA);
-					Controlador.getInstance().moreLikeThis(query, VentanaPpal.getIdDescViviendVisitadas());
-					dispose();
+				CBRQuery query = new CBRQuery();
+				query.setDescription(VIVIENDA);
+				Controlador.getInstance().moreLikeThis(query,
+						VentanaPpal.getIdDescViviendVisitadas());
+				dispose();
 
 			}
 		});

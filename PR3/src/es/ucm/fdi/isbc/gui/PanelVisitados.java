@@ -27,14 +27,13 @@ class PanelVisitados extends JPanel {
 	/** Atributos **/
 
 	private static final long serialVersionUID = 1L;
-	
 
 	private Dimension dim;
 	private ArrayList<DescripcionVivienda> visitadas;
 	private ArrayList<Integer> idVisitadas;
 	private Galeria galeria;
 
-	private JButton bAnterior,bSiguiente;
+	private JButton bAnterior, bSiguiente;
 	private JPanel[] panel;
 	private JLabel[] label;
 	private int[] imagen;
@@ -99,7 +98,7 @@ class PanelVisitados extends JPanel {
 		gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+		gridBagConstraints.anchor = GridBagConstraints.WEST;
 		gridBagConstraints.fill = GridBagConstraints.VERTICAL;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 0);
 		add(bAnterior, gridBagConstraints);
@@ -108,7 +107,7 @@ class PanelVisitados extends JPanel {
 		gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 7;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+		gridBagConstraints.anchor = GridBagConstraints.EAST;
 		gridBagConstraints.fill = GridBagConstraints.VERTICAL;
 		gridBagConstraints.insets = new Insets(5, 0, 5, 5);
 		add(bSiguiente, gridBagConstraints);

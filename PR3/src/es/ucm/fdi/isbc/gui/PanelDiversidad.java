@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
-import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 
 /**
  * Panel que contiene las viviendas con diversidad de contenido
@@ -24,17 +24,22 @@ import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda
 
 class PanelDiversidad extends JPanel {
 
+	/** Atributos **/
+
+	/* Estaticos */
+
 	private static final long serialVersionUID = 1L;
-//	private Galeria galeria;
-	
+
+	/* No estaticos */
+
 	private ArrayList<DescripcionVivienda> diversas;
 	private Galeria galeria;
 	private JLabel label[] = new JLabel[RecomendadorVivienda.NUMDIVERSIDAD];
-	
-	private final int LENGTH_LABELS = 6;
+
+	/** Constructores **/
 
 	public PanelDiversidad(Galeria galeria) {
-		setLayout(new GridLayout(2,3));
+		setLayout(new GridLayout(2, 3));
 
 		this.galeria = galeria;
 		diversas = new ArrayList<DescripcionVivienda>();
@@ -51,12 +56,10 @@ class PanelDiversidad extends JPanel {
 	// panel
 
 	public void setViviendasDiversas(ArrayList<DescripcionVivienda> viviendas) {
-		for (int i = 0; i < viviendas.size(); i++){
+		for (int i = 0; i < viviendas.size(); i++) {
 			diversas.add(viviendas.get(i));
-//			idDiversas.add(viviendas.get(i).getId());
-			label[i] = new JLabel(/*viviendas.get(i).getUrlFoto()*/);
-			this.add(label[i]);
-//			galeria.addFoto(vivienda.getUrlFoto(), vivienda.getId());
+			label[i] = new JLabel();
+			add(label[i]);
 			DescripcionVivienda dV = diversas.get(i);
 			String localización = "Madrid, ";
 			String[] loca1 = dV.getLocalizacion().split("/");
@@ -72,6 +75,7 @@ class PanelDiversidad extends JPanel {
 
 			// Añadimos la foto del panel:
 			int pos = galeria.addFoto(dV.getUrlFoto(), dV.getId());
+
 			// La cargamos:
 			label[i].setToolTipText(mensaje);
 			label[i].setIcon(galeria.getFotoOrigPos(pos));
@@ -81,24 +85,24 @@ class PanelDiversidad extends JPanel {
 			label[i].addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					boolean encontrado = false;
-					ArrayList<Integer> idYaVisitadas = VentanaPpal.getIdDescViviendVisitadas();
+					ArrayList<Integer> idYaVisitadas = VentanaPpal
+							.getIdDescViviendVisitadas();
 					for (int j = 0; j < diversas.size() && !encontrado; j++)
 						if (e.getSource() == label[j]) {
-							if (!idYaVisitadas.contains(diversas.get(j).getId()))
-								// La añadimos a visitados por haber pinchado
-								// sobre ella. Y no en VentanaDescripcion
+							if (!idYaVisitadas
+									.contains(diversas.get(j).getId()))
 								VentanaPpal.addVivienda(diversas.get(j));
-								VentanaPpal.actualizarPanel();
-								VentanaPpal.lanzarVentanaDescripcion(diversas.get(j));
-								encontrado = true;
-							//dispose();
+							VentanaPpal.actualizarPanel();
+							VentanaPpal.lanzarVentanaDescripcion(diversas
+									.get(j));
+							encontrado = true;
 						}
 				}
 			});
-			
+
 		}
 	}
-	
+
 	private String tipoToString(TipoVivienda tipo) {
 		switch (tipo) {
 		case Atico:

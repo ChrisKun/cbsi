@@ -30,7 +30,6 @@ class VentanaResult extends JDialog {
 	private Galeria galeria;
 	static VentanaDescripcion vD;
 	private int TOPE;
-	
 
 	/** Constructores **/
 
@@ -75,7 +74,6 @@ class VentanaResult extends JDialog {
 	/** Métodos **/
 
 	/* Otros métodos */
-
 
 	/**
 	 * Cuando hayamos obtenido el resultado con la lista de viviendas
@@ -138,7 +136,8 @@ class VentanaResult extends JDialog {
 			imagen[i].addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					boolean encontrado = false;
-					ArrayList<Integer> idYaVisitadas = VentanaPpal.getIdDescViviendVisitadas();
+					ArrayList<Integer> idYaVisitadas = VentanaPpal
+							.getIdDescViviendVisitadas();
 					for (int j = 0; j < aL.size() && !encontrado; j++)
 						if (e.getSource() == imagen[j]) {
 							if (!idYaVisitadas.contains(aL.get(j).getId()))
@@ -161,7 +160,5 @@ class VentanaResult extends JDialog {
 		this.add(p, BorderLayout.CENTER);
 		this.setVisible(true);
 	}
-
-	/* AUXILIARES */
 
 }
