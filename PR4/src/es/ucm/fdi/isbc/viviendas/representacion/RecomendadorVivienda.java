@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -64,6 +65,9 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private PrintWriter fich;
 	
 	LuceneIndexSpanish luceneIndexSpa;
+	static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]"; 
+	static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS); 
+	static final String REPLACEMENT_STRING = "\\\\$0"; 
 	
 	
 	public void setEvaluacionSistema(boolean b){

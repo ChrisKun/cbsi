@@ -26,6 +26,10 @@ public class ExtrasBasicos implements CaseComponent{
 	boolean nevera;
 	
 
+	public ExtrasBasicos() {
+		this.id = -1;
+	}
+
 	public ExtrasBasicos(int id){
 		super();
 		this.id = id;

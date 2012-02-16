@@ -15,8 +15,9 @@ public class ExtrasFinca implements CaseComponent{
 	boolean videoportero;
 	
 	
-	public ExtrasFinca(int id)
-	{
+	public ExtrasFinca(){ this.id = -1;}
+	
+	public ExtrasFinca(int id) {
 		super();
 		this.id = id;
 	}

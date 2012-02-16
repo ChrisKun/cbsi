@@ -1,16 +1,10 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
-import java.util.regex.Pattern;
-
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 import jcolibri.datatypes.Text;
 
 public class DescripcionVivienda implements CaseComponent {
-	
-	private static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]"; 
-	private static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS); 
-	private static final String REPLACEMENT_STRING = "\\\\$0"; 
 
 	public enum TipoVivienda {
 		Atico, Plantabaja, Piso, Loft, Casaadosada, CasaChalet, Duplex, Estudio, Fincarustica, Apartamento
@@ -19,8 +13,6 @@ public class DescripcionVivienda implements CaseComponent {
 	public enum EstadoVivienda {
 		Muybien, Reformado, Areformar, Casinuevo, Bien
 	};
-
-	EstadoVivienda e = EstadoVivienda.Muybien;
 
 	Integer id;
 
@@ -47,6 +39,10 @@ public class DescripcionVivienda implements CaseComponent {
 	ExtrasFinca extrasFinca;// Equal Peso: 6
 	ExtrasBasicos extrasBasicos; // Equal Peso: 3
 	ExtrasOtros extrasOtros; // Equal Peso: 6
+	
+	public DescripcionVivienda(){
+		this.id = -1;
+	}
 
 	public DescripcionVivienda(int id) {
 		super();
@@ -80,8 +76,8 @@ public class DescripcionVivienda implements CaseComponent {
 		extrasOtros = new ExtrasOtros(values[17]);
 
 		String userInput = values[18];
-		String escaped = LUCENE_PATTERN.matcher(userInput).replaceAll(REPLACEMENT_STRING); 
-		escaped = LUCENE_PATTERN.matcher(escaped).replaceAll(LUCENE_ESCAPE_CHARS); 
+		String escaped = RecomendadorVivienda.LUCENE_PATTERN.matcher(userInput).replaceAll(RecomendadorVivienda.REPLACEMENT_STRING); 
+		escaped = RecomendadorVivienda.LUCENE_PATTERN.matcher(escaped).replaceAll(RecomendadorVivienda.LUCENE_ESCAPE_CHARS); 
 		descripcion = new Text(escaped);
 
 	}

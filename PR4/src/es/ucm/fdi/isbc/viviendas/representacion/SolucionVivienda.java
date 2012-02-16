@@ -8,6 +8,10 @@ public class SolucionVivienda implements CaseComponent {
 	Integer id;
 	Integer precio;
 	
+	public SolucionVivienda(){
+		id = -1;
+		precio = 0;
+	}
 	
 	
 	public Integer getId() {
