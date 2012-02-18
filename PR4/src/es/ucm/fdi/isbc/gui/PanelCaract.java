@@ -33,6 +33,7 @@ import es.ucm.fdi.isbc.viviendas.representacion.Coordenada;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.EstadoVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda.TipoVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 
 public class PanelCaract extends JPanel implements TreeSelectionListener, FocusListener{
 	private static final long serialVersionUID = 1L;
@@ -42,9 +43,6 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 	private JComboBox tipoVivienda, estadoVivienda;
 	private Coordenada coordenada;
 	private JTree localizaciones;
-	private static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?\\\"]"; 
-	private static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS); 
-	private static final String REPLACEMENT_STRING = "\\\\$0"; 
 	
 	public PanelCaract(JTree localiz){
 		super();
@@ -200,7 +198,7 @@ public class PanelCaract extends JPanel implements TreeSelectionListener, FocusL
 		}
 		if (!areaDescr.getText().isEmpty()){
 			String userInput = areaDescr.getText();
-			String escaped = LUCENE_PATTERN.matcher(userInput).replaceAll(REPLACEMENT_STRING);  
+			String escaped = RecomendadorVivienda.LUCENE_PATTERN.matcher(userInput).replaceAll(RecomendadorVivienda.REPLACEMENT_STRING);  
 			caract.setDescripcion(new Text(escaped));
 		}
 		else caract.setDescripcion(null);
