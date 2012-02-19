@@ -1,7 +1,6 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
 import java.io.PrintWriter;
-
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
@@ -74,7 +73,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	LuceneIndexSpanish luceneIndexSpa;
 //	static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]"; 
 //    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\*\\?]";
-    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
+    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\{\\}\\~\\*\\?\\\"]";
 	public static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS); 
 	public static final String REPLACEMENT_STRING = "\\\\$0"; 
 
