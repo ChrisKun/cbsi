@@ -77,7 +77,6 @@ public class DescripcionVivienda implements CaseComponent {
 
 		String userInput = values[18];
 		String escaped = RecomendadorVivienda.LUCENE_PATTERN.matcher(userInput).replaceAll(RecomendadorVivienda.REPLACEMENT_STRING); 
-		//escaped = RecomendadorVivienda.LUCENE_PATTERN.matcher(escaped).replaceAll(RecomendadorVivienda.LUCENE_ESCAPE_CHARS); 
 		descripcion = new Text(escaped);
 
 	}

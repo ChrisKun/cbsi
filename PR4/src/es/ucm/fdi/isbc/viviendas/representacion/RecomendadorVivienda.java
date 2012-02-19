@@ -1,7 +1,6 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
 import java.io.PrintWriter;
-
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
@@ -16,7 +15,6 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
-import jcolibri.datatypes.Text;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
@@ -56,7 +54,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	final double PESOExtrasO = 0.05;
 	final double PESOExtrasB = 0.01;
 
-	final int NUMSELECTCASOS = 5;
+	final int NUMSELECTCASOS = 3;
 
 	/** Connector object */
 	ViviendasConnector _connector;
@@ -427,10 +425,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 
 		// Obtener los valores de la consulta
 		if (descr != null){
-			String userInput = descr.getDescripcion().toString();
-			String escaped = LUCENE_PATTERN.matcher(userInput).replaceAll(REPLACEMENT_STRING);  
-			descr.setDescripcion(new Text(escaped));
-			
 			query.setDescription(descr);
 			evaluacionSistema = false;
 		}
