@@ -9,8 +9,10 @@ import java.util.Collection;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CaseBaseFilter;
 import jcolibri.cbrcore.Connector;
+import jcolibri.datatypes.Text;
 import jcolibri.exception.InitializingException;
 import es.ucm.fdi.isbc.viviendas.representacion.DescripcionVivienda;
+import es.ucm.fdi.isbc.viviendas.representacion.RecomendadorVivienda;
 import es.ucm.fdi.isbc.viviendas.representacion.SolucionVivienda;
 
 public class ViviendasConnector implements Connector {
@@ -52,6 +54,11 @@ public class ViviendasConnector implements Connector {
 				SolucionVivienda solucion = new SolucionVivienda();
 				solucion.setId(vivienda.getId());
 				solucion.setPrecio(vivienda.getPrecio());
+				
+				String userInput = vivienda.getDescripcion().toString();
+				String escaped = RecomendadorVivienda.LUCENE_PATTERN.
+						matcher(userInput).replaceAll(RecomendadorVivienda.REPLACEMENT_STRING);  
+				vivienda.setDescripcion(new Text(escaped));
 				
 				CBRCase _case = new CBRCase();
 				_case.setDescription(vivienda);

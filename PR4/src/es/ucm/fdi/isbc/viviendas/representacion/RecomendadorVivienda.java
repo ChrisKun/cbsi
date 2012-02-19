@@ -1,6 +1,7 @@
 package es.ucm.fdi.isbc.viviendas.representacion;
 
 import java.io.PrintWriter;
+
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Vector;
@@ -15,6 +16,7 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.datatypes.Text;
 import jcolibri.evaluation.Evaluator;
 import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.evaluation.evaluators.LeaveOneOutEvaluator;
@@ -71,22 +73,13 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	private PrintWriter fich;
 
 	LuceneIndexSpanish luceneIndexSpa;
-//	static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]"; 
-//    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\*\\?]";
-    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\{\\}\\~\\*\\?\\\"]";
+    public static final String LUCENE_ESCAPE_CHARS = "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?\\\"]";
 	public static final Pattern LUCENE_PATTERN = Pattern.compile(LUCENE_ESCAPE_CHARS); 
 	public static final String REPLACEMENT_STRING = "\\\\$0"; 
 
 
 	public void setEvaluacionSistema(boolean b){
 		evaluacionSistema = b;
-
-		//		try{
-		//			fichAc = new PrintWriter(new FileOutputStream("Aciertos.txt"));
-		//			fichFa = new PrintWriter(new FileOutputStream("Fallos.txt"));
-		//		  }catch(Exception e){
-		//			  JOptionPane.showMessageDialog(null,e.getMessage());
-		//		  }
 	}
 
 	@Override
@@ -119,7 +112,6 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Madrid");
 		tree = new JTree(top);
 		for (CBRCase c : cases) {
-			// System.out.println(c);
 			barrio = "";
 			zona = "";
 			calle = "";
@@ -221,22 +213,23 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 	}
 
 	@Override
-	public void cycle(CBRQuery query) throws ExecutionException {	
+	public void cycle(CBRQuery query) throws ExecutionException {
+		
+		DescripcionVivienda dV = (DescripcionVivienda)query.getDescription();
+		
 		// Para configurar el KNN se utiliza un objeto NNConfig
 		NNConfig simConfig = new NNConfig();
 		// Fijamos la función de similitud global
 		simConfig.setDescriptionSimFunction(new Average());
 
-		//We only compare the "description" attribute using Lucene
-		DescripcionVivienda dV = ((DescripcionVivienda)query.getDescription());
+		// Fijamos las funciones de similitud locales
+			//We only compare the "description" attribute using Lucene
 		if (dV.getDescripcion() != null && !dV.getDescripcion().equals("")) {
 			Attribute textualAttribute = new Attribute("descripcion", DescripcionVivienda.class);
-			simConfig.addMapping(textualAttribute, new LuceneTextSimilaritySpanish(luceneIndexSpa,query,textualAttribute, false));
+			simConfig.addMapping(textualAttribute, new LuceneTextSimilaritySpanish(luceneIndexSpa, query, textualAttribute, true));
 		}
-
 		if (dV.getLocalizacion() != null)
 			simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class) ,new MyTreeSimilarityFunction(tree));
-		// Fijamos las funciones de similitud locales
 		if (dV.getTipo() != null)
 			simConfig.addMapping(new Attribute("tipo",DescripcionVivienda.class), new Table("tablaTipoVivienda.txt"));
 		if (dV.getSuperficie() != null)
@@ -337,7 +330,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 			if (Math.abs(precio_prediccion - precio_real) < 0.1*precio_real)
 				prediccion = 1.0;
 
-			DescripcionVivienda descrip = (DescripcionVivienda) query.getDescription();
+			DescripcionVivienda descrip = dV;
 
 			//			tester(prediccion, descrip, precio_real, precio_prediccion, confianza_prediccion);
 
@@ -352,7 +345,7 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 		}
 		else{
 			this.setChanged();
-			this.notifyObservers(new MuestraSolEvent((DescripcionVivienda)query.getDescription(), precio_prediccion, confianza_prediccion));
+			this.notifyObservers(new MuestraSolEvent(dV, precio_prediccion, confianza_prediccion));
 		}
 	}
 
@@ -434,6 +427,10 @@ public class RecomendadorVivienda extends Observable implements StandardCBRAppli
 
 		// Obtener los valores de la consulta
 		if (descr != null){
+			String userInput = descr.getDescripcion().toString();
+			String escaped = LUCENE_PATTERN.matcher(userInput).replaceAll(REPLACEMENT_STRING);  
+			descr.setDescripcion(new Text(escaped));
+			
 			query.setDescription(descr);
 			evaluacionSistema = false;
 		}
