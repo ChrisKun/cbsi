@@ -1,0 +1,3073 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY swrl "http://www.w3.org/2003/11/swrl#" >
+    <!ENTITY swrlb "http://www.w3.org/2003/11/swrlb#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY xsp "http://www.owl-ontologies.com/2005/08/07/xsp.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.owl-ontologies.com/Ontology1331921872.owl#"
+     xml:base="http://www.owl-ontologies.com/Ontology1331921872.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isSobrinoOf"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#actorInPersonaje -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#actorInPersonaje">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena"/>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaActividad -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaActividad">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneActividad"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaObj -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaObj">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneObj"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaPersonaje -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscenaPersonaje">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTienePersonaje"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaActividad -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaActividad">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActividad"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaActor -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaActor">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaEscena -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaEscena">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaObj -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaObj">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneObj"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaPersonaje -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaPersonaje">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTienePersonaje"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTiene -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTiene">
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnEscena"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneActividad -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneActividad">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneObj -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneObj">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTienePersonaje -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTienePersonaje">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasCasadoa -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasCasadoa">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasEsposa -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasEsposa">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasCasadoa"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasMadre -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasMadre">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasMarido -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasMarido">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasCasadoa"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasEsposa"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasPadre -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasPadre">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hasSexo -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hasSexo">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isExparejaOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isExparejaOf">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isExparejaOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isMadreOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isMadreOf">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasMadre"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isPadreOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isPadreOf">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasPadre"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaHechaIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaHechaIn">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActividad -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActividad">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActor -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneActor">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneEscena -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneEscena">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaEscena"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneObj -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTieneObj">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTienePersonaje -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTienePersonaje">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaTiene"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#personajeHasActor -->
+
+    <owl:ObjectProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#personajeHasActor">
+        <rdfs:range rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:inverseOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#actorInPersonaje"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#anio -->
+
+    <owl:DatatypeProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#anio">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#colorOjos -->
+
+    <owl:DatatypeProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#colorOjos">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#colorPelo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#colorPelo">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#path -->
+
+    <owl:DatatypeProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#path">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#titulo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#titulo">
+        <rdfs:domain rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Abuela -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Abuela">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isMadreOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Abuelo -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Abuelo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isPadreOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Accion -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Accion">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Animacion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Aventura"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Actor -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaActor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Africa -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Africa">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaNorte"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaSur"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Asia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaNorte -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaNorte">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaSur"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Asia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaSur -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaSur">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Asia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Animacion -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Animacion">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Aventura"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Asia -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Asia">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Aventura -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Aventura">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Belico -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Cuñada -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Cuñada">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                                <owl:someValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                <owl:someValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Cuñado -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Cuñado">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                                <owl:someValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                <owl:someValuesFrom>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Drama -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#AmericaNorte"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Escena -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#EscenasConObjetosViolentos -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#EscenasConObjetosViolentos">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#escenaTieneObj"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+                                    <owl:Class>
+                                        <owl:unionOf rdf:parseType="Collection">
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Accion"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+                                            </owl:Restriction>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasGenero"/>
+                                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+                                            </owl:Restriction>
+                                        </owl:unionOf>
+                                    </owl:Class>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#España -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#España">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Español -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Español">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Frances"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ingles"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Esposa -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Esposa">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Europa -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Europa">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Expareja -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Expareja">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isExparejaOf"/>
+                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isExparejaOf"/>
+                                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Frances -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Frances">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ingles"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Genero -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Hermana -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hermana">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Hermano -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hermano">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Hija -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hija">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Hijo -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hijo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Historico -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasSexo"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Ingles -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Ingles">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Idioma"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Madre -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Madre">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isMadreOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Marido -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Marido">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isCasadoaOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasSexo"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Musical -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Oceania">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mundo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Padre -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Padre">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isPadreOf"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Persona -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasSexo"/>
+                <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje">
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Sexo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino"/>
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Sobrina -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Sobrina">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Sobrino -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Sobrino">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hasProgenitor"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+        <owl:disjointWith rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Tia -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Tia">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Tio -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Tio">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isHermanoaOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#isProgenitorOf"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Western -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Western">
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Genero"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#actuaEnMasDeUnaPeliculas -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#actuaEnMasDeUnaPeliculas">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#actorInPersonaje"/>
+                        <owl:onClass>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaPersonaje"/>
+                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:onClass>
+                        <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#actuaEnSerieOPeliculaEspañola -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#actuaEnSerieOPeliculaEspañola">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Actor"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#actorInPersonaje"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#apareceEnPeliculaPersonaje"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:intersectionOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+                                                    <owl:Restriction>
+                                                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#peliculaHechaIn"/>
+                                                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+                                                    </owl:Restriction>
+                                                </owl:intersectionOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <isPadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Angelina_Jolie -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Angelina_Jolie">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Brad_Pitt"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <hasPadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson"/>
+        <hasMadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+        <isSobrinoOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier"/>
+        <isSobrinoOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#españa"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Brad_Pitt -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Brad_Pitt">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Angelina_Jolie"/>
+        <isExparejaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Gwyneth_Paltrow"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Gwyneth_Paltrow -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Gwyneth_Paltrow">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <isExparejaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Brad_Pitt"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <hasPadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson"/>
+        <isPadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson"/>
+        <isPadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson"/>
+        <isPadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#españa"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <hasPadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson"/>
+        <hasMadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <hasPadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson"/>
+        <hasMadre rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#españa"/>
+        <peliculaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <isMadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson"/>
+        <isMadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson"/>
+        <isMadreOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <isCasadoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem"/>
+        <isExparejaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Tom_Cruise"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mujer"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Femenino_Sexo"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson"/>
+        <isHermanoaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier_Prsj -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier_Prsj">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Tom_Cruise -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Tom_Cruise">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Hombre"/>
+        <hasSexo rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Masculino_Sexo"/>
+        <isExparejaOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pelicula"/>
+        <peliculaHechaIn rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#EEUU_Mundo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#abrigo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#abrigo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#accion -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#accion">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Accion"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#anillo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#anillo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#animacion -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#animacion">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Animacion"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#aventura -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#aventura">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Aventura"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#avion -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#avion">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#accion"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#belico"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bailando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bailando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bandera -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bandera">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#belico"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bate -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bate">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#accion"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#belico"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#deportiva"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#belico -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#belico">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Belico"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#besandose -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#besandose">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bf01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bf01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>BF01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bf02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bf02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>BF02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#tumbado"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bf03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bf03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>BF03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bf04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bf04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>BF04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#enfadado"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bf05 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bf05">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>BF05.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cigarro"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#fumando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#billete -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#billete">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#bolso -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#bolso">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#cabeza -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#cabeza">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#catastrofe -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#catastrofe">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Catastrofe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#cerveza -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#cerveza">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#chupete -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#chupete">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ciencia_ficcion -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ciencia_ficcion">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ciencia_Ficcion"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#cigarro -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#cigarro">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#cine_mudo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#cine_mudo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Cine_Mudo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#coche -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#coche">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#comedia -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#comedia">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Comedia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#cuchillo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#cuchillo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#accion"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#belico"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#policiaco"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Tom_Cruise"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#deportiva -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#deportiva">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Deportiva"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#disparando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#disparando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#drama -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#drama">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Drama"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#enfadado -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#enfadado">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#españa -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#españa">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#España"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#español -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#español">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Español"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#fantasia -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#fantasia">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Fantasia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#frances -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#frances">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Frances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#fumando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#fumando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#hablando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#historico -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#historico">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Historico"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ingles -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ingles">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Ingles"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#italiano -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#italiano">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Italiano"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#jj01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#jj01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>JJ01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#raul"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#silvia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#jj02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#jj02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>JJ02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#enfadado"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#raul"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#jj03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#jj03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>JJ03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#paseando"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#silvia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#jj04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#jj04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>JJ04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#raul"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#silvia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#jj05 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#jj05">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>JJ05.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#silvia"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ma01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ma01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>MA01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#silla_de_ruedas"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ma02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ma02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>MA02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ma03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ma03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>MA03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cigarro"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#riendose"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ma04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ma04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>MA04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#riendose"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#martillo -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#martillo">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#maverick -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#maverick">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Tom_Cruise"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#melodrama -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#melodrama">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Melodrama"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#mirandose -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#mirandose">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#musical -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#musical">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Musical"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ordenador -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ordenador">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#paseando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#paseando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#pistola -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#accion"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#belico"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#policiaco"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#policiaco -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#policiaco">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Policiaco"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#pornografica -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#pornografica">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Pornografica"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ramon_sampedro">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mar_adentro"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#raul -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#raul">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#riendose -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#riendose">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#romantica -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#romantica">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Romantica"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s05 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s05">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S05.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cuchillo"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pistola"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#s06 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#s06">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>S06.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+        <hasGenero rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#pornografica"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#saludando -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#saludando">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#sentado -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#sentado">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#silla_de_ruedas -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#silla_de_ruedas">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#silvia -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#silvia">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Jamon_jamon"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson01.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson02.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Abraham_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#bailando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson03.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#martillo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson04.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#billete"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson05 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson05">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson05.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#bate"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson06 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson06">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson06.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cabeza"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson07 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson07">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson07.jpg</path>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cerveza"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson08 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson08">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson08.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirandose"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#simpson09 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#simpson09">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>Simpson09.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Patty_Bouvier_Prsj"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Selma_Bouvier_Prsj"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#cigarro"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#fumando"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#ordenador"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#sofia_serrano -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#sofia_serrano">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Penelope_Cruz"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#sr_smith">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Brad_Pitt"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#sra_smith">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Angelina_Jolie"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Mr_and_Mrs_Smith"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#tg01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#tg01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>TG01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#avion"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#bandera"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#maverick"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#saludando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#tg02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#tg02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>TG02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#maverick"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#saludando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#tg03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#tg03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>TG03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#avion"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#tg04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#tg04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>TG04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Top_Gun"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#maverick"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sentado"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#thriller -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#thriller">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Thriller"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#tumbado -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#tumbado">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#uxbal">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Personaje"/>
+        <apareceEnPeliculaPersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Biutiful"/>
+        <personajeHasActor rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Javier_Bardem"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs01 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs01">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS01.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#besandose"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs02 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs02">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS02.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#coche"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#hablando"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs03 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs03">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS03.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTieneObj rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#coche"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs04 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs04">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS04.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sofia_serrano"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs05 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs05">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS05.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#mirada_infinito"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#vs06 -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#vs06">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Escena"/>
+        <path>VS06.jpg</path>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Vanilla_Sky"/>
+        <escenaTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#besandose"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#david_aames"/>
+        <escenaTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#sofia_serrano"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#western -->
+
+    <owl:NamedIndividual rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#western">
+        <rdf:type rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Western"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net -->
+
