@@ -31,6 +31,10 @@ import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
 public class Interfaz implements Serializable {
 	private Logger log;
 
+	private JTextArea textArea;
+
+	private JPanel panelResultado;
+
 	/** Atributos **/
 
 	private static final long serialVersionUID = 1L;
@@ -60,8 +64,11 @@ public class Interfaz implements Serializable {
 				frame.getContentPane().add(getPanelPrincipal());
 
 			dimensionarFrame(frame.getContentPane());
-			frame.setResizable(false);
+			frame.setResizable(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			int x=(int) (Toolkit.getDefaultToolkit().getScreenSize().width/2-frame.getPreferredSize().width/2);
+			int y=(int) (Toolkit.getDefaultToolkit().getScreenSize().height/2-frame.getPreferredSize().height/2);
+			frame.setLocation(x, y);
 			frame.setVisible(true);
 		}
 
@@ -71,7 +78,7 @@ public class Interfaz implements Serializable {
 
 	private void dimensionarFrame(Container container) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.pack();
+		frame.setMinimumSize(new Dimension(500,550));
 		if (container == null)
 			frame.setLocation((int) ((dim.getWidth() - frame.getJMenuBar()
 					.getWidth()) / 2), (int) ((dim.getHeight() - frame
@@ -95,9 +102,8 @@ public class Interfaz implements Serializable {
 		JMenu consulta = new JMenu("Consultas");
 		JMenuItem masDeUnaPeliculas = new JMenuItem(
 				"Actores que hayan participado en más de una película");
-		JMenuItem actoresNoJuntosPeroCompañerosSi = new JMenuItem(
-				"Parejas de actores que no han aparecido "
-						+ "juntos en ninguna película pero tienen compañeros comunes");
+		JMenuItem escenasObjetosViolentos = new JMenuItem(
+				"Escenas con objetos violentos ");
 		JMenuItem personajesEnPeliEspañola = new JMenuItem(
 				"Personajes que aparecen alguna serie o " + "película española");
 
@@ -108,7 +114,7 @@ public class Interfaz implements Serializable {
 
 		menuBar.add(consulta);
 		consulta.add(masDeUnaPeliculas);
-		consulta.add(actoresNoJuntosPeroCompañerosSi);
+		consulta.add(escenasObjetosViolentos);
 		consulta.add(personajesEnPeliEspañola);
 
 		abrir.addActionListener(new ActionListener() {
@@ -147,8 +153,11 @@ public class Interfaz implements Serializable {
 					actor.add(a[1]);
 					log.info("Actor " + actor.get(i));
 					i++;
+				}			
+				textArea.setText("");
+				for (int j = 0; j < actor.size(); j++){
+					textArea.append(actor.get(j) + "\n");
 				}
-				
 				// Para cada actor hay que mostrar las imágenes en las que aparece
 				
 			}
@@ -171,7 +180,35 @@ public class Interfaz implements Serializable {
 					log.info("Actor " + actor.get(i));
 					i++;
 				}
+				textArea.setText("");
+				for (int j = 0; j < actor.size(); j++){
+					textArea.append(actor.get(j) + "\n");
+				}
+				// Para cada actor hay que mostrar las imágenes en las que aparece
 				
+			}
+		});
+		
+		escenasObjetosViolentos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Iterator<String> it = ob.listInstances("EscenasConObjetosViolentos");
+				ArrayList<String> actor = new ArrayList<String>();
+				String[] a;
+				String aux = "";
+				int i = 0;
+				while (it.hasNext()) {
+					aux = it.next();
+					a = aux.split("#");
+					actor.add(a[1]);
+					log.info("Escena " + actor.get(i));
+					i++;
+				}
+				textArea.setText("");
+				for (int j = 0; j < actor.size(); j++){
+					textArea.append(actor.get(j) + "\n");
+				}
 				// Para cada actor hay que mostrar las imágenes en las que aparece
 				
 			}
@@ -210,7 +247,7 @@ public class Interfaz implements Serializable {
 		PnlConceptsAndInstancesTree tree = new PnlConceptsAndInstancesTree(ob,
 				true);
 		panel.add(tree);
-		panel.setMinimumSize(new Dimension(300, 600));
+		panel.setMinimumSize(new Dimension(400, 600));
 
 		return panel;
 
@@ -218,14 +255,16 @@ public class Interfaz implements Serializable {
 
 	private JPanel getPanelResultado() {
 
-		JPanel panel = new JPanel();
+		panelResultado = new JPanel();
 
-		JTextArea textArea = new JTextArea("");
-		panel.add(textArea);
-		panel.setMinimumSize(new Dimension(300, 600));
+		textArea = new JTextArea(20 , 20);
+		textArea.setEditable(false);
+		panelResultado.add(textArea);
+		panelResultado.setMinimumSize(new Dimension(300, 600));
 
-		return panel;
+		return panelResultado;
 	}
+
 
 	private void abrir() throws Exception {
 
@@ -293,9 +332,6 @@ public class Interfaz implements Serializable {
 
 			// Cargar la ontologia
 			ob.loadOntology(mainOnto, subOntologies, false);
-
-			frame.getContentPane().add(getPanelPrincipal());
-			dimensionarFrame(frame.getContentPane());
 
 		} else
 			throw new Exception("La ontología introducida no es válida");
