@@ -41,9 +41,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private static JPanel panelResultado;
 		private static JRadioButton radio1, radio2, radio3;
-		private static JPanel panelFotos;
+		private static JPanel panelFotosBuscar;
+		private static JLabel labelFotoMarcar;
+		private static JLabel labelFotoBuscar;
 		private static ArrayList<String> images;
-		private static JLabel label;
 		private static int index;
 
 		private static OntoBridge ob;
@@ -139,12 +140,12 @@ public class Interfaz extends JFrame implements ActionListener {
 				panelConsultas.add(radio3);
 				panelPpalBuscar.setTopComponent(panelConsultas);
 
-				label = new JLabel();
-				panelFotos = new JPanel();
-				panelFotos.setPreferredSize(new Dimension(500, 350));
-				panelFotos.add(label);
+				labelFotoBuscar = new JLabel();
+				panelFotosBuscar = new JPanel();
+				panelFotosBuscar.setPreferredSize(new Dimension(500, 350));
+				panelFotosBuscar.add(labelFotoBuscar);
 
-				panelFotosBoton.setTopComponent(panelFotos);
+				panelFotosBoton.setTopComponent(panelFotosBuscar);
 				JPanel panelBoton = new JPanel();
 				JPanel panelBotonesImg = new JPanel(new GridLayout(1, 3));
 				panelBotonesImg.add(botonAnt);
@@ -165,30 +166,33 @@ public class Interfaz extends JFrame implements ActionListener {
 				panelPpalMarcado.setDividerSize(0);
 				panelBotonFotos.setDividerSize(0);
 
-				JButton cargarFotoBoton = new JButton("Cargar foto");
-				JButton marcarFotoBoton = new JButton("Marcar foto");
+				JButton botonCargarFoto = new JButton("Cargar foto");
+				JButton botonMarcarFoto = new JButton("Marcar foto");
 
-				cargarFotoBoton.addActionListener(this);
-				marcarFotoBoton.addActionListener(this);
+				botonCargarFoto.addActionListener(this);
+				botonMarcarFoto.addActionListener(this);
 
 				JPanel panelBoton = new JPanel();
-				panelBoton.add(cargarFotoBoton);
-				panelBotonFotos.setTopComponent(panelBoton);
 				JPanel panelFotos = new JPanel();
-				panelFotos.setPreferredSize(new Dimension(500, 350));
-				panelBotonFotos.setBottomComponent(panelFotos);
 
+				labelFotoMarcar = new JLabel();
+				panelBoton.add(botonCargarFoto);
+				panelBotonFotos.setTopComponent(panelBoton);
+				panelBotonFotos.setBottomComponent(panelFotos);
 				panelPpalMarcado.setTopComponent(panelBotonFotos);
-				JLabel label = new JLabel("Opciones de marcado: ");
+				panelFotos.setPreferredSize(new Dimension(500, 350));
+				panelFotos.add(labelFotoMarcar);
+
+				JLabel labelOpcionesMarcado = new JLabel("Opciones de marcado: ");
 				JComboBox comboRelaciones = new JComboBox();
 				JComboBox comboIndividuos = new JComboBox();
 				JPanel panelOpcionesMarcado = new JPanel(new GridLayout(1, 4));
 				panelOpcionesMarcado.setPreferredSize(new Dimension(500, 20));
 
-				panelOpcionesMarcado.add(label);
+				panelOpcionesMarcado.add(labelOpcionesMarcado);
 				panelOpcionesMarcado.add(comboRelaciones);
 				panelOpcionesMarcado.add(comboIndividuos);
-				panelOpcionesMarcado.add(marcarFotoBoton);
+				panelOpcionesMarcado.add(botonMarcarFoto);
 
 				JPanel panel = new JPanel();
 				panel.add(panelOpcionesMarcado);
@@ -235,6 +239,8 @@ public class Interfaz extends JFrame implements ActionListener {
 					anterior();
 				else if (e.getActionCommand().equals(">>"))
 					siguiente();
+				else if (e.getActionCommand().equals("Cargar foto"))
+					cargarFoto();
 			}
 
 		/* Metodos para las consultas */
@@ -363,7 +369,7 @@ public class Interfaz extends JFrame implements ActionListener {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos .owl", "owl");
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setFileFilter(filter);
-				boolean seleccionCorrecta = fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION;
+				boolean seleccionCorrecta = fileChooser.showOpenDialog(Interfaz.this) == JFileChooser.APPROVE_OPTION;
 				boolean extensionCorrecta = false;
 				File file = null;
 
@@ -384,6 +390,22 @@ public class Interfaz extends JFrame implements ActionListener {
 				else JOptionPane.showMessageDialog(Interfaz.this, "La ontología introducida no es válida", "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
+			
+			private void cargarFoto() {
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos jpg y png", 
+					"jpg", "png");
+
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(filter);
+				File file = null;
+
+				if (fileChooser.showOpenDialog(Interfaz.this) == JFileChooser.APPROVE_OPTION) {
+					file = fileChooser.getSelectedFile();
+					String path = file.getPath();
+					if (path.endsWith(".jpg") || path.endsWith(".png"))
+						ponerImagen(path);
+				}
+			}
 
 			private void anterior() {
 				if (index > 0)
@@ -396,8 +418,14 @@ public class Interfaz extends JFrame implements ActionListener {
 			}
 
 			private void cambiarImagen(int index) {
-				label.setIcon(new ImageIcon((new ImageIcon("img/" + 
+				labelFotoBuscar.setIcon(new ImageIcon((new ImageIcon("img/" + 
 					images.get(index))).getImage().getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
+				repaint();
+			}
+
+			private void ponerImagen(String ruta) {
+				labelFotoMarcar.setIcon(new ImageIcon((new ImageIcon(
+					ruta)).getImage().getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
 				repaint();
 			}
 
