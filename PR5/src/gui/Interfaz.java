@@ -364,15 +364,11 @@ public class Interfaz extends JFrame implements ActionListener {
 
 		ob.listInstancePropertiesValues(individuo, prop, val);
 
-		boolean encontrado = false;
-		int i = 0;
-		while (!encontrado && i < prop.size()) {
-			if (relacion.equals(prop.get(i).split("#")[1])) {
+		for (int i = 0; i < prop.size(); i++)
+			if (relacion.equals(prop.get(i).split("#")[1])) 
 				if (!res.contains(val.get(i)))
 					res.add(val.get(i));
-			}
-			i++;
-		}
+			
 		return res;
 	}
 
