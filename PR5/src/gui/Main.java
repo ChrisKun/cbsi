@@ -16,20 +16,20 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  */
 public class Main {
-	private static final String  MAIN_LANDF="de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel";
+	//private static final String  MAIN_LANDF="de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel";
 	//private static final String  MAIN_LANDF="de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel";
 	//private static final String  MAIN_LANDF="de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel";
 	
 	public static void main(String[] args) {
 		// configuracion de formato de salida de los logs
-		Logger log = Logger.getLogger("");
+		/*Logger log = Logger.getLogger("");
 		for (Handler h : log.getHandlers())
 			log.removeHandler(h);
 		
 		try {
-			UIManager.setLookAndFeel(MAIN_LANDF);
+			UIManager.setLookAndFeel(MAIN_LANDF);*/
 			new Interfaz();
-		} catch (ClassNotFoundException e) {
+		/*} catch (ClassNotFoundException e) {
 			log.severe(e.getMessage());
 		} catch (InstantiationException e) {
 			log.severe(e.getMessage());
@@ -37,7 +37,7 @@ public class Main {
 			log.severe(e.getMessage());
 		} catch (UnsupportedLookAndFeelException e) {
 			log.severe(e.getMessage());
-		}
+		}*/
 		
 	}
 	
