@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,16 +37,16 @@ import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
 
 public class Interfaz extends JFrame implements ActionListener {
+
+	/** Atributos **/
+
 	private static final long serialVersionUID = 1L;
 	private final String actorEnPersonaje = "actorInPersonaje";
 	private final String aparece = "apareceEnImagen";
 	private final String path = "path";
-	private final String[] entidadesConsultas = {
-			"actuaEnAlMenosUnaPeliculas", 
-			"EscenasConObjetosViolentos", 
-			"actuaEnSerieOPeliculaEspañola"};
+	private final String[] entidadesConsultas = { "actuaEnAlMenosUnaPeliculas",
+			"EscenasConObjetosViolentos", "actuaEnSerieOPeliculaEspañola" };
 
-	/** Atributos **/
 	private JPanel panelResultado;
 	private JRadioButton radio1, radio2, radio3;
 	private JLabel labelFotoMarcar, labelFotoBuscar;
@@ -65,7 +66,6 @@ public class Interfaz extends JFrame implements ActionListener {
 
 	public Interfaz() {
 		super("Ontología");
-		// galeria = new Galeria();
 		setJMenuBar(getMiJMenuBar());
 		abrir();
 
@@ -134,10 +134,8 @@ public class Interfaz extends JFrame implements ActionListener {
 		// set border and layout
 		Border emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 		Border lineBorder = BorderFactory.createLineBorder(Color.BLACK);
-		Border titleBorder = BorderFactory.createTitledBorder(lineBorder,
-				"Consultas");
-		Border compoundBorder = BorderFactory.createCompoundBorder(titleBorder,
-				emptyBorder);
+		Border titleBorder = BorderFactory.createTitledBorder(lineBorder, "Consultas");
+		Border compoundBorder = BorderFactory.createCompoundBorder(titleBorder, emptyBorder);
 		panelConsultas.setBorder(compoundBorder);
 
 		ButtonGroup grupo = new ButtonGroup();
@@ -197,17 +195,19 @@ public class Interfaz extends JFrame implements ActionListener {
 		panelFotos.setPreferredSize(new Dimension(500, 350));
 		panelFotos.add(labelFotoMarcar);
 
-		JLabel labelOpcionesMarcado = new JLabel("Opciones de marcado: ");
-		comboIndividuos = new JComboBox(); comboIndividuos.addItem("-");
-		comboRelaciones = new JComboBox(); comboRelaciones.addItem("-");
+		JLabel labelOpcionesMarcado = new JLabel("Marcadores: ");
+		comboIndividuos = new JComboBox();
+		comboRelaciones = new JComboBox();
 		comboRelaciones.addActionListener(this);
-		JPanel panelOpcionesMarcado = new JPanel(new GridLayout(1, 4));
-		panelOpcionesMarcado.setPreferredSize(new Dimension(500, 20));
+		JPanel panelOpcionesMarcado = new JPanel(new GridLayout(2, 3));
+		panelOpcionesMarcado.setPreferredSize(new Dimension(500, 50));
 
 		panelOpcionesMarcado.add(labelOpcionesMarcado);
 		panelOpcionesMarcado.add(comboRelaciones);
 		panelOpcionesMarcado.add(comboIndividuos);
 		panelOpcionesMarcado.add(botonMarcarFoto);
+		panelOpcionesMarcado.add(new JPanel());
+		panelOpcionesMarcado.add(new JPanel());
 
 		JPanel panel = new JPanel();
 		panel.add(panelOpcionesMarcado);
@@ -240,9 +240,11 @@ public class Interfaz extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Salir")) {
 			System.exit(0);
-		} else if (e.getActionCommand().equals("Abrir")) {
+		}
+		else if (e.getActionCommand().equals("Abrir")) {
 			abrir();
-		} else if (e.getActionCommand().equals("OK")) {
+		}
+		else if (e.getActionCommand().equals("OK")) {
 			if (radio1.isSelected()) {
 				mostrarActoresEnMasDeUnaPelicula();
 			} else if (radio2.isSelected()) {
@@ -250,21 +252,26 @@ public class Interfaz extends JFrame implements ActionListener {
 			} else if (radio3.isSelected()) {
 				mostrarPersonajesEnPeliEspaniola();
 			}
-		} else if (e.getActionCommand().equals("<<")) {
+		}
+		else if (e.getActionCommand().equals("<<")) {
 			anterior();
-		} else if (e.getActionCommand().equals(">>")) {
+		}
+		else if (e.getActionCommand().equals(">>")) {
 			siguiente();
-		} else if (e.getActionCommand().equals("Cargar foto")) {
+		}
+		else if (e.getActionCommand().equals("Cargar foto")) {
 			cargarFoto();
-		} else if (e.getActionCommand().equals("Marcar foto")){
+		}
+		else if (e.getActionCommand().equals("Marcar foto")) {
 			// Creamos la nueva relación
 			String rel = comboRelaciones.getSelectedItem().toString();
 			String ind = comboIndividuos.getSelectedItem().toString();
-			if (!rel.equals("-") && !ind.equals("-")){
+			if (!rel.equals("-") && !ind.equals("-")) {
 				ob.createDataTypeProperty(imagenCargada, rel, ind);
 			}
-		} else if (e.getSource() == comboRelaciones){
-			this.obtenerIndividuos((String)comboRelaciones.getSelectedItem());
+		}
+		else if (e.getSource() == comboRelaciones && comboRelaciones.getItemCount() > 0) {
+			obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 		}
 	}
 
@@ -292,7 +299,8 @@ public class Interfaz extends JFrame implements ActionListener {
 				for (String escena : escenas) {
 					consultas = consultar(escena, "path");
 					for (String consulta : consultas)
-						images.add(consulta);
+						if (!images.contains(consulta))
+							images.add(consulta);
 				}
 			}
 		}
@@ -322,7 +330,8 @@ public class Interfaz extends JFrame implements ActionListener {
 				for (String escena : escenas) {
 					consultas = consultar(escena, path);
 					for (String consulta : consultas)
-						images.add(consulta);
+						if (!images.contains(consulta))
+							images.add(consulta);
 				}
 			}
 		}
@@ -343,7 +352,8 @@ public class Interfaz extends JFrame implements ActionListener {
 			for (String escena : escenas) {
 				consultas = consultar(escena, path);
 				for (String consulta : consultas)
-					images.add(consulta);
+					if (!images.contains(consulta))
+						images.add(consulta);
 			}
 		}
 		Logger.getLogger("CP").info(images.toString());
@@ -353,8 +363,10 @@ public class Interfaz extends JFrame implements ActionListener {
 	/**
 	 * Realiza una consulta
 	 * 
-	 * @param individuo Individuo sobre el que se realiza la consulta
-	 * @param relacion Relación a buscar
+	 * @param individuo
+	 *            Individuo sobre el que se realiza la consulta
+	 * @param relacion
+	 *            Relación a buscar
 	 * @return Array con el resultado de la consulta
 	 */
 	private ArrayList<String> consultar(String individuo, String relacion) {
@@ -365,10 +377,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		ob.listInstancePropertiesValues(individuo, prop, val);
 
 		for (int i = 0; i < prop.size(); i++)
-			if (relacion.equals(prop.get(i).split("#")[1])) 
+			if (relacion.equals(prop.get(i).split("#")[1]))
 				if (!res.contains(val.get(i)))
 					res.add(val.get(i));
-			
+
 		return res;
 	}
 
@@ -381,9 +393,8 @@ public class Interfaz extends JFrame implements ActionListener {
 		// Inicializamos el objeto de OntoBridge con un razonador Pellet
 		ob.initWithPelletReasoner();
 
-		JOptionPane.showMessageDialog(Interfaz.this,
-				"Selecciona el archivo para la ontología principal",
-				"Ontología principal", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(Interfaz.this, "Selecciona el archivo para la ontología principal",
+			"Ontología principal", JOptionPane.INFORMATION_MESSAGE);
 
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"Archivos .owl", "owl");
@@ -406,10 +417,9 @@ public class Interfaz extends JFrame implements ActionListener {
 			// Cargar la ontologia
 			ob.loadOntology(mainOnto, new ArrayList<OntologyDocument>(), false);
 
-		} else{
-			JOptionPane.showMessageDialog(Interfaz.this,
-					"La ontología introducida no es válida", "ERROR",
-					JOptionPane.ERROR_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(Interfaz.this, "La ontología introducida no es válida", "ERROR",
+				JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -423,36 +433,38 @@ public class Interfaz extends JFrame implements ActionListener {
 		if (fileChooser.showOpenDialog(Interfaz.this) == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile();
 			String path = file.getPath();
-			if (path.endsWith(".jpg") || path.endsWith(".png")){
+			if (path.endsWith(".jpg") || path.endsWith(".png")) {
 				ponerImagen(path);
 				// Actualizamos el combo box con las propedades de la imagen
-				String aux = path.substring(path.lastIndexOf("\\") + 1, path.length() - 4);
-				this.obtenerPropiedades(aux);
+				String name = file.getName();
+				comboIndividuos.removeAllItems();
+				comboRelaciones.removeAllItems();
+				obtenerPropiedades(name.substring(0, name.length() - 4));
+				obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 			}
 		}
 	}
-	
 
-	private void obtenerPropiedades(String path) {
-		imagenCargada = ob.getURI(path);
+	private void obtenerPropiedades(String name) {
+		imagenCargada = ob.getURI(name);
 		Iterator<String> iter = ob.listInstanceProperties(imagenCargada);
 		ArrayList<String> rel = new ArrayList<String>();
 		String aux = "";
 		while (iter.hasNext()) {
 			aux = iter.next().split("#")[1];
-			if (!rel.contains(aux)){
+			if (!rel.contains(aux)) {
 				rel.add(aux);
 				comboRelaciones.addItem(aux);
 			}
 		}
-		
 	}
 
 	private void obtenerIndividuos(String prop) {
+		comboIndividuos.removeAllItems();
 		ob.getURI(prop);
 		ArrayList<String> res = consultar(imagenCargada, prop);
 
-		for (String individuo: res)
+		for (String individuo : res)
 			comboIndividuos.addItem(individuo.split("#")[1]);
 	}
 
@@ -467,14 +479,20 @@ public class Interfaz extends JFrame implements ActionListener {
 	}
 
 	private void cambiarImagen(int index) {
-		labelFotoBuscar.setIcon(new ImageIcon((new ImageIcon("img/"
-				+ images.get(index))).getImage().getScaledInstance(-1, 325,
+		String ruta = "img/" + images.get(index);
+		ImageIcon imageIcon = new ImageIcon(ruta.substring(0, ruta.indexOf("^^")));
+		labelFotoBuscar.setIcon(imageIcon);
+		if (imageIcon.getIconHeight() > 325 || imageIcon.getIconWidth() > 475)
+			labelFotoBuscar.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(-1, 325,
 				Image.SCALE_AREA_AVERAGING)));
 		repaint();
 	}
 
 	private void ponerImagen(String ruta) {
-		labelFotoMarcar.setIcon(new ImageIcon((new ImageIcon(ruta)).getImage()
+		ImageIcon imageIcon = new ImageIcon(ruta);
+		labelFotoMarcar.setIcon(imageIcon);
+		if (imageIcon.getIconHeight() > 325 || imageIcon.getIconWidth() > 475)
+			labelFotoMarcar.setIcon(new ImageIcon(imageIcon.getImage()
 				.getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
 		repaint();
 	}
