@@ -27,8 +27,9 @@ public class Main {
 			log.removeHandler(h);
 		
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//			UIManager.setLookAndFeel(MAIN_LANDF);
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(MAIN_LANDF);
+			new Interfaz();
 		} catch (ClassNotFoundException e) {
 			log.severe(e.getMessage());
 		} catch (InstantiationException e) {
@@ -37,9 +38,6 @@ public class Main {
 			log.severe(e.getMessage());
 		} catch (UnsupportedLookAndFeelException e) {
 			log.severe(e.getMessage());
-		}
-		finally{
-			new Interfaz();
 		}
 		
 	}

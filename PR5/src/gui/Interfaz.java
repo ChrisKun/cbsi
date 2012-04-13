@@ -43,8 +43,10 @@ public class Interfaz extends JFrame implements ActionListener {
 	private final String actorEnPersonaje = "actorInPersonaje";
 	private final String aparece = "apareceEnImagen";
 	private final String path = "path";
-	private final String[] entidadesConsultas = { "actuaEnAlMenosUnaPeliculas",
-			"EscenasConObjetosViolentos", "actuaEnSerieOPeliculaEspañola" };
+	private final String[] entidadesConsultas = { 
+			"actuaEnAlMenosUnaPeliculas",
+			"EscenasConObjetosViolentos", 
+			"actuaEnSerieOPeliculaEspañola" };
 
 	private JPanel panelResultado;
 	private JRadioButton radio1, radio2, radio3;
@@ -58,7 +60,7 @@ public class Interfaz extends JFrame implements ActionListener {
 
 	private OntoBridge ob;
 	private OntologyDocument mainOnto;
-	private JComboBox<String> comboIndividuos, comboRelaciones;
+	private JComboBox comboIndividuos, comboRelaciones;
 	private String imagenCargada;
 	private JButton aniadirObjeto;
 	private JButton aniadirActividad;
@@ -199,8 +201,8 @@ public class Interfaz extends JFrame implements ActionListener {
 		panelFotos.add(labelFotoMarcar);
 
 		JLabel labelOpcionesMarcado = new JLabel("Marcadores: ");
-		comboIndividuos = new JComboBox<String>();
-		comboRelaciones = new JComboBox<String>();
+		comboIndividuos = new JComboBox();
+		comboRelaciones = new JComboBox();
 		comboRelaciones.addActionListener(this);
 		JPanel panelOpcionesMarcado = new JPanel(new GridLayout(2, 3));
 		panelOpcionesMarcado.setPreferredSize(new Dimension(500, 50));
@@ -229,8 +231,7 @@ public class Interfaz extends JFrame implements ActionListener {
 	private JPanel getPanelOntologia() {
 		JPanel panel = new JPanel();
 
-		PnlConceptsAndInstancesTree tree = new PnlConceptsAndInstancesTree(ob,
-				true);
+		PnlConceptsAndInstancesTree tree = new PnlConceptsAndInstancesTree(ob,true);
 		tree.setPreferredSize(new Dimension(300, 500));
 		panel.add(tree);
 
@@ -270,7 +271,7 @@ public class Interfaz extends JFrame implements ActionListener {
 			String rel = comboRelaciones.getSelectedItem().toString();
 			String ind = comboIndividuos.getSelectedItem().toString();
 			if (!rel.equals("-") && !ind.equals("-")) {
-				ob.createDataTypeProperty(imagenCargada, rel, ind);
+				ob.createOntProperty(imagenCargada, rel, ind);
 			}
 		} else if (e.getSource().equals(aniadirObjeto)) {
 			String s = JOptionPane.showInputDialog("Introduzca el nombre del individuo: ");
@@ -279,7 +280,7 @@ public class Interfaz extends JFrame implements ActionListener {
 			String s = JOptionPane.showInputDialog("Introduzca el nombre del individuo: ");
 			if (s != null && !s.isEmpty()) ob.createInstance("Actividad", s);
 
-		} else if (e.getSource() == comboRelaciones) {
+		} else if (e.getSource() == comboRelaciones && comboRelaciones.getItemCount() > 0) {
 			obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 		}
 	}
@@ -448,17 +449,17 @@ public class Interfaz extends JFrame implements ActionListener {
 			if (path.endsWith(".jpg") || path.endsWith(".png")) {
 				ponerImagen(path);
 				// Actualizamos el combo box con las propedades de la imagen
-				String name = file.getName();
 				comboIndividuos.removeAllItems();
 				comboRelaciones.removeAllItems();
-				obtenerPropiedades(name.substring(0, name.length() - 4));
+				imagenCargada = path.substring(path.lastIndexOf("\\") + 1, path.length() - 4);
+				obtenerPropiedades();
+				obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 			}
 		}
 	}
 
-	private void obtenerPropiedades(String name) {
-		imagenCargada = ob.getURI(name);
-		Iterator<String> iter = ob.listInstanceProperties(imagenCargada);
+	private void obtenerPropiedades() {
+		Iterator<String> iter = ob.listProperties("Imagen");
 		ArrayList<String> rel = new ArrayList<String>();
 		String aux = "";
 		while (iter.hasNext()) {
@@ -472,26 +473,29 @@ public class Interfaz extends JFrame implements ActionListener {
 
 	private void obtenerIndividuos(String prop) {
 		comboIndividuos.removeAllItems();
-		Iterator<String> it = ob.listPropertyRange(prop);
-		Iterator<String> iter;
-		if (!it.hasNext()){
-			// Entonces es la relación es compatible con todo
-			it = ob.listAllClasses();
-		}
-		ArrayList<String> ind = new ArrayList<String>();
-		String clase = ""; String individuo = "";
-		while (it.hasNext()){
-			// Para cada clase obtenida listamos todos los individuos
-			clase = it.next().split("#")[1];
-			iter = ob.listInstances(clase);
-			while (iter.hasNext()){
-				individuo = iter.next().split("#")[1];
-				if (!ind.contains(individuo)){
-					ind.add(individuo);
-					comboIndividuos.addItem(individuo);
+		try{
+			Iterator<String> it = ob.listPropertyRange(prop);
+			Iterator<String> iter;
+			if (!it.hasNext()){
+				// Entonces es la relación es compatible con todo
+				it = ob.listAllClasses();
+			}
+			ArrayList<String> ind = new ArrayList<String>();
+			String clase = ""; String individuo = "";
+			while (it.hasNext()){
+				// Para cada clase obtenida listamos todos los individuos
+				clase = it.next().split("#")[1];
+				iter = ob.listInstances(clase);
+				while (iter.hasNext()){
+					individuo = iter.next().split("#")[1];
+					if (!ind.contains(individuo)){
+						ind.add(individuo);
+						comboIndividuos.addItem(individuo);
+					}
 				}
-			}		
-		}
+
+			}
+		} catch(NullPointerException e){}
 	}
 
 	private void anterior() {
