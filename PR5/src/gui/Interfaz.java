@@ -49,21 +49,23 @@ public class Interfaz extends JFrame implements ActionListener {
 			"actuaEnSerieOPeliculaEspañola" };
 
 	private JPanel panelResultado;
-	private JRadioButton radio1, radio2, radio3;
+	private JRadioButton radio1, radio2, radio3, radio4;
 	private JLabel labelFotoMarcar, labelFotoBuscar;
 	private ArrayList<String> images;
 	private int index;
 	private String[] consulta = {
 			"Actores que hayan participado en más de una película",
 			"Escenas con objetos violentos",
-			"Actores que aparecen alguna serie o película española" };
-
+			"Actores que aparecen alguna serie o película española"};
 	private OntoBridge ob;
 	private OntologyDocument mainOnto;
 	private JComboBox comboIndividuos, comboRelaciones;
 	private String imagenCargada;
 	private JButton aniadirObjeto;
 	private JButton aniadirActividad;
+	
+	private static JComboBox<String>[] combos;
+	private static final String NINGUNA = "Ninguna de las anteriores opciones";
 
 	/** Constructores **/
 
@@ -121,6 +123,18 @@ public class Interfaz extends JFrame implements ActionListener {
 	private JSplitPane getPanelBuscar() {
 		JSplitPane panelPpalBuscar = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		JSplitPane panelFotosBoton = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+
+		combos = new JComboBox[3];
+		combos[0] = new JComboBox<String>();
+		combos[1] = new JComboBox<String>();
+		combos[2] = new JComboBox<String>();
+		combos[0].addActionListener(this);
+		combos[1].addActionListener(this);
+		combos[2].addActionListener(this);
+		
+		combos[0].addItem("Pelicula");
+		combos[0].addItem("Imagen");
+		
 		panelFotosBoton.setDividerSize(0);
 		panelPpalBuscar.setDividerSize(0);
 
@@ -132,43 +146,53 @@ public class Interfaz extends JFrame implements ActionListener {
 		botonAnt.addActionListener(this);
 		botonSig.addActionListener(this);
 
-		JPanel panelConsultas = new JPanel(new GridLayout(3, 1));
+		JPanel panelConsultas = new JPanel(new GridLayout(4, 1));
 
 		// set border and layout
 		Border emptyBorder = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 		Border lineBorder = BorderFactory.createLineBorder(Color.BLACK);
-		Border titleBorder = BorderFactory.createTitledBorder(lineBorder,
-				"Consultas");
-		Border compoundBorder = BorderFactory.createCompoundBorder(titleBorder,
-				emptyBorder);
+		Border titleBorder = BorderFactory.createTitledBorder(lineBorder, "Consultas");
+		Border compoundBorder = BorderFactory.createCompoundBorder(titleBorder, emptyBorder);
 		panelConsultas.setBorder(compoundBorder);
 
 		ButtonGroup grupo = new ButtonGroup();
 		radio1 = new JRadioButton(consulta[0]);
 		radio2 = new JRadioButton(consulta[1]);
 		radio3 = new JRadioButton(consulta[2]);
+		radio4 = new JRadioButton(NINGUNA);
 		grupo.add(radio1);
 		grupo.add(radio2);
 		grupo.add(radio3);
-		radio1.setSelected(true);
+		grupo.add(radio4);
+		radio4.setSelected(true);
 
 		panelConsultas.add(radio1);
 		panelConsultas.add(radio2);
 		panelConsultas.add(radio3);
+		panelConsultas.add(radio4);
 		panelPpalBuscar.setTopComponent(panelConsultas);
 
 		labelFotoBuscar = new JLabel();
 		JPanel panelFotosBuscar = new JPanel();
-		panelFotosBuscar.setPreferredSize(new Dimension(500, 350));
+		panelFotosBuscar.setPreferredSize(new Dimension(500, 310));
 		panelFotosBuscar.add(labelFotoBuscar);
 
 		panelFotosBoton.setTopComponent(panelFotosBuscar);
-		JPanel panelBoton = new JPanel();
-		JPanel panelBotonesImg = new JPanel(new GridLayout(1, 3));
+		JPanel panelBoton = new JPanel(new GridLayout(2, 1));
+		JPanel panelBotones = new JPanel(new GridLayout(1, 3));
+		panelBotones.add(new JPanel(new GridLayout(1, 3)));
+		JPanel panelBotonesImg = new JPanel();
 		panelBotonesImg.add(botonAnt);
 		panelBotonesImg.add(botonBuscar);
 		panelBotonesImg.add(botonSig);
-		panelBoton.add(panelBotonesImg);
+		panelBotones.add(panelBotonesImg);
+		panelBotones.add(new JPanel());
+		panelBoton.add(panelBotones);
+		JPanel panelCombos = new JPanel(new GridLayout(1, 3));
+		panelCombos.add(combos[0]);
+		panelCombos.add(combos[1]);
+		panelCombos.add(combos[2]);
+		panelBoton.add(panelCombos);
 		panelFotosBoton.setBottomComponent(panelBoton);
 
 		panelPpalBuscar.setBottomComponent(panelFotosBoton);
@@ -248,46 +272,45 @@ public class Interfaz extends JFrame implements ActionListener {
 	/* Metodos que implementan ActionListener */
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Salir")) {
-			System.exit(0);
-		} else if (e.getActionCommand().equals("Abrir")) {
-			abrir();
-		} else if (e.getActionCommand().equals("OK")) {
-			if (radio1.isSelected()) {
-				mostrarActoresEnMasDeUnaPelicula();
-			} else if (radio2.isSelected()) {
-				mostrarEscenasConObjetosViolentos();
-			} else if (radio3.isSelected()) {
-				mostrarPersonajesEnPeliEspaniola();
-				//mostrarImagenesConActor("Tom_Cruise");
-			}
-		} else if (e.getActionCommand().equals("<<")) {
-			anterior();
-		} else if (e.getActionCommand().equals(">>")) {
-			siguiente();
-		} else if (e.getActionCommand().equals("Cargar foto")) {
-			cargarFoto();
-		} else if (e.getActionCommand().equals("Marcar foto")) {
+		if (e.getActionCommand().equals("Salir")) System.exit(0);
+		else if (e.getActionCommand().equals("Abrir")) abrir();
+		else if (e.getActionCommand().equals("OK")) {
+			if (radio1.isSelected()) mostrarActoresEnMasDeUnaPelicula();
+			else if (radio2.isSelected()) mostrarEscenasConObjetosViolentos();
+			else if (radio3.isSelected()) mostrarPersonajesEnPeliEspaniola();
+		}
+		else if (e.getActionCommand().equals("<<")) anterior();
+		else if (e.getActionCommand().equals(">>")) siguiente();
+		else if (e.getSource() == combos[0]) cambiarCombo1();
+		else if (e.getSource() == combos[1]) cambiarCombo2();
+		else if (e.getActionCommand().equals("Cargar foto")) cargarFoto();
+		else if (e.getActionCommand().equals("Marcar foto")) {
 			// Creamos la nueva relación
 			String rel = comboRelaciones.getSelectedItem().toString();
 			String ind = comboIndividuos.getSelectedItem().toString();
-			if (!rel.equals("-") && !ind.equals("-")) {
+			if (!rel.equals("-") && !ind.equals("-"))
 				ob.createOntProperty(imagenCargada, rel, ind);
-			}
-		} else if (e.getSource().equals(aniadirObjeto)) {
+		}
+		else if (e.getSource().equals(aniadirObjeto)) {
 			String s = JOptionPane.showInputDialog("Introduzca el nombre del individuo: ");
 			if (s != null && !s.isEmpty()) ob.createInstance("Objeto", s);
-		} else if (e.getSource().equals(aniadirActividad)) {
+		}
+		else if (e.getSource().equals(aniadirActividad)) {
 			String s = JOptionPane.showInputDialog("Introduzca el nombre del individuo: ");
 			if (s != null && !s.isEmpty()) ob.createInstance("Actividad", s);
-
-		} else if (e.getSource() == comboRelaciones && comboRelaciones.getItemCount() > 0) {
-			obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 		}
+		else if (e.getSource() == comboRelaciones && comboRelaciones.getItemCount() > 0)
+			obtenerIndividuos((String) comboRelaciones.getSelectedItem());
 	}
 
 	/*-------------- Metodos para las consultas -------------------*/
-
+	
+	private void mostrarConsulta() {
+		if (radio4.isSelected()) {
+			
+		}
+	}
+	
 	private void mostrarActoresEnMasDeUnaPelicula() {
 		Iterator<String> it = ob.listInstances(entidadesConsultas[0]);
 		ArrayList<String> actores = new ArrayList<String>();
@@ -656,7 +679,7 @@ public class Interfaz extends JFrame implements ActionListener {
 				personajes.add(it.next().split("#")[1]);
 			}
 		}
-		else if (actor.equalsIgnoreCase("Tom_Cruise")){
+		else if (actor.equalsIgnoreCase("Tom_Cruise")) {
 			it = ob.listInstances("PersonajesDeTomCruise");
 			while (it.hasNext()) {
 				personajes.add(it.next().split("#")[1]);
@@ -795,6 +818,60 @@ public class Interfaz extends JFrame implements ActionListener {
 		}
 	}
 
+	private void cambiarCombo1() {
+		if (combos[0].getItemCount() > 0) {
+			combos[1].removeAllItems();
+			String selected = (String) combos[0].getSelectedItem();
+			for (Iterator<String> it = ob.listSpecificProperties(selected); it.hasNext(); ) {
+				String propiedad = it.next();
+				propiedad = propiedad.substring(propiedad.lastIndexOf('#') + 1);
+				if (!(propiedad.equals("anio") || propiedad.equals("titulo") || propiedad.equals("path")))
+					combos[1].addItem(propiedad);
+			}
+		}
+	}
+	
+	private void cambiarCombo2() {
+		if (combos[1].getItemCount() > 0) {
+			combos[2].removeAllItems();
+			String selected0 = (String) combos[0].getSelectedItem();
+			String selected1 = (String) combos[1].getSelectedItem();
+			if (selected0.equals("Pelicula")) {
+				if (selected1.equals("peliculaHechaIn")) agregarACombo2("Mundo");
+				else if (selected1.equals("peliculaTieneObj")) agregarACombo2("Objeto");
+				else if (selected1.equals("peliculaTieneEscena")) agregarACombo2("Escena");
+				else if (selected1.equals("peliculaTienePersonaje")) agregarACombo2("Personaje");
+				else if (selected1.equals("peliculaTieneActor")) agregarACombo2("Actor");
+				else if (selected1.equals("peliculaTieneActividad")) agregarACombo2("Actividad");
+				else if (selected1.equals("peliculaTiene")) {
+					agregarACombo2("Objeto");
+					agregarACombo2("Escena");
+					agregarACombo2("Personaje");
+					agregarACombo2("Actor");
+					agregarACombo2("Actividad");
+				}
+			}
+			else {
+				if (selected1.equals("imagenTieneActividad")) agregarACombo2("Actividad");
+				else if (selected1.equals("imagenTienePersonaje")) agregarACombo2("Personaje");
+				else if (selected1.equals("imagenTieneObj")) agregarACombo2("Objeto");
+				else if (selected1.equals("imagenTiene")) {
+					agregarACombo2("Actividad");
+					agregarACombo2("Personaje");
+					agregarACombo2("Objeto");
+				}
+			}
+		}
+	}
+	
+	private void agregarACombo2(String clase) {
+		for (Iterator<String> it = ob.listInstances(clase); it.hasNext(); ) {
+			String instancia = it.next();
+			instancia = instancia.substring(instancia.lastIndexOf('#') + 1);
+			combos[2].addItem(instancia);
+		}
+	}
+	
 	private void cargarFoto() {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"Archivos jpg y png", "jpg", "png");
@@ -876,7 +953,7 @@ public class Interfaz extends JFrame implements ActionListener {
 			labelFotoBuscar.setIcon(imageIcon);
 			if (imageIcon.getIconHeight() > 325 || imageIcon.getIconWidth() > 475)
 				labelFotoBuscar.setIcon(new ImageIcon(imageIcon.getImage()
-						.getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
+						.getScaledInstance(-1, 305, Image.SCALE_AREA_AVERAGING)));
 		}
 		repaint();
 	}
