@@ -1475,9 +1475,28 @@
     
 
 
-    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenesDeActores -->
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConActividad -->
 
-    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenesDeActores">
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConActividad">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Imagen"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#imagenTieneActividad"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Actividad"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Imagen"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConActores -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConActores">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -1494,6 +1513,25 @@
                             </owl:Restriction>
                         </owl:unionOf>
                     </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Imagen"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConObjetos -->
+
+    <owl:Class rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#ImagenConObjetos">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.owl-ontologies.com/Ontology1331921872.owl#Imagen"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#imagenTieneObj"/>
+                        <owl:someValuesFrom rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Objeto"/>
+                    </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
@@ -3039,6 +3077,7 @@
         <imagenTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Bart_Simpson_Prsj"/>
         <imagenTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Homer_Simpson_Prsj"/>
         <imagenTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Lisa_Simpson_Prsj"/>
+        <apareceEnPeliculaEscena rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Los_Simpsons"/>
         <imagenTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Maggie_Simpson_Prsj"/>
         <imagenTienePersonaje rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#Marge_Simpson_Prsj"/>
         <imagenTieneActividad rdf:resource="http://www.owl-ontologies.com/Ontology1331921872.owl#riendose"/>

@@ -259,6 +259,7 @@ public class Interfaz extends JFrame implements ActionListener {
 				mostrarEscenasConObjetosViolentos();
 			} else if (radio3.isSelected()) {
 				mostrarPersonajesEnPeliEspaniola();
+				//mostrarImagenesConActor("Tom_Cruise");
 			}
 		} else if (e.getActionCommand().equals("<<")) {
 			anterior();
@@ -293,7 +294,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		ArrayList<String> personajes = new ArrayList<String>();
 		ArrayList<String> escenas = new ArrayList<String>();
 		ArrayList<String> paths;
-		images = new ArrayList<String>();
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
 
 		String instance = "";
 		while (it.hasNext()) {
@@ -323,7 +327,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		ArrayList<String> personajes = new ArrayList<String>();
 		ArrayList<String> escenas = new ArrayList<String>();
 		ArrayList<String> paths;
-		images = new ArrayList<String>();
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
 
 		String instance = "";
 		while (it.hasNext()) {
@@ -351,7 +358,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		Iterator<String> it = ob.listInstances(entidadesConsultas[1]);
 		ArrayList<String> escenas = new ArrayList<String>();
 		ArrayList<String> paths;
-		images = new ArrayList<String>();
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
 
 		while (it.hasNext()) {
 			escenas.add(it.next());
@@ -366,6 +376,331 @@ public class Interfaz extends JFrame implements ActionListener {
 			
 		Logger.getLogger("CP").info(images.toString());
 		cambiarImagen(index = 0);
+	}
+	
+	/**
+	 * Recuperamos las escenas de las peliculas que han sido hechas en el país dado
+	 * @param pais
+	 */
+	private void mostrarPeliculasHechasEn(String pais){
+		Iterator<String> it, it2;
+		ArrayList<String> escenas = new ArrayList<String>();
+		ArrayList<String> peliculas, paths;
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
+		
+		if( pais.equalsIgnoreCase("America") ){
+			it = ob.listInstances("EscenasDePeliculasAmericanas");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else if (pais.equalsIgnoreCase("España")){
+			it = ob.listInstances("EscenasDePeliculasEspañolas");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else{ //Peliculas de paises que nos hayan dicho.
+			it = ob.listInstances("EscenasDePeliculas");
+			it2 = ob.listInstances("Pelicula");
+			peliculas = new ArrayList<String>();
+			String aux;
+			ArrayList<String> auxArray;
+			//Primero hallamos la peliculas hechas en el pais
+			while(it2.hasNext()){
+				aux = it2.next();
+				auxArray = consultarRel(aux, "peliculaHechaIn");
+				if(auxArray.get(0).equalsIgnoreCase(pais))
+					peliculas.add(aux.split("#")[1]);
+			}
+			//Sacamos las escenas de esas películas
+			while(it.hasNext()){
+				aux = it2.next();
+				auxArray = consultarRel(aux, "ApareceEnPeliculaEscena");
+				if(peliculas.contains(auxArray.get(0)))
+					escenas.add(aux.split("#")[1]);
+			}
+		}
+		
+		//Ya tenemos las escenas, ahora a añadir los paths
+		for (String escena : escenas) {
+			paths = consultarAtrib(escena, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
+		Logger.getLogger("CP").info(images.toString());
+		cambiarImagen(index = 0);
+		
+	}
+	
+	/**
+	 * Peliculas respecto al género pedido
+	 * @param genero
+	 */
+	private void mostrarPeliculasGenero(String genero){
+		Iterator<String> it, it2;
+		ArrayList<String> escenas = new ArrayList<String>();
+		ArrayList<String> peliculas, paths;
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
+		
+		if( genero.equalsIgnoreCase("Accion") ){
+			it = ob.listInstances("EscenasDePeliculasAccion");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else if (genero.equalsIgnoreCase("Animacion")){
+			it = ob.listInstances("EscenasDePeliculasAnimacion");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else if (genero.equalsIgnoreCase("Comedia")){
+			it = ob.listInstances("EscenasDePeliculasComedia");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else if (genero.equalsIgnoreCase("Drama")){
+			it = ob.listInstances("EscenasDePeliculasDrama");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else if (genero.equalsIgnoreCase("Romantica")){
+			it = ob.listInstances("EscenasDePeliculasRomantica");
+			while (it.hasNext()) {
+				escenas.add(it.next());
+			}
+		}
+		else{ //Peliculas de paises que nos hayan dicho.
+			it = ob.listInstances("Escena");
+			it2 = ob.listInstances("Pelicula");
+			peliculas = new ArrayList<String>();
+			String aux;
+			ArrayList<String> auxArray;
+			boolean added = false;
+			int i = 0;
+			//Primero hallamos la peliculas con el género buscado
+			while(it2.hasNext()){
+				aux = it2.next();
+				auxArray = consultarRel(aux, "hasGenero");
+				while (!added && i < auxArray.size())
+					if(auxArray.get(i).equalsIgnoreCase(genero)){
+						peliculas.add(aux.split("#")[1]);
+						added = true;
+					}
+					else
+						i++;
+				
+				i = 0;
+				added = false;
+				
+			}
+			//Sacamos las escenas de esas películas			
+			while(it.hasNext()){
+				aux = it.next();
+				auxArray = consultarRel(aux, "apareceEnPeliculaEscena");
+				if(peliculas.contains(auxArray.get(0)))
+					escenas.add(aux.split("#")[1]);
+			}
+		}
+		
+		//Ya tenemos las escenas, ahora a añadir los paths
+		for (String escena : escenas) {
+			paths = consultarAtrib(escena, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
+		Logger.getLogger("CP").info(images.toString());
+		cambiarImagen(index = 0);
+		
+	}
+	
+	/**
+	 * Imagenes que contienen el objeto dado
+	 * @param objeto
+	 */
+	private void mostrarImagenesConObjeto(String objeto){
+		Iterator<String> it;
+		ArrayList<String> imgs = new ArrayList<String>();
+		ArrayList<String> paths;
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
+		
+		it = ob.listInstances("ImagenConObjetos");
+		String aux;
+		ArrayList<String> auxArray;
+		boolean encontrado = false;
+		int i = 0;
+		//Primero hallamos las imagenes con el objeto buscado
+		while(it.hasNext()){
+			aux = it.next();
+			auxArray = consultarRel(aux, "imagenTieneObj");
+			//No me fio del contains del ArrayList
+			while (!encontrado && i < auxArray.size()){
+				encontrado = auxArray.get(i).equalsIgnoreCase(objeto);
+				if ( encontrado )
+					imgs.add(aux.split("#")[1]);
+				else
+					i++;
+			}
+			encontrado = false;
+			i = 0;
+		}
+		
+		//Ya tenemos las imagenes, ahora a añadir los paths
+		for (String img : imgs) {
+			paths = consultarAtrib(img, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
+		Logger.getLogger("CP").info(images.toString());
+		cambiarImagen(index = 0);
+		
+	}
+	
+	/**
+	 * Escogemos las imagenes en las que se lleve a cabo la actividad dada
+	 * @param actividad
+	 */
+	private void mostrarImagenesConActividad(String actividad){
+		Iterator<String> it;
+		ArrayList<String> imgs = new ArrayList<String>();
+		ArrayList<String> paths;
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
+		
+		it = ob.listInstances("ImagenConActividad");
+		String aux;
+		ArrayList<String> auxArray;
+		boolean encontrado = false;
+		int i = 0;
+		//Primero hallamos las imagenes con la actividad buscado
+		while(it.hasNext()){
+			aux = it.next();
+			auxArray = consultarRel(aux, "imagenTieneActividad");
+			while (!encontrado && i < auxArray.size()){
+				encontrado = auxArray.get(i).equalsIgnoreCase(actividad);
+				if ( encontrado )
+					imgs.add(aux.split("#")[1]);
+				else
+					i++;
+			}
+			encontrado = false;
+			i = 0;
+		}
+		
+		//Ya tenemos las imagenes, ahora a añadir los paths
+		for (String img : imgs) {
+			paths = consultarAtrib(img, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
+		Logger.getLogger("CP").info(images.toString());
+		cambiarImagen(index = 0);
+		
+	}
+	
+	/**
+	 * Se desea mostrar las imagenes donde aparezca el actor dado
+	 * @param actor
+	 */
+	private void mostrarImagenesConActor(String actor){
+		Iterator<String> it, it2;
+		ArrayList<String> imgs = new ArrayList<String>();
+		ArrayList<String> personajes = new ArrayList<String>();
+		ArrayList<String> paths;
+		String aux;
+		ArrayList<String> auxArray;
+		if(images == null)
+			images = new ArrayList<String>();
+		else
+			images.clear();
+		
+		if( actor.equalsIgnoreCase("Angelina_Jolie") ){
+			it = ob.listInstances("PersonajesDeAngelinaJolie");
+			while (it.hasNext()) {
+				personajes.add(it.next().split("#")[1]);
+			}
+		}
+		else if (actor.equalsIgnoreCase("Javier_Bardem")){
+			it = ob.listInstances("PersonajesDeBardem");
+			while (it.hasNext()) {
+				personajes.add(it.next().split("#")[1]);
+			}
+		}
+		else if (actor.equalsIgnoreCase("Brad_Pitt")){
+			it = ob.listInstances("PersonajesDeBradPitt");
+			while (it.hasNext()) {
+				personajes.add(it.next().split("#")[1]);
+			}
+		}
+		else if (actor.equalsIgnoreCase("Penelope_Cruz")){
+			it = ob.listInstances("PersonajesDePenelopeCruz");
+			while (it.hasNext()) {
+				personajes.add(it.next().split("#")[1]);
+			}
+		}
+		else if (actor.equalsIgnoreCase("Tom_Cruise")){
+			it = ob.listInstances("PersonajesDeTomCruise");
+			while (it.hasNext()) {
+				personajes.add(it.next().split("#")[1]);
+			}
+		}
+		else{ //Peliculas de paises que nos hayan dicho.
+			it = ob.listInstances("Personaje");
+			//Primero hallamos los personajes que usan los actores
+			while(it.hasNext()){
+				aux = it.next();
+				auxArray = consultarRel(aux, "personajeHasActor");
+				if(auxArray.get(0).equalsIgnoreCase(actor))
+					personajes.add(aux);
+			}
+		}
+		
+		//Tras tener los personajes, sacamos las escenas donde aparecen
+		it2 = ob.listInstances("ImagenConActores");
+		boolean encontrado = false;
+		int i = 0;
+		while(it2.hasNext()){
+			aux = it2.next();
+			auxArray = consultarRel(aux, "imagenTiene");
+			while (!encontrado && i < auxArray.size()){
+				encontrado = personajes.contains(auxArray.get(i)) || actor.equalsIgnoreCase(auxArray.get(i));
+				if ( encontrado )
+					imgs.add(aux);
+				else
+					i++;
+			}
+			encontrado = false;
+			i = 0;
+		}
+		
+		//Ya tenemos las escenas, ahora a añadir los paths
+		for (String img : imgs) {
+			paths = consultarAtrib(img, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
+		Logger.getLogger("CP").info(images.toString());
+		cambiarImagen(index = 0);
+		
 	}
 
 	/**
@@ -534,13 +869,15 @@ public class Interfaz extends JFrame implements ActionListener {
 	}
 
 	private void cambiarImagen(int index) {
-		String ruta = "img/" + images.get(index);
-		ImageIcon imageIcon = new ImageIcon(ruta.substring(0,
-				ruta.indexOf("^^")));
-		labelFotoBuscar.setIcon(imageIcon);
-		if (imageIcon.getIconHeight() > 325 || imageIcon.getIconWidth() > 475)
-			labelFotoBuscar.setIcon(new ImageIcon(imageIcon.getImage()
-					.getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
+		if(images.size() > 0){
+			String ruta = "img/" + images.get(index);
+			ImageIcon imageIcon = new ImageIcon(ruta.substring(0,
+					ruta.indexOf("^^")));
+			labelFotoBuscar.setIcon(imageIcon);
+			if (imageIcon.getIconHeight() > 325 || imageIcon.getIconWidth() > 475)
+				labelFotoBuscar.setIcon(new ImageIcon(imageIcon.getImage()
+						.getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
+		}
 		repaint();
 	}
 
