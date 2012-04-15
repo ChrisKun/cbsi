@@ -42,7 +42,7 @@ public class Interfaz extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final String actorEnPersonaje = "actorInPersonaje";
 	private final String aparece = "apareceEnImagen";
-	private final String path = "path";
+//	private final String path = "path";
 	private final String[] entidadesConsultas = { 
 			"actuaEnAlMenosUnaPeliculas",
 			"EscenasConObjetosViolentos", 
@@ -292,7 +292,7 @@ public class Interfaz extends JFrame implements ActionListener {
 		ArrayList<String> actores = new ArrayList<String>();
 		ArrayList<String> personajes = new ArrayList<String>();
 		ArrayList<String> escenas = new ArrayList<String>();
-		ArrayList<String> consultas;
+		ArrayList<String> paths;
 		images = new ArrayList<String>();
 
 		String instance = "";
@@ -300,17 +300,16 @@ public class Interfaz extends JFrame implements ActionListener {
 			instance = it.next();
 			actores.add(instance);
 			// Listar personajes de cada actor
-			personajes = consultar(instance, actorEnPersonaje);
+			personajes = consultarRel(instance, actorEnPersonaje);
 
 			// Listar escenas donde aparecen esos personajes
 			for (String personaje : personajes) {
-				escenas = consultar(personaje, aparece);
+				escenas = consultarRel(personaje, aparece);
 				// Obtener path de las escenas
 				for (String escena : escenas) {
-					consultas = consultar(escena, "path");
-					for (String consulta : consultas)
-						if (!images.contains(consulta))
-							images.add(consulta);
+					paths = consultarAtrib(escena, "path");
+					if (!images.contains(paths.get(0)))
+						images.add(paths.get(0));
 				}
 			}
 		}
@@ -323,7 +322,7 @@ public class Interfaz extends JFrame implements ActionListener {
 		ArrayList<String> actores = new ArrayList<String>();
 		ArrayList<String> personajes = new ArrayList<String>();
 		ArrayList<String> escenas = new ArrayList<String>();
-		ArrayList<String> consultas;
+		ArrayList<String> paths;
 		images = new ArrayList<String>();
 
 		String instance = "";
@@ -331,17 +330,16 @@ public class Interfaz extends JFrame implements ActionListener {
 			instance = it.next();
 			actores.add(instance);
 			// Listar personajes de cada actor
-			personajes = consultar(instance, actorEnPersonaje);
+			personajes = consultarRel(instance, actorEnPersonaje);
 
 			// Listar escenas donde aparecen esos personajes
 			for (String personaje : personajes) {
-				escenas = consultar(personaje, aparece);
+				escenas = consultarRel(personaje, aparece);
 				// Obtener path de las escenas
 				for (String escena : escenas) {
-					consultas = consultar(escena, path);
-					for (String consulta : consultas)
-						if (!images.contains(consulta))
-							images.add(consulta);
+					paths = consultarAtrib(escena, "path");
+					if (!images.contains(paths.get(0)))
+						images.add(paths.get(0));
 				}
 			}
 		}
@@ -352,20 +350,20 @@ public class Interfaz extends JFrame implements ActionListener {
 	private void mostrarEscenasConObjetosViolentos() {
 		Iterator<String> it = ob.listInstances(entidadesConsultas[1]);
 		ArrayList<String> escenas = new ArrayList<String>();
-		ArrayList<String> consultas;
+		ArrayList<String> paths;
 		images = new ArrayList<String>();
 
 		while (it.hasNext()) {
 			escenas.add(it.next());
-
-			// Obtener path de las escenas
-			for (String escena : escenas) {
-				consultas = consultar(escena, path);
-				for (String consulta : consultas)
-					if (!images.contains(consulta))
-						images.add(consulta);
-			}
 		}
+
+		// Obtener path de las escenas
+		for (String escena : escenas) {
+			paths = consultarAtrib(escena, "path");
+			if (!images.contains(paths.get(0)))
+				images.add(paths.get(0));
+		}
+			
 		Logger.getLogger("CP").info(images.toString());
 		cambiarImagen(index = 0);
 	}
@@ -379,17 +377,44 @@ public class Interfaz extends JFrame implements ActionListener {
 	 *            Relación a buscar
 	 * @return Array con el resultado de la consulta
 	 */
-	private ArrayList<String> consultar(String individuo, String relacion) {
-		ArrayList<String> prop = new ArrayList<String>();
-		ArrayList<String> val = new ArrayList<String>();
+	private ArrayList<String> consultarRel(String individuo, String relacion) {
+//		ArrayList<String> prop = new ArrayList<String>();
+//		ArrayList<String> val = new ArrayList<String>();
+		Iterator<String> val;
 		ArrayList<String> res = new ArrayList<String>();
+		
+		val = ob.listPropertyValue(individuo, relacion);
+		
+		while(val.hasNext())
+			res.add(val.next().split("#")[1]);
 
-		ob.listInstancePropertiesValues(individuo, prop, val);
+//		ob.listInstancePropertiesValues(individuo, prop, val);
+//
+//		for (int i = 0; i < prop.size(); i++)
+//			if (relacion.equals(prop.get(i).split("#")[1]))
+//				if (!res.contains(val.get(i)))
+//					res.add(val.get(i));
 
-		for (int i = 0; i < prop.size(); i++)
-			if (relacion.equals(prop.get(i).split("#")[1]))
-				if (!res.contains(val.get(i)))
-					res.add(val.get(i));
+		return res;
+	}
+	
+	private ArrayList<String> consultarAtrib(String individuo, String atributo) {
+//		ArrayList<String> prop = new ArrayList<String>();
+//		ArrayList<String> val = new ArrayList<String>();
+		Iterator<String> val;
+		ArrayList<String> res = new ArrayList<String>();
+		
+		val = ob.listPropertyValue(individuo, atributo);
+		
+		while(val.hasNext())
+			res.add(val.next().split("^^")[0]);
+
+//		ob.listInstancePropertiesValues(individuo, prop, val);
+//
+//		for (int i = 0; i < prop.size(); i++)
+//			if (relacion.equals(prop.get(i).split("#")[1]))
+//				if (!res.contains(val.get(i)))
+//					res.add(val.get(i));
 
 		return res;
 	}
