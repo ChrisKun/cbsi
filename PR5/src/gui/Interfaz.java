@@ -7,13 +7,14 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,7 +27,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
@@ -36,7 +36,7 @@ import es.ucm.fdi.gaia.ontobridge.OntoBridge;
 import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 import es.ucm.fdi.gaia.ontobridge.test.gui.PnlConceptsAndInstancesTree;
 
-public class Interfaz extends JFrame implements ActionListener {
+public class Interfaz extends JFrame implements ActionListener, ItemListener {
 
 	/** Atributos **/
 
@@ -153,8 +153,10 @@ public class Interfaz extends JFrame implements ActionListener {
 		comboIndivBuscAvanzada.addItem(consulta[0]);
 		comboIndivBuscAvanzada.addItem(consulta[1]);
 		comboIndivBuscAvanzada.addItem(consulta[2]);
+		comboIndivBuscAvanzada.setEnabled(false);
 		panelBotonesBuscAvanzada.add(comboIndivBuscAvanzada);
 		checkBuscAvanzada = new JCheckBox("Consultas especiales activadas", false);
+		checkBuscAvanzada.addItemListener(this);
 		panelBotonesBuscAvanzOk.add(checkBuscAvanzada);
 		panelConsultas.add(panelBotonesBuscAvanzada);
 		panelConsultas.add(panelBotonesBuscAvanzOk);
@@ -1019,6 +1021,25 @@ public class Interfaz extends JFrame implements ActionListener {
 			labelFotoMarcar.setIcon(new ImageIcon(imageIcon.getImage()
 					.getScaledInstance(-1, 325, Image.SCALE_AREA_AVERAGING)));
 		repaint();
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+	    if (e.getItemSelectable() == checkBuscAvanzada) {
+	    	if (checkBuscAvanzada.isSelected()){
+	    		comboIndivBuscAvanzada.setEnabled(true);
+	    		comboRelBusc.setEnabled(false);
+	    		comboIndivBusc.setEnabled(false);
+	    		comboIniBusc.setEnabled(false);
+	    	}
+	    	else{
+	    		comboIndivBuscAvanzada.setEnabled(false);
+	    		comboRelBusc.setEnabled(true);
+	    		comboIndivBusc.setEnabled(true);
+	    		comboIniBusc.setEnabled(true);
+	    	}
+	    } 
+
 	}
 
 }
