@@ -515,7 +515,7 @@ public class Interfaz extends JFrame implements ActionListener, ItemListener {
 		else
 			images.clear();
 		
-		if( pais.equalsIgnoreCase("America") ){
+		if (pais.equalsIgnoreCase("EEUU_Mundo") ){
 			it = ob.listInstances("EscenasDePeliculasAmericanas");
 			while (it.hasNext()) {
 				escenas.add(it.next());
@@ -599,7 +599,7 @@ public class Interfaz extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 		else if (genero.equalsIgnoreCase("Romantica")){
-			it = ob.listInstances("EscenasDePeliculasRomantica");
+			it = ob.listInstances("EscenasDePeliculasRomanticas");
 			while (it.hasNext()) {
 				escenas.add(it.next());
 			}
