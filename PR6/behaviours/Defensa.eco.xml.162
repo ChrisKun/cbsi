@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beh:compCompuesto xmlns:beh="http://www.local.com/eCo/xml/Comportamiento.xsd" nombre="Defensa" descripcion="">
+  <beh:listaPropiedades>
+    <beh:propiedad nombre="Attacker" valor="3.0" />
+    <beh:propiedad nombre="Defender" valor="2.0" />
+    <beh:propiedad nombre="Mobility" valor="4.0" />
+    <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+  </beh:listaPropiedades>
+  <beh:nodos>
+    <beh:nodo id="4" inicial="false">
+      <beh:compAtomico nombre="Ir a la pelota" descripcion="Ir a la pelota">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Ir a la pelota" />
+      </beh:compAtomico>
+      <beh:vista x="161" y="268" />
+    </beh:nodo>
+    <beh:nodo id="3" inicial="false">
+      <beh:compAtomico nombre="Esperar" descripcion="Esperar">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Wait" />
+      </beh:compAtomico>
+      <beh:vista x="334" y="387" />
+    </beh:nodo>
+    <beh:nodo id="2" inicial="false">
+      <beh:compAtomico nombre="Posicionar y patear" descripcion="Posicionar y patear">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Posicionar y patear" />
+      </beh:compAtomico>
+      <beh:vista x="536" y="249" />
+    </beh:nodo>
+    <beh:nodo id="1" inicial="true">
+      <beh:compAtomico nombre="Volver al campo" descripcion="Volver al campo">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Andar hacia el campo" />
+      </beh:compAtomico>
+      <beh:vista x="325" y="103" />
+    </beh:nodo>
+  </beh:nodos>
+</beh:compCompuesto>
+

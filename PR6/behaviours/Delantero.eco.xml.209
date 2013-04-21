@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beh:compCompuesto xmlns:beh="http://www.local.com/eCo/xml/Comportamiento.xsd" nombre="Delantero" descripcion="">
+  <beh:listaPropiedades>
+    <beh:propiedad nombre="Defender" valor="2.0" />
+    <beh:propiedad nombre="Attacker" valor="3.0" />
+    <beh:propiedad nombre="Mobility" valor="4.0" />
+    <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+  </beh:listaPropiedades>
+  <beh:nodos>
+    <beh:nodo id="3" inicial="false">
+      <beh:compAtomico nombre="Esperar" descripcion="Esperar">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Wait" />
+      </beh:compAtomico>
+      <beh:vista x="460" y="590" />
+    </beh:nodo>
+    <beh:nodo id="2" inicial="false">
+      <beh:compAtomico nombre="Posicionar y patear" descripcion="Posicionar y patear">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Posicionar y patear" />
+      </beh:compAtomico>
+      <beh:vista x="722" y="340" />
+    </beh:nodo>
+    <beh:nodo id="1" inicial="true">
+      <beh:compAtomico nombre="Ir a la pelota" descripcion="Ir a la pelota">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Ir a la pelota" />
+      </beh:compAtomico>
+      <beh:vista x="218" y="306" />
+    </beh:nodo>
+  </beh:nodos>
+</beh:compCompuesto>
+

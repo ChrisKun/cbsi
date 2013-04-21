@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<es:editSequence xmlns:es="http://www.local.com/eCo/xml/EditSequence.xsd" onSave="false">
+  <es:session id="1" timestamp="20120429-18:06:14.695">
+    <es:EditOperation timestamp="20120429-18:06:27.014" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="ADD_NODE" parentBehaviour="Equipo" parentId="MAIN" id="1" />
+    <es:EditOperation timestamp="20120429-18:06:35.996" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="ADD_NODE" parentBehaviour="Equipo" parentId="MAIN" id="34">
+      <compCompuesto xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" nombre="Portero" descripcion="">
+        <listaPropiedades>
+          <propiedad nombre="Attacker" valor="3.0" />
+          <propiedad nombre="Defender" valor="2.0" />
+          <propiedad nombre="Mobility" valor="4.0" />
+          <propiedad nombre="Goalkeeper" valor="1.0" />
+        </listaPropiedades>
+        <nodos>
+          <nodo id="19" inicial="true">
+            <compCompuesto nombre="Patada" descripcion="">
+              <listaPropiedades>
+                <propiedad nombre="Defender" valor="2.0" />
+                <propiedad nombre="Attacker" valor="3.0" />
+                <propiedad nombre="Mobility" valor="4.0" />
+                <propiedad nombre="Goalkeeper" valor="1.0" />
+              </listaPropiedades>
+              <nodos>
+                <nodo id="21" inicial="true">
+                  <compAtomico nombre="Patear" descripcion="Chuta la pelota">
+                    <listaPropiedades>
+                      <propiedad nombre="Defender" valor="2.0" />
+                      <propiedad nombre="Attacker" valor="3.0" />
+                      <propiedad nombre="Mobility" valor="4.0" />
+                      <propiedad nombre="Goalkeeper" valor="1.0" />
+                    </listaPropiedades>
+                    <basicBehaviour name="Patear" />
+                  </compAtomico>
+                  <vista x="361" y="81" />
+                </nodo>
+                <nodo id="20" inicial="false">
+                  <compAtomico nombre="Ir a la pelota" descripcion="El jugador se mueve directamente hacia la pelota">
+                    <listaPropiedades>
+                      <propiedad nombre="Defender" valor="2.0" />
+                      <propiedad nombre="Attacker" valor="3.0" />
+                      <propiedad nombre="Mobility" valor="4.0" />
+                      <propiedad nombre="Goalkeeper" valor="1.0" />
+                    </listaPropiedades>
+                    <basicBehaviour name="Ir a la pelota" />
+                  </compAtomico>
+                  <vista x="58" y="83" />
+                </nodo>
+              </nodos>
+              <aristas>
+                <arista id="23" origen="21" destino="20" descripcion="No puedo dar una patada">
+                  <condition>
+                    <aggregation aggregator="AND">
+                      <condition xmlns="" comparator="==">
+                        <left type="sensor" value="canKick" />
+                        <right type="constant" value="false" />
+                      </condition>
+                    </aggregation>
+                  </condition>
+                </arista>
+                <arista id="22" origen="20" destino="21" descripcion="Puedo dar una patada">
+                  <condition>
+                    <aggregation aggregator="AND">
+                      <condition xmlns="" comparator="==">
+                        <left type="sensor" value="canKick" />
+                        <right type="constant" value="true" />
+                      </condition>
+                    </aggregation>
+                  </condition>
+                </arista>
+              </aristas>
+            </compCompuesto>
+            <vista x="543" y="198" />
+          </nodo>
+          <nodo id="18" inicial="false">
+            <compAtomico nombre="Cover Goal" descripcion="Cubre la portería">
+              <listaPropiedades>
+                <propiedad nombre="Defender" valor="2.0" />
+                <propiedad nombre="Attacker" valor="3.0" />
+                <propiedad nombre="Mobility" valor="4.0" />
+                <propiedad nombre="Goalkeeper" valor="1.0" />
+              </listaPropiedades>
+              <basicBehaviour name="Cover Goal" />
+            </compAtomico>
+            <vista x="98" y="309" />
+          </nodo>
+          <nodo id="24" inicial="false">
+            <compCompuesto nombre="Ir a la portería" descripcion="El jugador va hacia la portería y se detiene cuando está cerca.">
+              <listaPropiedades>
+                <propiedad nombre="Defender" valor="2.0" />
+                <propiedad nombre="Attacker" valor="3.0" />
+                <propiedad nombre="Mobility" valor="4.0" />
+                <propiedad nombre="Goalkeeper" valor="1.0" />
+              </listaPropiedades>
+              <nodos>
+                <nodo id="26" inicial="true">
+                  <compAtomico nombre="Wait" descripcion="">
+                    <listaPropiedades>
+                      <propiedad nombre="Defender" valor="2.0" />
+                      <propiedad nombre="Attacker" valor="3.0" />
+                      <propiedad nombre="Mobility" valor="4.0" />
+                      <propiedad nombre="Goalkeeper" valor="1.0" />
+                    </listaPropiedades>
+                    <basicBehaviour name="Wait" />
+                  </compAtomico>
+                  <vista x="480" y="77" />
+                </nodo>
+                <nodo id="25" inicial="false">
+                  <compAtomico nombre="Walk Towards Goal" descripcion="">
+                    <listaPropiedades>
+                      <propiedad nombre="Defender" valor="2.0" />
+                      <propiedad nombre="Attacker" valor="3.0" />
+                      <propiedad nombre="Mobility" valor="4.0" />
+                      <propiedad nombre="Goalkeeper" valor="1.0" />
+                    </listaPropiedades>
+                    <basicBehaviour name="Walk Towards Goal" />
+                  </compAtomico>
+                  <vista x="105" y="78" />
+                </nodo>
+              </nodos>
+              <aristas>
+                <arista id="28" origen="25" destino="26" descripcion="Cerca de mi portería">
+                  <condition>
+                    <aggregation aggregator="AND">
+                      <condition xmlns="" comparator="&lt;=">
+                        <left type="sensor" value="getOurGoalR" />
+                        <right type="constant" value="0.1" />
+                      </condition>
+                    </aggregation>
+                  </condition>
+                </arista>
+                <arista id="27" origen="26" destino="25" descripcion="Andar hacia la portería">
+                  <condition>
+                    <aggregation aggregator="AND">
+                      <condition xmlns="" comparator="&gt;">
+                        <left type="sensor" value="getOurGoalR" />
+                        <right type="constant" value="0.1" />
+                      </condition>
+                    </aggregation>
+                  </condition>
+                </arista>
+              </aristas>
+            </compCompuesto>
+            <vista x="64" y="33" />
+          </nodo>
+        </nodos>
+        <aristas>
+          <arista id="32" origen="24" destino="19" descripcion="La pelota está en mi campo y estoy cerca de ella">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="fieldBallX" />
+                  <right type="constant" value="0" />
+                </condition>
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="getBallR" />
+                  <right type="constant" value="0.3" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+          <arista id="31" origen="19" destino="18" descripcion="La pelota está en mi campo y estoy lejos de ella">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="fieldBallX" />
+                  <right type="constant" value="0" />
+                </condition>
+                <condition xmlns="" comparator="&gt;">
+                  <left type="sensor" value="getBallR" />
+                  <right type="constant" value="0.3" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+          <arista id="30" origen="18" destino="19" descripcion="Estoy cerca de la pelota">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="getBallR" />
+                  <right type="constant" value="0.3" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+          <arista id="29" origen="24" destino="18" descripcion="Estoy en mi área y la pelota está en mi campo">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="getPositionY" />
+                  <right type="constant" value="0.5" />
+                </condition>
+                <condition xmlns="" comparator="&gt;">
+                  <left type="sensor" value="getPositionY" />
+                  <right type="constant" value="-0.5" />
+                </condition>
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="normalizedPositionX" />
+                  <right type="constant" value="-1.145" />
+                </condition>
+                <condition xmlns="" comparator="&lt;">
+                  <left type="sensor" value="fieldBallX" />
+                  <right type="constant" value="0" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+          <arista id="33" origen="19" destino="24" descripcion="No estoy en mi área y la pelota no está en mi campo">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="&gt;">
+                  <left type="sensor" value="fieldBallX" />
+                  <right type="constant" value="0" />
+                </condition>
+                <aggregation aggregator="NOT_AND">
+                  <condition xmlns="" comparator="&lt;">
+                    <left type="sensor" value="getPositionY" />
+                    <right type="constant" value="0.5" />
+                  </condition>
+                  <condition xmlns="" comparator="&gt;">
+                    <left type="sensor" value="getPositionY" />
+                    <right type="constant" value="-0.5" />
+                  </condition>
+                  <condition xmlns="" comparator="&lt;">
+                    <left type="sensor" value="normalizedPositionX" />
+                    <right type="constant" value="-1.145" />
+                  </condition>
+                </aggregation>
+              </aggregation>
+            </condition>
+          </arista>
+        </aristas>
+      </compCompuesto>
+    </es:EditOperation>
+    <es:EditOperation timestamp="20120429-18:06:41.651" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="ADD_NODE" parentBehaviour="Equipo" parentId="MAIN" id="43">
+      <compCompuesto xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" nombre="Patada" descripcion="">
+        <listaPropiedades>
+          <propiedad nombre="Attacker" valor="3.0" />
+          <propiedad nombre="Defender" valor="2.0" />
+          <propiedad nombre="Mobility" valor="4.0" />
+          <propiedad nombre="Goalkeeper" valor="1.0" />
+        </listaPropiedades>
+        <nodos>
+          <nodo id="40" inicial="true">
+            <compAtomico nombre="Patear" descripcion="Chuta la pelota">
+              <listaPropiedades>
+                <propiedad nombre="Attacker" valor="3.0" />
+                <propiedad nombre="Defender" valor="2.0" />
+                <propiedad nombre="Mobility" valor="4.0" />
+                <propiedad nombre="Goalkeeper" valor="1.0" />
+              </listaPropiedades>
+              <basicBehaviour name="Patear" />
+            </compAtomico>
+            <vista x="361" y="81" />
+          </nodo>
+          <nodo id="39" inicial="false">
+            <compAtomico nombre="Ir a la pelota" descripcion="El jugador se mueve directamente hacia la pelota">
+              <listaPropiedades>
+                <propiedad nombre="Attacker" valor="3.0" />
+                <propiedad nombre="Defender" valor="2.0" />
+                <propiedad nombre="Mobility" valor="4.0" />
+                <propiedad nombre="Goalkeeper" valor="1.0" />
+              </listaPropiedades>
+              <basicBehaviour name="Ir a la pelota" />
+            </compAtomico>
+            <vista x="58" y="83" />
+          </nodo>
+        </nodos>
+        <aristas>
+          <arista id="42" origen="40" destino="39" descripcion="No puedo dar una patada">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="==">
+                  <left type="sensor" value="canKick" />
+                  <right type="constant" value="false" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+          <arista id="41" origen="39" destino="40" descripcion="Puedo dar una patada">
+            <condition>
+              <aggregation aggregator="AND">
+                <condition xmlns="" comparator="==">
+                  <left type="sensor" value="canKick" />
+                  <right type="constant" value="true" />
+                </condition>
+              </aggregation>
+            </condition>
+          </arista>
+        </aristas>
+      </compCompuesto>
+    </es:EditOperation>
+    <es:EditOperation timestamp="20120429-18:06:50.418" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="ADD_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="44" from="1" to="43" />
+    <es:EditOperation timestamp="20120429-18:06:51.802" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="ADD_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="45" from="1" to="34" />
+    <es:EditOperation timestamp="20120429-18:07:49.250" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="EDIT_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="44">
+      <es:oldEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="44" origen="1" destino="43" descripcion="">
+          <condition />
+        </arista>
+      </es:oldEdge>
+      <es:newEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="44" origen="1" destino="43" descripcion="">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="&gt;">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:newEdge>
+    </es:EditOperation>
+    <es:EditOperation timestamp="20120429-18:08:12.755" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="EDIT_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="45">
+      <es:oldEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="45" origen="1" destino="34" descripcion="">
+          <condition />
+        </arista>
+      </es:oldEdge>
+      <es:newEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="45" origen="1" destino="34" descripcion="">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="==">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:newEdge>
+    </es:EditOperation>
+    <es:EditOperation timestamp="20120429-18:08:29.028" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="EDIT_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="45">
+      <es:oldEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="45" origen="1" destino="34" descripcion="">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="==">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:oldEdge>
+      <es:newEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="45" origen="1" destino="34" descripcion="jugador = 0">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="==">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:newEdge>
+    </es:EditOperation>
+    <es:EditOperation timestamp="20120429-18:08:36.066" repositoryPath="SoccerBots" mainBehaviour="Equipo" operationType="EDIT_EDGE" parentBehaviour="Equipo" parentId="MAIN" id="44">
+      <es:oldEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="44" origen="1" destino="43" descripcion="">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="&gt;">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:oldEdge>
+      <es:newEdge>
+        <arista xmlns="http://www.local.com/eCo/xml/Comportamiento.xsd" id="44" origen="1" destino="43" descripcion="jugador != 0">
+          <condition>
+            <aggregation aggregator="AND">
+              <condition xmlns="" comparator="&gt;">
+                <left type="sensor" value="getPlayerNumber" />
+                <right type="constant" value="0" />
+              </condition>
+            </aggregation>
+          </condition>
+        </arista>
+      </es:newEdge>
+    </es:EditOperation>
+  </es:session>
+  <es:session id="2" timestamp="20120429-18:21:31.222" />
+</es:editSequence>
+

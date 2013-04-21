@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beh:compCompuesto xmlns:beh="http://www.local.com/eCo/xml/Comportamiento.xsd" nombre="Portero" descripcion="">
+  <beh:listaPropiedades>
+    <beh:propiedad nombre="Defender" valor="2.0" />
+    <beh:propiedad nombre="Attacker" valor="3.0" />
+    <beh:propiedad nombre="Mobility" valor="4.0" />
+    <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+  </beh:listaPropiedades>
+  <beh:nodos>
+    <beh:nodo id="1" inicial="true">
+      <beh:compAtomico nombre="Cubrir portería" descripcion="El portero va a cubrir la portería.">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:basicBehaviour name="Cover Goal" />
+      </beh:compAtomico>
+      <beh:vista x="122" y="176" />
+    </beh:nodo>
+    <beh:nodo id="11" inicial="false">
+      <beh:compCompuesto nombre="Patada" descripcion="">
+        <beh:listaPropiedades>
+          <beh:propiedad nombre="Attacker" valor="3.0" />
+          <beh:propiedad nombre="Defender" valor="2.0" />
+          <beh:propiedad nombre="Mobility" valor="4.0" />
+          <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+        </beh:listaPropiedades>
+        <beh:nodos>
+          <beh:nodo id="8" inicial="false">
+            <beh:compAtomico nombre="Patear" descripcion="Pega una patada al balón.">
+              <beh:listaPropiedades>
+                <beh:propiedad nombre="Attacker" valor="3.0" />
+                <beh:propiedad nombre="Defender" valor="2.0" />
+                <beh:propiedad nombre="Mobility" valor="4.0" />
+                <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+              </beh:listaPropiedades>
+              <beh:basicBehaviour name="Patear" />
+            </beh:compAtomico>
+            <beh:vista x="563" y="379" />
+          </beh:nodo>
+          <beh:nodo id="7" inicial="true">
+            <beh:compAtomico nombre="Ir a la pelota" descripcion="El jugador se mueve directamente hacia la pelota">
+              <beh:listaPropiedades>
+                <beh:propiedad nombre="Attacker" valor="3.0" />
+                <beh:propiedad nombre="Defender" valor="2.0" />
+                <beh:propiedad nombre="Mobility" valor="4.0" />
+                <beh:propiedad nombre="Goalkeeper" valor="1.0" />
+              </beh:listaPropiedades>
+              <beh:basicBehaviour name="Ir a la pelota" />
+            </beh:compAtomico>
+            <beh:vista x="240" y="552" />
+          </beh:nodo>
+        </beh:nodos>
+        <beh:aristas>
+          <beh:arista id="10" origen="8" destino="7" descripcion="No puedo dar una patada">
+            <beh:condition>
+              <beh:aggregation aggregator="AND">
+                <condition comparator="==">
+                  <left type="sensor" value="canKick" />
+                  <right type="constant" value="false" />
+                </condition>
+              </beh:aggregation>
+            </beh:condition>
+          </beh:arista>
+          <beh:arista id="9" origen="7" destino="8" descripcion="Puedo dar una patada">
+            <beh:condition>
+              <beh:aggregation aggregator="AND">
+                <condition comparator="==">
+                  <left type="sensor" value="canKick" />
+                  <right type="constant" value="true" />
+                </condition>
+              </beh:aggregation>
+            </beh:condition>
+          </beh:arista>
+        </beh:aristas>
+      </beh:compCompuesto>
+      <beh:vista x="443" y="180" />
+    </beh:nodo>
+  </beh:nodos>
+</beh:compCompuesto>
+
